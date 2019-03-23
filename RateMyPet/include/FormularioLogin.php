@@ -11,11 +11,11 @@ class FormularioLogin extends Form {
                 <legend>Log In</legend>
                 <div class="grupo-control">
                     <label>Nombre de usuario:</label> 
-                    <input type="text" name="username" placeholder="Username"/>
+                    <input class="form-control" type="text" name="username" placeholder="Username"/>
                 </div>
                 <div class="grupo-control">
                     <label>Password:</label> 
-                    <input type="password" name="password" placeholder="*****"/>
+                    <input class="form-control" type="password" name="password" placeholder="*****"/>
                 </div>
                 <div class="grupo-control">
                     <button type="submit" name="login">Login</button>

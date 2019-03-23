@@ -11,20 +11,20 @@ class FormularioRegistro extends Form {
                 <legend>Register</legend>
                 <div class="grupo-control">
                     <label>Username:</label>
-                        <input class="control" type="text" name="username" placeholder="Name" />
+                        <input class="form-control" type="text" name="username" placeholder="Name" />
                 </div>
                 <div class="grupo-control">
-                    <label>Full Name:</label> <input class="control" type="text" name="fullname" placeholder="Name" />
+                    <label>Full Name:</label> <input class="form-control" type="text" name="fullname" placeholder="Name" />
                 </div>
                 <div class="grupo-control">
-                    <label>E-Mail:</label> <input class="control" type="text" name="email" placeholder="youremail@mail.com" />
+                    <label>E-Mail:</label> <input class="form-control" type="text" name="email" placeholder="youremail@mail.com" />
                 </div>
                 <div class="grupo-control">
-                    <label>Password:</label> <input class="control" type="password" name="password" placeholder="*****" />
+                    <label>Password:</label> <input class="form-control" type="password" name="password" placeholder="*****" />
                 </div>
                 <div class="grupo-control">
                     <label>Re-enter Password:</label>
-                        <input class="control" type="password" name="password2" placeholder="*****" />
+                        <input class="form-control" type="password" name="password2" placeholder="*****" />
                         <br />
                 </div>
                 <div>
