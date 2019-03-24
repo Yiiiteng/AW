@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 23-03-2019 a las 16:11:19
+-- Tiempo de generación: 24-03-2019 a las 14:06:49
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -52,13 +52,22 @@ CREATE TABLE `messages` (
 --
 
 CREATE TABLE `pets` (
-  `idPet` varchar(10) NOT NULL,
+  `idPet` int(11) NOT NULL,
   `name` text NOT NULL,
   `description` text NOT NULL,
   `type` text NOT NULL,
   `breed` text NOT NULL,
-  `treats` int(11) NOT NULL
+  `treats` int(11) NOT NULL,
+  `owner_id` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `pets`
+--
+
+INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`) VALUES
+(22, 'Toby', '						', 'Cat', 'Siamesse', 0, 6),
+(23, 'Jeff', '						', 'Dog', 'Corgi', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -127,7 +136,8 @@ ALTER TABLE `posts`
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`id`),
+  ADD KEY `id` (`id`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -137,12 +147,23 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `idPet` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=24;
+
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
   MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- Restricciones para tablas volcadas
+--
+
+--
+-- Filtros para la tabla `pets`
+--
+ALTER TABLE `pets`
+  ADD CONSTRAINT `pets_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

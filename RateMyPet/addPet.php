@@ -1,6 +1,8 @@
 ﻿<?php
-    session_start();
+	require_once __DIR__.'/include/Aplicacion.php';
+	require_once __DIR__.'/include/config.php';
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +53,7 @@
 					</td>
 				</tr>
 			</table>
-
+			
 			<button class="button-create">Create!</button>
 
 			</form>

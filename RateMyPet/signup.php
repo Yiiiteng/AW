@@ -4,7 +4,7 @@
     require_once __DIR__.'/include/FormularioRegistro.php';
 
     if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
-        header("Location: index.php");
+        header("Location: index.php"); // If the user is already logged in, take him to the Home page
     }
 ?>
 

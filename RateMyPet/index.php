@@ -1,59 +1,40 @@
 <?php
-
     require_once __DIR__.'/include/config.php';
-    
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-	<title>RateMyPet</title>
-    <link rel="stylesheet" href="css/main.css">
+    <title>RateMyPet</title>
+    <link rel="stylesheet" href="css/header.css">
+    <link rel="stylesheet" href="css/footer.css">
 </head>
 <body>
-    <div class="header">
-        <h1> Rate My Pet <h1>
-    </div>
-
+    <?php 
+        require('include/comun/header.php');
+    ?>
     <div class="nav-bar">
         <ul>
             <li>
-                <a href="">Hola</a>
+                <a href="addPet.php">Add a Pet</a>
+            </li>
+            <li>
+                <a href="home.php">Home</a>
+            </li>
+            <li>
+                <a href="perfilOwner.php">Owner Profile</a>
             </li>
             <li>
                 <a href="">Hola</a>
             </li>
             <li>
-                <a href="">Hola</a>
-            </li>
-            <li>
-                <a href="">Hola</a>
-            </li>
-            <li>
-                <a href="">Hola</a>
+                <a href="logout.php">Log Out</a>
             </li>
         </ul>
-    </div>
+    </div>   
 
-
-    <?php
-        if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
-            echo '<div class="content">
-                <p>"Bienvenido de nuevo."<p>
-            </div>';
-        } else {
-            echo '<div class="content">
-                <p>"Esperemos que consideres crear una cuenta con nosotros."<p>
-            </div>';
-        }
+    <?php 
+        require('include/comun/footer.php');
     ?>
-
-    <a href="logout.php">Log Out</a>
-
-    
-
-    <div class="footer">
-        <h4>Made in UCM</h4>
-    </div>
 </body>
 </html>

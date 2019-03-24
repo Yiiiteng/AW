@@ -1,5 +1,5 @@
 <?php
-    session_start();
+	require_once __DIR__.'/include/config.php';
 ?>
 <!DOCTYPE html>
 <html>
@@ -10,7 +10,7 @@
 </head>
 <body class="color-fondo">
 	<?php
-		require("include/comun/cabecera.php");
+		require("include/comun/header.php");
 	?>
 
 	<div class="card" id="owner">
@@ -57,7 +57,21 @@
 	<div class="card" id="myPet">
 		<h3>My pets</h3>
 		<?php
+			
+			$control = Aplicacion::getSingleton();
+			$conn = $control->conexionBd();
+			$sql = sprintf("SELECT * FROM pets WHERE owner_id = '%s'", $_SESSION['owner_id']); // Return owner id
+			$result = $conn->query($sql);
 		
+			if ($result->num_rows > 0) {
+				// output data of each row
+				while($row = $result->fetch_assoc()) {
+					echo 'Owner of: ' . $row['name'];
+				}
+			} else {
+				echo "You don't own any pets!";
+			}
+
 		?>
 		<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> + </button>
 	</div>

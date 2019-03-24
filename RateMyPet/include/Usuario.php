@@ -57,6 +57,14 @@ class Usuario {
         $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol);
         return self::guarda($user);
     }
+
+    public static function buscaMascotas() { // Return all my pets
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $pets = Pet::allPets($conn->real_escape_string($id)); // Look for my pets (with my id)
+
+        return $result;
+    }
     
     private static function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
