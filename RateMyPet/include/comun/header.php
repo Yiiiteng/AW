@@ -8,8 +8,9 @@
 	<?php
 		if (isset($_SESSION["username"]) && ($_SESSION["login"]===true)) {
 	?>
-		<div class="saludo">Welcome back, <?php
-			echo ' ' . $_SESSION["username"] . ' ' . '<a href="logout.php" class="button-create">Logout</a>'
+		<div class="saludo">Welcome back,
+		<?php
+			echo ' ' . $_SESSION["username"] . ' ' . '<a href="logout.php" class="button-create">Logout</a>';
 		?>
 		
 	<?php

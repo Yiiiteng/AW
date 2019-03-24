@@ -24,14 +24,17 @@
 	        </div>
 
 			<table id="info">
-				<tr>
-				<!--echo $_SESSION['nombre'];-->
-					<th>Laura</th>
-				</tr>
-				<tr>
-					<!--echo $_SESSION['id'];-->
-					<th>@laura123</th>
-				</tr>
+				<?php
+				echo "<tr>
+						<th> ".$_SESSION['username']."</th>
+						<!--<th>Laura</th>-->
+					</tr>
+					<tr>
+						<!--@laura123-->
+						<th>".$_SESSION['email']."</th>
+					</tr>";
+				?>
+				
 				<tr>
 					<!--echo $_SESSION['followed']; need add a function-->
 				<th>48 seguidores</th>

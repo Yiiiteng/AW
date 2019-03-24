@@ -46,6 +46,7 @@ class FormularioLogin extends Form {
                 if ($usuario->compruebaPassword($password)) {
                     $_SESSION['login'] = true;
                     $_SESSION['username'] = $username;
+                    $_SESSION['email'] = $usuario->email();
                     $_SESSION['esAdmin'] = strcmp($fila['rol'], 'admin') == 0 ? true : false;
                     header('Location: index.php');
                     exit();

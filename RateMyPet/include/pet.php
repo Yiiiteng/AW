@@ -1,52 +1,58 @@
 <?php
 require_once __DIR__ . '/Aplicacion.php';
 require_once __DIR__ . '/Usuario.php';
-class Pet{
-        private $petName;
-        private $petId;
-        private $petType;
-        private $petBreed;
-        private $petDescript;
-        private $treats;
 
-     public function __construct ($petName,$petId,$petType,$petBreed,$petDescript,$treats){
+class Pet {
+    private $petName;
+    private $petId;
+    private $petType;
+    private $petBreed;
+    private $petDescript;
+    private $treats;
+
+    public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats) {
         $this->petName = $petName;
         $this->petId = $petId;
         $this->petType = $petType;
         $this->petBreed = $petBreed;
         $this->petDescript = $petDescript;
-         $this->treats = $treats;
-     }      
-      public static function existePet($idOwner,$petName){
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql=sprintf("SELECT petName FROM pets WHERE idOwner = '%s' AND petName = '%s' " 
-            ,$idOwner
-            ,$connect->real_escape_string($petName));
-        $consulta = mysqli_query($connect,$sql);
-
-            if($consulta && $consulta->num_rows == 1) {
-                $consulta->free();
-                return true;
-            }else{
-                return false;
-            }
+        $this->treats = $treats;
     }
-    
-      public static function buscarPet($idOwner,$petName){
+
+    public static function existePet($idOwner, $petName) {
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
-        $sql=sprintf("SELECT * FROM pets WHERE idOwner = '%s' AND petName = '%s'"
-            ,$idOwner
-            ,$connect->real_escape_string($petName));
+        $sql = sprintf(
+            "SELECT petName FROM pets WHERE idOwner = '%s' AND petName = '%s' ",
+            $idOwner,
+            $connect->real_escape_string($petName)
+        );
+        $consulta = mysqli_query($connect, $sql);
 
-        $consulta = mysqli_query($connect,$sql);
+        if ($consulta && $consulta->num_rows == 1) {
+            $consulta->free();
+            return true;
+        } else {
+            return false;
+        }
+    }
+
+    public static function buscarPet($idOwner, $petName) {
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = sprintf(
+            "SELECT * FROM pets WHERE idOwner = '%s' AND petName = '%s'",
+            $idOwner,
+            $connect->real_escape_string($petName)
+        );
+
+        $consulta = mysqli_query($connect, $sql);
         $result = false;
 
         if ($consulta) {
-            if ( $consulta->num_rows == 1) {
+            if ($consulta->num_rows == 1) {
                 $fila = $consulta->fetch_assoc();
-               // $fruta = new Fruta($fila['id_fruta'], $fila['nombre'],$fila['cantidad'], $fila['precio'],$fila['Oferta']);
+                // $fruta = new Fruta($fila['id_fruta'], $fila['nombre'],$fila['cantidad'], $fila['precio'],$fila['Oferta']);
                 $result = $fila;
             }
             $consulta->free();
@@ -67,40 +73,44 @@ class Pet{
         return self::guarda($pet);
     }*/
 
-     public static function insertar($petName,$petType,$petBreed,$petDescript,$treats){
-        
-            $app = Aplicacion::getSingleton();
-            $conn = $app->conexionBd();
-            $query=sprintf("INSERT INTO pets(name,description,type,breed,treats) VALUES('%s', '%s','%s','%s','%s')"
-                   , $conn->real_escape_string($petName)
-                , $conn->real_escape_string($petType)
-                 , $conn->real_escape_string($petBreed)
-                , $conn->real_escape_string($petDescript)
-                , $conn->real_escape_string($treats));
-            if ( $conn->query($query)){
-                $petId = $conn->insert_id;
-                return true;
-            }
-             else {
-                echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-                exit();
-            }   
+    public static function insertar($petName, $petType, $petBreed, $petDescript, $treats, $owner_id) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+
+        $query = sprintf(
+            "INSERT INTO pets(name,description,type,breed,treats,owner_id) VALUES('%s', '%s','%s','%s','%s', '%s')",
+            $conn->real_escape_string($petName),
+            $conn->real_escape_string($petDescript),
+            $conn->real_escape_string($petType),
+            $conn->real_escape_string($petBreed),
+            $conn->real_escape_string($treats),
+            $conn->real_escape_string($owner_id)
+        );
+
+        if ($conn->query($query)) {
+            $petId = $conn->insert_id;
+            return true;
+        } else {
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
     }
 
-     public static function eliminar($idOwner,$petName){
+    public static function eliminar($idOwner, $petName) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf(
+            "DELETE FROM pets where idOwner = '%s' AND petName = '%s'",
+            $idOwner,
+            $conn->real_escape_string($petName)
+        );
 
-            $app = Aplicacion::getSingleton();
-            $conn = $app->conexionBd();
-            $query=sprintf("DELETE FROM pets where idOwner = '%s' AND petName = '%s'"
-                ,$idOwner
-                ,$conn->real_escape_string($petName));
-
-            if ( $conn->query($query) ) {
-                return true;
-            } else {
-                echo "Error al eliminar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-                exit();
-            }
+        if ($conn->query($query)) {
+            return true;
+        } else {
+            echo "Error al eliminar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
     }
 
     /*public static function actualizar($id_inventario,$datos){
@@ -134,61 +144,50 @@ class Pet{
         }
     
     }*/
-     
-     public static function allPets($idOwner){
+
+    public static function allPets($idOwner) { // Given an Owner ID, returns a list with all the pets
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
-        $sql=sprintf("SELECT * FROM pets  WHERE idOwner = '%s'" ,$idOwner);
-         $rs = $connect->query($sql);
+        $sql = sprintf("SELECT * FROM pets  WHERE idOwner = '%s'", $idOwner);
+        $rs = $connect->query($sql);
 
-            if($rs){
-                $producto = array();
-                while($row =  $rs->fetch_assoc()){
-                    $producto[] = $row;
-                }
-                $rs->free();
-                
-                return $producto;
-                    
-            }else {
-                    echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-                    exit();
-                }
+        if ($rs) {
+            $producto = array();
+            while ($row =  $rs->fetch_assoc()) {
+                $producto[] = $row;
+            }
+            $rs->free();
 
-
-     }
-     
-
-         public function petName()
-        {
-            return $this->petName;
+            return $producto;
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
         }
-
-        public function petId()
-        {
-            return $this->petId;
-        }
-
-        public function petType()
-        {
-            return $this->petType;
-        }
-
-        public function petBreed()
-        {
-            return $this->petBreed;
-        }
-
-        public function petDescript()
-        {
-            return $this->petDescript;
-        }
-
-         public function treats()
-        {
-            return $this->treats;
-        }
+    }
 
 
+    public function petName() {
+        return $this->petName;
+    }
+
+    public function petId() {
+        return $this->petId;
+    }
+
+    public function petType() {
+        return $this->petType;
+    }
+
+    public function petBreed() {
+        return $this->petBreed;
+    }
+
+    public function petDescript() {
+        return $this->petDescript;
+    }
+
+    public function treats() {
+        return $this->treats;
+    }
 }
-?>
+ 

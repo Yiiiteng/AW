@@ -130,6 +130,10 @@ class Usuario {
         return $this->username;
     }
 
+    public function email() {
+        return $this->email;
+    }
+
     public function compruebaPassword($password) {
         return password_verify($password, $this->password);
     }
