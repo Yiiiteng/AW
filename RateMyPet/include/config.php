@@ -7,8 +7,8 @@ require_once __DIR__.'/Aplicacion.php';
  */
 define('BD_HOST', 'localhost');
 define('BD_NAME', 'ratemypet');
-define('BD_USER', 'RateMyPet');
-define('BD_PASS', 'RateMyPet');
+define('BD_USER', 'root');
+define('BD_PASS', '');
 
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria

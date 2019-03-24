@@ -134,6 +134,11 @@ ALTER TABLE `users`
 --
 
 --
+-- AUTO_INCREMENT de la tabla `pets`
+--
+ALTER TABLE `pets`
+  MODIFY `idPet` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+--
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`

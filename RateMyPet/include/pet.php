@@ -57,17 +57,28 @@ class Pet{
         return $result;
     }
 
+    /* public static function crea($petName, $petId, $petType, $petBreed, $petDescript, $treats)
+    {
+        $pet = self::buscarPet($petName);
+        if ($pet) {
+            return false;
+        }
+        $pet = new Pet($petName,$petId,$petType,$petBreed,$petDescript,$treats);
+        return self::guarda($pet);
+    }*/
+
      public static function insertar($petName,$petType,$petBreed,$petDescript,$treats){
         
             $app = Aplicacion::getSingleton();
             $conn = $app->conexionBd();
-            $query=sprintf("INSERT INTO pets(name,description, type,breed,treats) VALUES('%s', '%s','%s','%s','%s')"
+            $query=sprintf("INSERT INTO pets(name,description,type,breed,treats) VALUES('%s', '%s','%s','%s','%s')"
                    , $conn->real_escape_string($petName)
                 , $conn->real_escape_string($petType)
                  , $conn->real_escape_string($petBreed)
                 , $conn->real_escape_string($petDescript)
                 , $conn->real_escape_string($treats));
             if ( $conn->query($query)){
+                $petId = $conn->insert_id;
                 return true;
             }
              else {

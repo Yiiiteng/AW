@@ -1,4 +1,7 @@
-﻿<!DOCTYPE html>
+﻿<?php
+    session_start();
+?>
+<!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
@@ -27,12 +30,12 @@
 			<table>
 				<tr>
 					<td>Name: </td>
-					<td><input class="form-control" id = "petName" type="text" name="pet">
+					<td><input class="form-control" id = "petName" type="text" name="petName">
 					</td>
 				</tr>
 				<tr>
-					<td>Nick: </td>
-					<td><input class="form-control" id = "petNickName" type="text" name="petNick">
+					<td>Type: </td>
+					<td><input class="form-control" id = "petType" type="text" name="petType">
 					</td>
 				</tr>
 				<tr>

@@ -1,21 +1,23 @@
 <?php
+	require_once "config.php";
+    require_once "pet.php";
 
-    require_once "Pet.php";
-
-	 
-		$petName = isset($_POST['pet']) ? $_POST['pet'] : null;
+		$petName = isset($_POST['petName']) ? $_POST['petName'] : null;
 		$petType = isset($_POST['petType']) ? $_POST['petType'] : null;
 		$petBreed = isset($_POST['petBreed']) ? $_POST['petBreed'] : null;
 		$petDescript = isset($_POST['petDescript']) ? $_POST['petDescript'] : null;
 
 
-		if(empty($pet)  or empty($petBreed) or empty($petDescript) or empty($petType))
+		if(empty($petName) or empty($petType) or empty($petBreed) or empty($petDescript)){
 			//header("Location: ../errorRegistro.php");
 			echo "Debes rellenar todos los campos";
-
+		}
 		else{
 			$pet = Pet:: insertar($petName,$petType,$petBreed,$petDescript,0);
-		 }
+
+			header('Location: ../index.php');
+			exit();
+		}
 	
 
 ?>
