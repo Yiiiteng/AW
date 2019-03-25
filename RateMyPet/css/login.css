@@ -4,7 +4,6 @@
 	background-image: linear-gradient(to bottom right , #F6D8CE, #F3F781);
 }
 
-
 .split {
     text-align: center;
     height: 100%;
@@ -125,6 +124,7 @@ header {
     color: black;
 }
 
-h1.form {
-
+.title {
+    display: flexbox;
+    
 }

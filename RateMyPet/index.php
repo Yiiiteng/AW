@@ -1,37 +1,33 @@
 <?php
     require_once __DIR__.'/include/config.php';
+
+    if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
+        header("Location: signup.php");
+    }
+
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>RateMyPet</title>
+    <title>Home</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
+    <link rel="stylesheet" href="css/content.css">
 </head>
 <body>
     <?php 
         require('include/comun/header.php');
     ?>
-    <div class="nav-bar">
-        <ul>
-            <li>
-                <a href="addPet.php">Add a Pet</a>
-            </li>
-            <li>
-                <a href="home.php">Home</a>
-            </li>
-            <li>
-                <a href="perfilOwner.php">Owner Profile</a>
-            </li>
-            <li>
-                <a href="">Hola</a>
-            </li>
-            <li>
-                <a href="logout.php">Log Out</a>
-            </li>
-        </ul>
-    </div>   
+    <div class="content">
+        <p>
+            Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut 
+            labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris 
+            nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit 
+            esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in 
+            culpa qui officia deserunt mollit anim id est laborum.
+        </p>
+    </div>
 
     <?php 
         require('include/comun/footer.php');

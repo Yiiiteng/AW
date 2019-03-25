@@ -1,3 +1,3 @@
 <div class="footer">
-	Pie de página
+	Rate My Pet 2019 / Property of UCM - <a href=terms.php>Terms & Conditions</a>
 </div>

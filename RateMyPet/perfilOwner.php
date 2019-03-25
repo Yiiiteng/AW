@@ -27,10 +27,8 @@
 				<?php
 				echo "<tr>
 						<th> ".$_SESSION['username']."</th>
-						<!--<th>Laura</th>-->
 					</tr>
 					<tr>
-						<!--@laura123-->
 						<th>".$_SESSION['email']."</th>
 					</tr>";
 				?>
@@ -60,7 +58,6 @@
 	<div class="card" id="myPet">
 		<h3>My pets</h3>
 		<?php
-			
 			$control = Aplicacion::getSingleton();
 			$conn = $control->conexionBd();
 			$sql = sprintf("SELECT * FROM pets WHERE owner_id = '%s'", $_SESSION['owner_id']); // Return owner id
@@ -69,7 +66,7 @@
 			if ($result->num_rows > 0) {
 				// output data of each row
 				while($row = $result->fetch_assoc()) {
-					echo 'Owner of: ' . $row['name'];
+					echo 'Owner of: ' . $row['name'] . '<img src="img/dog.png" alt="Logo" width="100" height="100" />';
 				}
 			} else {
 				echo "You don't own any pets!";

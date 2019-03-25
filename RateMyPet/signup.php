@@ -40,9 +40,5 @@
 			?>
         </div>
     </div>
-
-    <div class="footer">
-        <h1>Not convinced? <a href="index.php">Browse our website!</a></h1>
-    </div>
 </body>
 </html>
