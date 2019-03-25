@@ -17,10 +17,23 @@
 		<div class="infoOwner">
 
 			<div class="content-img">
-				<img src="usuarios/laura.png" alt="Logo" width="100" height="100" />
-	            <div class="file">
-	                <i class="ico-plus"></i>Subir foto(jpg/png): <input type="file" name="file" accept="image/*" id="upload" >
-	            </div>  
+				<?php
+					$_SESSION["ownerOpet"]="owner";
+
+					$path='usuarios/'.$_SESSION["username"].'.png';
+					if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
+						echo '<img src='.$path.' alt="Logo" width="100" height="100" />';
+					}
+					else{
+						echo '<img src="usuarios/default.png" alt="Logo" width="100" height="100" />';
+					}
+				?>
+
+	            <form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
+	            	Change foto(jpg/png): 
+	                <input type="file" name="file" accept="image/*" id="upload" >
+	                <input type="submit" value="Change">
+	            </form>  
 	        </div>
 
 			<table id="info">

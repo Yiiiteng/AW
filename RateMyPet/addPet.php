@@ -12,7 +12,7 @@
 </head>
 
 <body class="color-fondo">
-	
+	<form action="include/procesarRegistroPet.php" method="POST">
 	<div class="contenedor-add">
 
 		<div id="contenedor-perfil-img">
@@ -22,13 +22,13 @@
 			<img src="usuarios/default.png" alt="Logo" width="300" height="300" />
 			<div class="content-img">
 	            <div class="file">
-	                <i class="ico-plus"></i>Subir foto(jpg/png): <input type="file" name="file" accept="image/*" id="upload" >
+	                Subir foto(jpg/png): <input type="file" name="file" accept="image/*" id="upload" >
 	            </div>  
 	        </div>
 		</div>
 
 		<div>
-			<form action="include/procesarRegistroPet.php" method="POST">
+			
 			<table>
 				<tr>
 					<td>Name: </td>
@@ -54,11 +54,12 @@
 				</tr>
 			</table>
 			
-			<button class="button-create">Create!</button>
+			
 
-			</form>
+			
 		</div>
-
+	<button class="button-create">Create!</button>
 	</div>
+	</form>
 	</body>
 </html>
