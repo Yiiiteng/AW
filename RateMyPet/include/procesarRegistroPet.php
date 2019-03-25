@@ -10,7 +10,7 @@
 
 	if(empty($petName) or empty($petType) or empty($petBreed) or empty($petDescript))	{
 		//header("Location: ../errorRegistro.php");
-		echo "Debes rellenar todos los campos";
+		echo "Debes rellenar todos los campos.";
 	} else{
 
 		$dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
@@ -26,18 +26,19 @@
 			mkdir($petdir);
 
 			move_uploaded_file($_FILES["file"]["tmp_name"], $petdir.'/'.$_FILES["file"]["name"]);
-/*
+
 			if($_FILES["file"]["type"]==="image/png"){
 				rename( $petdir.'/'.$_FILES["file"]["name"], $petdir.'/'.$petName.'.png');
 			}
 			else if($_FILES["file"]["type"]==="image/jpg"){
 				rename( $petdir.'/'.$_FILES["file"]["name"], $petdir.'/'.$petName.'.jpg');
 			}
-			else echo "Image form error.";*/
+			else echo "Image form error.";
 		}
 
 		$treats = 0;
 		$pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
+
 		header('Location: ../perfilOwner.php');
 		exit();
 	}

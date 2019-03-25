@@ -79,7 +79,8 @@
 			if ($result->num_rows > 0) {
 				// output data of each row
 				while($row = $result->fetch_assoc()) {
-					echo 'Owner of: ' . $row['name'] . '<img src="img/dog.png" alt="Logo" width="100" height="100" />';
+					$dir="usuarios/". $_SESSION['username']."/".$row['name']."/".$row['name'].".png";
+					echo 'Owner of: ' .$row["name"] .'<img src='.$dir.' alt="petFoto" width="100" height="100" />';
 				}
 			} else {
 				echo "You don't own any pets!";
