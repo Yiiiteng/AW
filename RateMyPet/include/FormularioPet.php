@@ -28,7 +28,7 @@ class FormularioPet extends Form {
                             <tr>
                                 <td>Type: </td>
                                 <td>
-                                <select id="petType" type="text" name="petType">
+                                <select class="form-control" id="petType" type="text" name="petType">
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Hamster">Hamster</option>

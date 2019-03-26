@@ -43,3 +43,8 @@ table {
     text-decoration: none;
 }
 
+#info, #rankingPerfil{
+    text-align:left;
+    font-weight: bold;
+    width:350px;
+}

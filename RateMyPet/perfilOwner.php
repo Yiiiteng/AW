@@ -30,9 +30,12 @@
 		<?php
 			$_SESSION["ownerOpet"]="owner";
 
-			$path='usuarios/'.$_SESSION["username"].'.jpg';
+			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img src='.$path.' alt="Logo" width="100" height="100" />';
+				echo '<img src='.$path.'.jpg alt="Logo" width="100" height="100" />';
+			}
+			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
+				echo '<img src='.$path.'.png alt="Logo" width="100" height="100" />';
 			}
 			else{
 				echo '<img src="usuarios/default.png" alt="Logo" width="100" height="100" />';
@@ -47,30 +50,31 @@
 
 		<h1>These are your parameters:</h1>
 
-		<table>
+		<table id="info">
 		<?php
-			echo "<tr>
-			<th> Name: ".$_SESSION['username']."</th>
+			echo "
+			<tr>
+				<td> Name: </td> <td>".$_SESSION['username']."</td>
 			</tr>
 			<tr>
-			<th> Email: ".$_SESSION['email']."</th>
+				<td> Email: </td> <td>".$_SESSION['email']."</td>
 			</tr>";
 		?>
 		<tr>
 		<!--echo $_SESSION['followed']; need add a function-->
-		<th>Followers: 48</th>
+			<td>Followers: </td> <td>48</td>
 		</tr>
 		<tr>
 		<!--echo $_SESSION['followed']; need add a function-->
-		<th>Following: 49</th>
+			<td>Following: </td> <td>49</td>
 		</tr>
 		<tr>
 		<!--echo $_SESSION['weekrank'];-->
-		<th>Current Weekly Rank: #302</th>
+			<td>Current Weekly Rank: </td> <td>#302</td>
 		</tr>
 		<tr>
 		<!--echo $_SESSION['bestrank'];-->
-		<th>Best Weekly Rank: #3</th>
+			<td>Best Weekly Rank: </td> <td>#3</td>
 		</tr>
 		</table>
 
