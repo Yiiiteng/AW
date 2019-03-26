@@ -1,9 +1,5 @@
 /* Split the screen in half */
 
-.color-fondo{
-	background-image: linear-gradient(to bottom right , #F6D8CE, #F3F781);
-}
-
 .split {
     text-align: center;
     height: 100%;

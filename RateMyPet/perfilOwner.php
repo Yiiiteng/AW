@@ -78,23 +78,6 @@
 		<div class="display-pets">
 			<ul>
 				<?php
-
-				/*<div class="image">
-				<img ...>
-				<div>caption text</div>
-				</div>*/
-
-				/*
-					Revious version:
-
-					<li>
-						<a href="perfilPet.php?idPet='.$pet['idPet'].'">
-						<img src="img/animals/'.$pet['type'].'.png">
-						</a>
-					</li>
-				*/
-
-
 				if ($myPets->num_rows > 0) { // Iterate through all of my pets
 					while($pet = $myPets->fetch_assoc()) {
 						echo '<li><div class="image">
