@@ -79,8 +79,10 @@
 			if ($result->num_rows > 0) {
 				// output data of each row
 				while($row = $result->fetch_assoc()) {
-					$dir="usuarios/". $_SESSION['username']."/".$row['name']."/".$row['name'].".png";
-					echo 'Owner of: ' .$row["name"] .'<img src='.$dir.' alt="petFoto" width="100" height="100" />';
+					//$dir="usuarios/". $_SESSION['username']."/".$row['name']."/".$row['name'].".png";
+					//echo 'Owner of: ' .$row["idPet"] .'<img src='.$dir.' alt="petFoto" width="100" height="100" />';
+					$pet = $row["idPet"];
+					echo '<a href="perfilPet.php?idPet='.$pet.'">Go To Profile of '.$row['name'].'</a><br/>';
 				}
 			} else {
 				echo "You don't own any pets!";
