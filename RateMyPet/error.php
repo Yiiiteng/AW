@@ -10,7 +10,7 @@
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>Error</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
@@ -19,9 +19,10 @@
     <?php 
         require('include/comun/header.php');
     ?>
-    <div class="content">
-        <h1>This is your Home Page</h1>
-        <p>Here you will be able to browse all of the new posts from your followed pets.</p>
+    <div class="content-error">
+        <h1>Oops!</h1>
+        <p>Looks like there was a problem with your request!</p>
+        <p>Are you sure this is what you were looking for?</p>
     </div>
     <?php 
         require('include/comun/footer.php');

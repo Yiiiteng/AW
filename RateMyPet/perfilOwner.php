@@ -1,6 +1,13 @@
 <?php
 	require_once __DIR__.'/include/config.php';
+	
+	$control = Aplicacion::getSingleton();
+	$conn = $control->conexionBd();
+	$sql = sprintf("SELECT * FROM pets WHERE owner_id = '%s'", $_SESSION['owner_id']); // Return owner id
+	$myPets = $conn->query($sql); // List of my pets (If I have any)
+		
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -15,6 +22,11 @@
 	?>
 
 	<div>
+
+	<div class="content">
+        <h1>This is your Profile Page</h1>
+		<p>Here you will be able to select any of your pet accounts, add a new pet, change your profile settings...</p>
+		
 		<?php
 			$_SESSION["ownerOpet"]="owner";
 
@@ -33,23 +45,25 @@
 			<input type="submit" value="Change">
 		</form>  
 
-		<table id="info">
+		<h1>These are your parameters:</h1>
+
+		<table>
 		<?php
 			echo "<tr>
-			<th> ".$_SESSION['username']."</th>
+			<th> Name: ".$_SESSION['username']."</th>
 			</tr>
 			<tr>
-			<th>".$_SESSION['email']."</th>
+			<th> Email: ".$_SESSION['email']."</th>
 			</tr>";
 		?>
 		<tr>
 		<!--echo $_SESSION['followed']; need add a function-->
-		<th>48 seguidores</th>
+		<th>Followers: 48</th>
 		</tr>
-		</table>
-
-
-		<table>
+		<tr>
+		<!--echo $_SESSION['followed']; need add a function-->
+		<th>Following: 49</th>
+		</tr>
 		<tr>
 		<!--echo $_SESSION['weekrank'];-->
 		<th>Current Weekly Rank: #302</th>
@@ -60,33 +74,44 @@
 		</tr>
 		</table>
 
-		<div class="card" id="myPet">
 		<h3>My pets</h3>
-		<?php
-		$control = Aplicacion::getSingleton();
-		$conn = $control->conexionBd();
-		$sql = sprintf("SELECT * FROM pets WHERE owner_id = '%s'", $_SESSION['owner_id']); // Return owner id
-		$result = $conn->query($sql);
+		<div class="display-pets">
+			<ul>
+				<?php
 
-		if ($result->num_rows > 0) {
-			// output data of each row
-			while($row = $result->fetch_assoc()) {
-				//$dir="usuarios/". $_SESSION['username']."/".$row['name']."/".$row['name'].".png";
-				//echo 'Owner of: ' .$row["idPet"] .'<img src='.$dir.' alt="petFoto" width="100" height="100" />';
-				$pet = $row["idPet"];
-				echo '<a href="perfilPet.php?idPet='.$pet.'"><img src="img/Adrian.jpg">Go To Profile of '.$row['name'].'</a><br/>';
-				/*echo '<form method="post" action="perfilPet.php">
-				<input type="hidden" name="idPet" value='.$row["idPet"].'>
-				<input type="submit">
-				<label>Go to '.$row['name'].'\'s  Profile</label>
-				</form>';*/
-			}
-		} else {
-			echo "You don't own any pets!";
-		}
+				/*<div class="image">
+				<img ...>
+				<div>caption text</div>
+				</div>*/
 
-		?>
-		<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> + </button>
+				/*
+					Revious version:
+
+					<li>
+						<a href="perfilPet.php?idPet='.$pet['idPet'].'">
+						<img src="img/animals/'.$pet['type'].'.png">
+						</a>
+					</li>
+				*/
+
+
+				if ($myPets->num_rows > 0) { // Iterate through all of my pets
+					while($pet = $myPets->fetch_assoc()) {
+						echo '<li><div class="image">
+								<a href="perfilPet.php?idPet='.$pet['idPet'].'">
+								<img src="img/animals/'.$pet['type'].'.png">
+								</a>
+								'.$pet['name'].'
+						</div></li>';
+					}
+				} else {
+					echo "You don't own any pets!";
+				}
+				?>
+			</ul>
+		</div>
+		</br>
+		<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> Add a Pet </button>
 	</div>
 
 	<?php

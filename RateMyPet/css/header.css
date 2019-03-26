@@ -1,7 +1,6 @@
 /* Style for the header of RateMyPet */
 
 .header {
-    /*background-image: linear-gradient(to bottom right , #F6D8CE, #F3F781);*/
     background-color: #DB5254;
     text-align: center;
     margin-bottom: 5px;
@@ -24,21 +23,35 @@
 }
 
 .header nav {
+    background-color: #DB5254;
     display: flex;
     font-size: 30px;
 }
 
-.header nav a {
+.header nav ul {
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    overflow: hidden;
+    background-color: #DB5254;
+}
+
+.header nav li {
+    float: left;
+}
+
+.header nav li a {
+    display: block;
     color: black;
-    margin-right: 20px;
+    text-align: center;
+    padding: 14px 16px;
     text-decoration: none;
 }
 
-.header nav a .hello {
-    color: white;
-    margin-right: 20px;
+.header nav li a:hover:not(.active) {
+    background-color:  #ff2e31;
 }
 
-.header nav a:hover {
-    color: gray;
+.active {
+    background-color: #4CAF50;
 }

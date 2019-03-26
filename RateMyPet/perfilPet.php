@@ -3,6 +3,27 @@
     
     $pet = $_GET['idPet'];
 
+    $control = Aplicacion::getSingleton();
+    $conn = $control->conexionBd();
+    $sql = sprintf("SELECT * FROM pets WHERE idPet = '%s'", $pet); // Return owner id
+    $result = $conn->query($sql);
+
+    $petName = "";
+    $petID = "";
+    $petType = "";
+    $isYours = false;
+
+    if ($result->num_rows > 0) {
+        while($row = $result->fetch_assoc()) {
+            $petName = $row['name'];
+            $petID = $pet;
+            $petType = $row['type'];
+            if ($_SESSION['owner_id'] == $row['owner_id']) $isYours = true;
+        }
+    } else {
+        header("Location: error.php");
+    }
+
 ?>
 <!DOCTYPE html>
 <html>
@@ -16,25 +37,23 @@
 <body>
 	<?php
 		require("include/comun/header.php");
-	?>
-
-    <div>
-        <?php
-            $control = Aplicacion::getSingleton();
-            $conn = $control->conexionBd();
-            $sql = sprintf("SELECT * FROM pets WHERE idPet = '%s'", $pet); // Return owner id
-            $result = $conn->query($sql);
-            if ($result->num_rows > 0) {
-                while($row = $result->fetch_assoc()) {
-                    echo 'Hello, I am your pet: ' .$row['name'];
-                }
+    ?>
+    
+    <div class="content">
+        <h1>This is <?php echo ''.$petName; ?> the <?php echo ''.$petType; ?>'s Page</h1>
+        <p>Here you will be able to browse the pet's posts, as well as see everything related with the pet's ranking.</p>
+        
+        <?php 
+            if ($isYours) {
+                echo '<h2>I belong to you!</h2>';
             } else {
-                echo 'This pet doesn\'t exist';
-                // header("Location: index.php");
+                echo '<h2>Hello! My owner isn\'t home. Why not leave him a message?</h2>';
             }
         ?>
-    </div>
-
+        <div class="display-pets">
+            <img src="img/animals/<?php echo $petType?>.png"></a>
+		</div>
+	</div>
     
     <?php
 		require("include/comun/footer.php");

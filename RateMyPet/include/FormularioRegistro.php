@@ -82,7 +82,9 @@ class FormularioRegistro extends Form {
                 $erroresFormulario[] = "Username already in use.";
             } else {
                 $_SESSION['login'] = true;
-                $_SESSION['fullname'] = $username;
+                $_SESSION['username'] = $username;
+                $_SESSION['email'] = $usuario->email();
+                $_SESSION['esAdmin'] = strcmp($fila['rol'], 'admin') == 0 ? true : false;
                 header('Location: index.php');
                 exit();
         

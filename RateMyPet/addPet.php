@@ -30,21 +30,26 @@
 			</div>
 
 			<div>
-				
 				<table>
 					<tr>
 						<td>Name: </td>
-						<td><input class="form-control" id = "petName" type="text" name="petName">
+						<td><input class="form-control" id = "petName" type="text" name="petName" required>
 						</td>
 					</tr>
 					<tr>
 						<td>Type: </td>
-						<td><input class="form-control" id = "petType" type="text" name="petType">
+						<td>
+						<select id="petType" type="text" name="petType">
+							<option value="Dog">Dog</option>
+							<option value="Cat">Cat</option>
+							<option value="Hamster">Hamster</option>
+							<option value="Rabbit">Rabbit</option>
+						</select>
 						</td>
 					</tr>
 					<tr>
 						<td>Breed: </td>
-						<td><input class="form-control" id = "breed" type="text" name="petBreed">
+						<td><input class="form-control" id = "breed" type="text" name="petBreed" required>
 						</td>
 					</tr>
 					<tr>
@@ -56,8 +61,9 @@
 					</tr>
 				</table>
 			</div>
+			<button>Create!</button>
 		</div>
-		<button class="button-create">Create!</button>
+		
 	</form>
 	</div>
 </body>

@@ -1,3 +1,45 @@
 .content {
-    
+    text-align: center;
 }
+
+.content-error {
+    text-align: center;
+    font-size: 50px;
+}
+
+table {
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display-pets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-pets img {
+    width: 80px;
+    height: 80px;
+}
+
+.display-pets ul {
+    display: flex;
+    align-items: center;
+}
+
+.display-pets li {
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+}
+
+.display-pets ul li a {
+    display: flex;
+    text-decoration: none;
+}
+
