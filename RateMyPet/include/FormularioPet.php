@@ -95,8 +95,8 @@ class FormularioPet extends Form {
             $treats = 0;
             $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
 
-            //header('Location: perfilOwner.php');
-            //exit();
+            header('Location: perfilOwner.php');
+            exit();
         }
     }
 

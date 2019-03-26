@@ -22,8 +22,6 @@
 		require("include/comun/header.php");
 	?>
 
-	<div>
-
 	<div class="content">
         <h1>This is your Profile Page</h1>
 		<p>Here you will be able to select any of your pet accounts, add a new pet, change your profile settings...</p>
@@ -98,7 +96,6 @@
 				?>
 			</ul>
 		</div>
-		</br>
 		<button type="button" class="button-create" onclick="window.location.href='addPet.php'"> Add a Pet </button>
 	</div>
 

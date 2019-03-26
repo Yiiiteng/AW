@@ -5,7 +5,7 @@
     background-color: #DB5254;
     text-align: center;
     display: inline-block;
-    position: absolute;
+    position: fixed;
     bottom: 0;
     width: 100%;
     padding-top: 10px;
