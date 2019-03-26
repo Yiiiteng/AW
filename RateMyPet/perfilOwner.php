@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
 </head>
+<body>
 	<?php
 		require("include/comun/header.php");
 	?>
@@ -98,7 +99,7 @@
 			</ul>
 		</div>
 		</br>
-		<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> Add a Pet </button>
+		<button type="button" class="button-create" onclick="window.location.href='addPet.php'"> Add a Pet </button>
 	</div>
 
 	<?php

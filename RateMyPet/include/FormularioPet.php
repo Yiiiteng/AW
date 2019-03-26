@@ -66,18 +66,19 @@ class FormularioPet extends Form {
             header('Location: perfilOwner.php');
             exit();
         } else{
-            $dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
+            $dir='usuarios/'.$_SESSION["username"].'/'.$petName;
+
             if (is_dir($dir)) {
                 echo "This pet already exists!";
             }
             else{
-                $dir='../usuarios/'.$_SESSION["username"];
+                $dir='usuarios/'.$_SESSION["username"];
                 if (is_dir($dir)===false) {
-                    mkdir($dir);
+                    mkdir($dir,0777,true);
                 }
                 $petdir=$dir.'/'.$petName;
-                mkdir($petdir);
-
+                mkdir($petdir,0777,true);
+                //no se puede sacar imagen
                 move_uploaded_file($_FILES["file"]["tmp_name"], $petdir.'/'.$_FILES["file"]["name"]);
 
                 if($_FILES["file"]["type"]==="image/png"){
@@ -94,8 +95,8 @@ class FormularioPet extends Form {
             $treats = 0;
             $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
 
-            header('Location: perfilOwner.php');
-            exit();
+            //header('Location: perfilOwner.php');
+            //exit();
         }
     }
 
