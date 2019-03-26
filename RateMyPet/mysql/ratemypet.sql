@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 24-03-2019 a las 14:06:49
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Tiempo de generación: 26-03-2019 a las 12:37:17
+-- Versión del servidor: 10.1.35-MariaDB
+-- Versión de PHP: 7.2.9
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -33,6 +33,17 @@ CREATE TABLE `comments` (
   `likes` int(11) NOT NULL,
   `idcomment` varchar(9) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `following`
+--
+
+CREATE TABLE `following` (
+  `idFollowing` int(11) NOT NULL,
+  `idFollower` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 -- --------------------------------------------------------
 
@@ -115,6 +126,13 @@ ALTER TABLE `comments`
   ADD PRIMARY KEY (`idcomment`);
 
 --
+-- Indices de la tabla `following`
+--
+ALTER TABLE `following`
+  ADD PRIMARY KEY (`idFollowing`,`idFollower`),
+  ADD KEY `idFollower` (`idFollower`);
+
+--
 -- Indices de la tabla `messages`
 --
 ALTER TABLE `messages`
@@ -124,7 +142,8 @@ ALTER TABLE `messages`
 -- Indices de la tabla `pets`
 --
 ALTER TABLE `pets`
-  ADD PRIMARY KEY (`idPet`);
+  ADD PRIMARY KEY (`idPet`),
+  ADD KEY `pets_ibfk_1` (`owner_id`);
 
 --
 -- Indices de la tabla `posts`
@@ -158,6 +177,13 @@ ALTER TABLE `users`
 --
 -- Restricciones para tablas volcadas
 --
+
+--
+-- Filtros para la tabla `following`
+--
+ALTER TABLE `following`
+  ADD CONSTRAINT `following_ibfk_1` FOREIGN KEY (`idFollower`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `following_ibfk_2` FOREIGN KEY (`idFollowing`) REFERENCES `users` (`id`);
 
 --
 -- Filtros para la tabla `pets`
