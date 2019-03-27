@@ -63,7 +63,7 @@ body {
   
 /* Style the image inside the centered container, if needed */
 .centered img {
-    width: 150px;
+    height: 80px;
     border-radius: 50%;
 }
 
@@ -98,9 +98,8 @@ header {
 }
 
 .header img {
-    transform: translate(165px, -365px);
-    width: 80px;
-    height: 80px;
+    transform: translate(-50%, -365px);
+    height: 150px;
     position: fixed;
     top: 50%;
     left: 50%;

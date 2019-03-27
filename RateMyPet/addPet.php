@@ -10,15 +10,21 @@
 	<meta charset="utf-8">
 	<title>Rate My Pet: Add your pet</title>
 	<link rel="stylesheet" type="text/css" href="css/perfil.css">
+	<link rel="stylesheet" type="text/css" href="css/header.css">
+	<link rel="stylesheet" type="text/css" href="css/footer.css">
 </head>
-
-<body class="color-fondo">
+	<?php
+		require("include/comun/header.php");
+    ?>
 	<div>
 		<?php
 			$opciones = array(); // Ninguna por defecto
 			$formulario = new FormularioPet("Pet", $opciones); // Créame una instancia hija de Form de tipo FormularioPet
 			$formulario->gestiona(); // Búscame el HTML correspondiente al formulario de tipo Añadir Pet
 		?>
-	</div>
+	<div>
+	<?php
+		require("include/comun/footer.php");
+    ?>
 </body>
 </html>

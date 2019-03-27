@@ -17,8 +17,7 @@
 </head>
 <body>
     <div class="header">
-        <h1>RateMyPet</h1>
-        <img src="img/logo-cabecera.png" alt="RateMyPet">
+        <img class="centered" src="img/logo-header.png" alt="RateMyPet">
     </div>
 
     <div class="split left">

@@ -1,19 +1,22 @@
 <div class="header">
-	<title_>
-		<a href= "index.php">Rate My Pet</a>
-	</title_>
+	<div>
+	<a href="index.php"><img src="img/logo-header.png" alt="logo" class="logo"></a>
+	</div>
 	<nav>
 		<ul>
-			<li><a href="perfilOwner.php">Owner Profile</a></li>
-			<li>
-			<?php
+			<li><a href="index.php">Home</a></li>
+			<li><a href="perfilOwner.php">Profile</a></li>
+		</ul>
+	</nav>
+	<nav id="log">
+		<ul>
+			<li><?php
 			if (isset($_SESSION["username"]) && ($_SESSION["login"]===true)) {
-				echo '<a class="hello" href="logout.php" class="button-create">Logout</a>';
+				echo '<a href="logout.php">Logout</a>';
 			} else {
-				echo '<a class="hello" href="signup.php" class="button-create">Login/Register</a>';
+				echo '<a href="signup.php">Login/Register</a>';
 			}
-			?>
-			</li>
+			?></a></li>
 		</ul>
 	</nav>
 </div>

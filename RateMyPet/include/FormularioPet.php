@@ -12,12 +12,6 @@ class FormularioPet extends Form {
                         <div class="contenedor-title">
                             <h2>Add your pet</h2>
                         </div>
-                        <img src="usuarios/default.png" alt="Logo" width="300" height="300" />
-                            <div>
-                                Upload a Picture(jpg/png): 
-                                <input type="file" name="file" accept="image/*" id="upload">
-                            </div>
-                        </div>
                         <div>
                             <table>
                             <tr>
@@ -28,7 +22,7 @@ class FormularioPet extends Form {
                             <tr>
                                 <td>Type: </td>
                                 <td>
-                                <select class="form-control" id="petType" type="text" name="petType">
+                                <select class="form-control id="petType" type="text" name="petType">
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Hamster">Hamster</option>
@@ -48,7 +42,8 @@ class FormularioPet extends Form {
                                     </textarea>
                                 </td>
                             </tr>
-                        </table>
+                            </table>
+                        </div>
                     </div>
                     <button class="button-create">Create!</button>
                 </div>';
@@ -66,19 +61,18 @@ class FormularioPet extends Form {
             header('Location: perfilOwner.php');
             exit();
         } else{
-            $dir='usuarios/'.$_SESSION["username"].'/'.$petName;
-
+            $dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
             if (is_dir($dir)) {
                 echo "This pet already exists!";
             }
             else{
-                $dir='usuarios/'.$_SESSION["username"];
+                $dir='../usuarios/'.$_SESSION["username"];
                 if (is_dir($dir)===false) {
-                    mkdir($dir,0777,true);
+                    mkdir($dir);
                 }
                 $petdir=$dir.'/'.$petName;
-                mkdir($petdir,0777,true);
-                //no se puede sacar imagen
+                mkdir($petdir);
+
                 move_uploaded_file($_FILES["file"]["tmp_name"], $petdir.'/'.$_FILES["file"]["name"]);
 
                 if($_FILES["file"]["type"]==="image/png"){

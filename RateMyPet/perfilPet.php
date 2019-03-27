@@ -52,7 +52,9 @@
         ?>
         <div class="display-pets">
             <img src="img/animals/<?php echo $petType?>.png"></a>
-		</div>
+        </div>
+        <h4>Followers: 324 | Following: 30</h4>
+        
 	</div>
     
     <?php

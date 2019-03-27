@@ -51,7 +51,7 @@ class FormularioLogin extends Form {
                     header('Location: index.php');
                     exit();
                 } else {
-                    $erroresFormulario[] = "Incorrect username or password: " . $password;
+                    $erroresFormulario[] = "Incorrect username or password";
                 }
             }
         }
