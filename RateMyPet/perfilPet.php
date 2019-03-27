@@ -12,12 +12,14 @@
     $petID = "";
     $petType = "";
     $isYours = false;
+    $petDesc ="";
 
     if ($result->num_rows > 0) {
         while($row = $result->fetch_assoc()) {
             $petName = $row['name'];
             $petID = $pet;
             $petType = $row['type'];
+            $petDesc = $row['description'];
             if ($_SESSION['owner_id'] == $row['owner_id']) $isYours = true;
         }
     } else {
@@ -53,6 +55,9 @@
         <div class="display-pets">
             <img src="img/animals/<?php echo $petType?>.png"></a>
         </div>
+        <?php
+            echo '<p>'.$petDesc.'</p>';
+        ?>
         <h4>Followers: 324 | Following: 30</h4>
         
 	</div>
