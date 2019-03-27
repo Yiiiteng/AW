@@ -7,6 +7,7 @@
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 300;
     padding: 10px 0;
+    color: white;
 }
 
 .logo {
@@ -53,14 +54,14 @@ nav li a {
 }
 
 nav li a:hover {
-    color: #303e54;
+    color: white;
 }
 
 nav a::before {
     content: '';
     display: block;
     height: 5px;
-    background-color: #444;
+    background-color: white;
     position: absolute;
     bottom: -40px;
     width: 0%; /*Starts as nothing*/
