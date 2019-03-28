@@ -20,9 +20,9 @@
         require('include/comun/header.php');
     ?>
     <div class="content">
-        <h1>This is your Home Page</h1>
-        <p>Here you will be able to browse all of the new posts from your followed pets.</p>
-        <img src="img/offline.png" alt="logo" id="centered-offline">
+        <h1>Are you sure you want to Log Out?</h1>
+        <a href="include/logout.php"><button type="button">Yes</button></a>
+        <a href="index.php"><button type="button">No</button></a>
     </div>
     <?php 
         require('include/comun/footer.php');

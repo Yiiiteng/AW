@@ -9,7 +9,7 @@
 <head>
 	<meta charset="utf-8">
 	<title>Rate My Pet: Add your pet</title>
-	<link rel="stylesheet" type="text/css" href="css/perfil.css">
+	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
 </head>

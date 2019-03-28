@@ -13,7 +13,7 @@
 <head>
 	<title>RateMyPet</title>
     <link rel="stylesheet" type="text/css" href="css/login.css">
-    <link rel="stylesheet" type="text/css" href="css/perfil.css">
+    <link rel="stylesheet" type="text/css" href="css/profile.css">
 </head>
 <body>
     <div class="header">

@@ -11,11 +11,11 @@
 		rename('../usuarios/'.$_FILES["file"]["name"], '../usuarios/'.$savename.'.png');
 	} else if($_FILES["file"]["type"]=="image/jpeg"){
 		rename('../usuarios/'.$_FILES["file"]["name"], '../usuarios/'.$savename.'.jpg');
-	}else if($_FILES["file"]["type"]=="image/jpg"){
+	} else if($_FILES["file"]["type"]=="image/jpg"){
 			rename('../usuarios/'.$_FILES["file"]["name"], '../usuarios/'.$savename.'.jpg');
 	} else echo "Image form error.";
 	
-	header('Location: ../perfilOwner.php');
+	header('Location: ../ownerProfile.php');
 	exit();
 
 ?>

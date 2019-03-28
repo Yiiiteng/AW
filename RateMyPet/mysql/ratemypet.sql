@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 26-03-2019 a las 16:38:08
+-- Tiempo de generación: 27-03-2019 a las 21:52:02
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -78,7 +78,13 @@ CREATE TABLE `pets` (
 
 INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`) VALUES
 (29, 'Kiwi', '							', 'Cat', 'Siamesse', 0, 6),
-(30, 'Mickey', '							', 'Hamster', 'White', 0, 6);
+(30, 'Mickey', '							', 'Hamster', 'White', 0, 6),
+(31, 'Jeffrey', '							', 'Rabbit', 'Grey', 0, 6),
+(35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7),
+(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 0, 7),
+(37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7),
+(38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6),
+(39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6);
 
 -- --------------------------------------------------------
 
@@ -115,7 +121,8 @@ CREATE TABLE `users` (
 INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`) VALUES
 (6, 'aaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user'),
 (7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user'),
-(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user');
+(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user'),
+(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user');
 
 --
 -- Índices para tablas volcadas
@@ -168,13 +175,13 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=31;
+  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=40;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
 --
 ALTER TABLE `users`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=9;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- Restricciones para tablas volcadas
