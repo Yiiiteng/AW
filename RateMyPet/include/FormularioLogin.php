@@ -44,10 +44,15 @@ class FormularioLogin extends Form {
                 $erroresFormulario[] = "Incorrect username or password.";
             } else {
                 if ($usuario->compruebaPassword($password)) {
+
+                    // Guardar el usuario $_SESSION['user'] -> Una vez
+
+
+                    $_SESSION['user'] = $usuario;
                     $_SESSION['login'] = true;
                     $_SESSION['username'] = $username;
                     $_SESSION['email'] = $usuario->email();
-                    $_SESSION['esAdmin'] = strcmp($fila['rol'], 'admin') == 0 ? true : false;
+                    $_SESSION['isAdmin'] = strcmp($usuario->rol(), 'admin') == 0 ? true : false;
                     header('Location: index.php');
                     exit();
                 } else {

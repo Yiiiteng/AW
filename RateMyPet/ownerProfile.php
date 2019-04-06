@@ -1,10 +1,16 @@
 <?php
+	require_once __DIR__.'/include/Usuario.php';
 	require_once __DIR__.'/include/config.php';
 	
-	$control = Aplicacion::getSingleton();
-	$conn = $control->conexionBd();
-	$sql = sprintf("SELECT * FROM pets WHERE owner_id = '%s'", $_SESSION['owner_id']); // Return owner id
+	$sql = 'SELECT * FROM pets WHERE owner_id = '.$_SESSION['owner_id']; // Return owner id
 	$myPets = $conn->query($sql); // List of my pets (If I have any)
+
+	if (isset($_GET['id'])) {
+		$user = $_SESSION['user'];
+		if ($_GET['id'] != $user->id()) {
+			header('Location: userProfile.php?id='.$_GET['id']);
+		}
+	}
 		
 ?>
 
@@ -95,8 +101,9 @@
 				}
 				?>
 			</ul>
+			
+		<button type="button" class="button-create" onclick="window.location.href='addPet.php'"> Add a Pet </button>
 		</div>
-		<button type="button" class="button-create" onclick="window.location.href='/RateMyPet/addPet.php'"> Add a Pet </button>
 	</div>
 
 	<?php

@@ -1,6 +1,7 @@
 /* Style for the footer of RateMyPet */
 
 .footer {
+    z-index: 10;
     font-size: 25px;
     background-color: #DB5254;
     text-align: center;

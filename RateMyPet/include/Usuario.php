@@ -141,4 +141,15 @@ class Usuario {
     public function cambiaPassword($nuevoPassword) {
         $this->password = self::hashPassword($nuevoPassword);
     }
+
+    public function toString($usuario) { // HTML Builder User
+        $nick = $usuario['username'];
+        $name = $usuario['fullname'];
+        $email = $usuario['email'];
+        $id = $usuario['id'];
+        return '<h1><a href="ownerProfile.php?id='.$id.'">'.$nick.'</a></h1>
+                <h2>'.$name.'</h2>
+                <h3>'.$email.'</h3>
+                </br>';
+    }
 }

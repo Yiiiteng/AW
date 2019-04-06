@@ -1,0 +1,21 @@
+.search-content {
+    text-align: center;
+    width: 50%;
+    height: 80%;
+    position: fixed;
+    z-index: 1;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.search-content#left {
+    left: 0;
+}
+
+.search-content#right {
+    right: 0;
+}
+
+.search-content a {
+    text-decoration: none;
+}

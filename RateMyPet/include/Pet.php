@@ -189,5 +189,16 @@ class Pet {
     public function treats() {
         return $this->treats;
     }
+
+    public function toString($pet) {
+        $name = $pet['name'];
+        $type = $pet['type'];
+        $breed = $pet['breed'];
+        $id = $pet['idPet'];
+        return '<h1><a href="petProfile.php?idPet='.$id.'">'.$name.'</a></h1>
+                <h2>'.$type.'</h2>
+                <h3>'.$breed.'</h3>
+                </br>';
+    }
 }
  

@@ -72,3 +72,8 @@ table {
     color:#fff!important;
     background-color:#CD5C5C!important
 }
+
+a {
+    color: black;
+    /*text-decoration: none;*/
+}

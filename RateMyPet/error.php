@@ -20,9 +20,27 @@
         require('include/comun/header.php');
     ?>
     <div class="content-error">
-        <h1>Oops!</h1>
-        <p>Looks like there was a problem with your request!</p>
-        <p>Are you sure this is what you were looking for?</p>
+
+        <?php
+            if (isset($_SESSION['error'])) {
+                switch($_SESSION['error']) {
+                    case 'SearchError':
+                        echo '<h1>No results...</h1>';
+                    break;
+                    default:
+                        echo '<h1>Oops!</h1>
+                        <p>Looks like there was a problem with your request!</p>
+                        <p>Are you sure this is what you were looking for?</p>';
+                    break;
+                }   
+            } else {
+                echo '<h1>Oops!</h1>
+                <p>Looks like there was a problem with your request!</p>
+                <p>Are you sure this is what you were looking for?</p>';
+            }
+            unset($_SESSION['error']);
+        ?>
+        
     </div>
     <?php 
         require('include/comun/footer.php');
