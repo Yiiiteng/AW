@@ -1,3 +1,4 @@
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 <div class="header">
 	<div>
 	<a href="index.php"><img src="img/logo-header.png" alt="logo" class="logo"></a>
@@ -8,10 +9,12 @@
 			<li><a href="index.php">Home</a></li>
 			<li><a href="userProfile.php">Profile</a></li>
 			<li>
+				<div class="search bar1"> 
 				<form method="GET" action="searchResult.php">
 					<input type="search" id="search" name="search" placeholder="Search...">
-					<button>Ir</button>
+					<button type="submit"></button>
 				</form>
+				</div>
 			<li>
 		</ul>
 	</nav>
