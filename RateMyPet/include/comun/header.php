@@ -6,7 +6,7 @@
 		<ul>
 			<?php // echo ''.$_SESSION['user']->id(); ?>
 			<li><a href="index.php">Home</a></li>
-			<li><a href="ownerProfile.php">Profile</a></li>
+			<li><a href="userProfile.php">Profile</a></li>
 			<li>
 				<form method="GET" action="searchResult.php">
 					<input type="search" id="search" name="search" placeholder="Search...">

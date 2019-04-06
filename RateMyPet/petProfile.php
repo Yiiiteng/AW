@@ -83,15 +83,22 @@
             <button type="button" class="button-create" onclick="window.location.href='/RateMyPet/FoemularioFollow.php'"> FOLLOW! </button>
             <i class="fa fa-paw" id="treatNum"> <?php echo $pettreat; ?></i>
             <button type="button" id="giveTreat" class="button-create"> Give a treat! </button>
+            
+            <div class="pet-post">
+                <h2>POST</h2>
         <?php
             
             }
+            else{
         ?>
-
-        <div class="pet-post">
-            <h2>POST</h2>
-            <button type="button" class="button-create" onclick="window.location.href='petPost.php'">New Post</button>
-        </div>
+            <div class="pet-post">
+                <h2>POST</h2>
+                <button type="button" class="button-create" onclick="window.location.href='petPost.php'">New Post</button>
+                
+        <?php 
+            }
+        ?>
+            </div>
 	</div>
 
     <script>
