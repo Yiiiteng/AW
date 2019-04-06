@@ -76,22 +76,22 @@ nav a:hover::before {
     box-sizing: border-box;  
 }  
 div.search {padding: 15px 0;}
-form {  
+.bar1 form {  
     position: relative;  
     width: 300px;  
     margin: 0 auto;  
 }  
-input, button {  
+.bar1 input, .bar1 button {  
     border: none;  
     outline: none;  
 }  
-input {  
+.bar1 input {  
     width: 100%;  
     height: 40px;  
     padding-left: 13px;  
     padding-right:46px;  
 }  
-button {  
+.bar1 button {  
     height: 40px;  
     width: 50px;  
     cursor: pointer;  
