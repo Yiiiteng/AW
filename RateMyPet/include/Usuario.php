@@ -48,6 +48,27 @@ class Usuario {
         }
         return $result;
     }
+
+    public static function buscaUsuariowithID($id) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM users U WHERE U.id = '%s'", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'],$fila['id']);
+                $result = $user;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+
      public static function buscaIdUsuario($username)
     {
         $app = Aplicacion::getSingleton();

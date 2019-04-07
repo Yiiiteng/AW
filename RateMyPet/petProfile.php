@@ -1,48 +1,28 @@
 <?php
     require_once __DIR__.'/include/Usuario.php';
     require_once __DIR__.'/include/config.php';
+    require_once __DIR__.'/include/Pet.php';
     
-    $pet = $_GET['idPet'];
+    $petID = $_GET['idPet'];
+    $idOwner = $_SESSION['owner_id'];
 
-    $sql = 'SELECT * FROM pets WHERE idPet = '.$pet; // Return owner id
-    $result = $conn->query($sql);
+    $isYours = Pet::existePet($idOwner,$petID);
 
-    $petName = "";
-    $petID = "";
-    $petType = "";
-    $isYours = false;
-    $petDesc ="";
-    $pettreat ="";
-    $petOwnerId ="";
-
-    $otherUser = "";
-
-    if ($result->num_rows > 0) {
-        while($row = $result->fetch_assoc()) {
-            $petName = $row['name'];
-            $petID = $pet;
-            $petType = $row['type'];
-            $petDesc = $row['description'];
-            $pettreat = $row['treats'];
-            $petOwnerId = $row['owner_id'];
-
-            $idYours = $_SESSION['owner_id'];
-
-            if ($idYours == $petOwnerId) $isYours = true;
-
-            if ($_SESSION['user']->id() == $row['owner_id']){
-                $isYours = true; // My pet
-            }
-            else { // Not my pet
-                $sql = 'SELECT * FROM users WHERE id = '.$petOwnerId; // Return owner id
-                $otherUser = ($conn->query($sql))->fetch_assoc();
-            }
-        }
-    } else {
-        header("Location: error.php");
+    if ($isYours) {
+        $result = Pet::buscarPet($petID);
     }
-
+    else{
+        $result = Pet::buscarPet($petID);
+        $otherUserid = $result->petOwnerId();
+        $otherUser = Usuario::buscaUsuariowithID($otherUserid);
+    }
+    $petName = $result->petName();
+    $petType = $result->petType();
+    $petBreed = $result->petBreed();
+    $petDesc = $result->petDescript();
+    $pettreat = $result->treats();
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -51,7 +31,6 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<?php
@@ -66,7 +45,7 @@
             if ($isYours) {
                 echo '<h2>I belong to you!</h2>';
             } else {
-                echo '<h2>This pet belongs to: <a href="userProfile.php?id='.$otherUser['id'].'">'.$otherUser['username'].'</a></h2>';
+                echo '<h2>This pet belongs to: <a href="userProfile.php?id='.$otherUserid.'">'.$otherUser->username().'</a></h2>';
             }
         ?>
         <div class="display-pets">
@@ -107,6 +86,7 @@
         function GiveTreat(){
             var pettreat = <?php echo $pettreat ?>;
             pettreat++;
+            
             document.getElementById("treatNum").innerHTML = pettreat;
         }
     </script>

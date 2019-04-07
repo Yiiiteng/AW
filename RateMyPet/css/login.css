@@ -123,3 +123,22 @@ header {
     display: flexbox;
     
 }
+
+.btn{
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    text-decoration:none;
+    color:inherit;
+    background-color: #FADBD8;
+    font-size: 18px;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap
+}
+
+.btn:hover{
+    color:#fff!important;
+    background-color:#CD5C5C!important
+}

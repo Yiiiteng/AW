@@ -54,7 +54,7 @@ class FormularioPost extends Form {
         $owner_id = isset($_SESSION['owner_id']) ? $_SESSION['owner_id'] : null;
 
         if (empty($petName) or empty($petType) or empty($petBreed))	{
-            header('Location: ownerprofile.php');
+            header('Location: userProfile.php');
             exit();
         } else{
             $dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
@@ -85,7 +85,7 @@ class FormularioPost extends Form {
             $treats = 0;
             $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
 
-            header('Location: ownerprofile.php');
+            header('Location: petProfile.php');
             exit();
         }
     }
