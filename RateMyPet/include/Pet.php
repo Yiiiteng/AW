@@ -52,7 +52,6 @@ class Pet {
         if ($consulta) {
             if ($consulta->num_rows == 1) {
                 $fila = $consulta->fetch_assoc();
-                // $fruta = new Fruta($fila['id_fruta'], $fila['nombre'],$fila['cantidad'], $fila['precio'],$fila['Oferta']);
                 $result = $fila;
             }
             $consulta->free();
@@ -144,11 +143,25 @@ class Pet {
         }
     
     }*/
+     public static function numPets($idOwner){
+        
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql=sprintf("SELECT COUNT(*) AS numero FROM pets WHERE  owner_id = '%u' GROUP BY owner_id",$idOwner);
+        $consulta =$connect-> query($sql);
+        if($consulta){
+            $num =$consulta->fetch_assoc();
+            
+            return $num['numero'];
+        }
+
+        else return 0;
+     }
 
     public static function allPets($idOwner) { // Given an Owner ID, returns a list with all the pets
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
-        $sql = sprintf("SELECT * FROM pets  WHERE idOwner = '%s'", $idOwner);
+        $sql = sprintf("SELECT * FROM pets  WHERE owner_id = '%u'", $idOwner);
         $rs = $connect->query($sql);
 
         if ($rs) {

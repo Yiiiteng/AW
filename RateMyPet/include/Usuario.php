@@ -12,12 +12,13 @@ class Usuario {
     private $email; // User specified
     private $rol; // Admin specified
 
-    private function __construct($username, $fullname, $password, $email, $rol) {
+    private function __construct($username, $fullname, $password, $email, $rol,$id) {
         $this->username= $username;
         $this->fullname = $fullname;
         $this->password = $password;
         $this->email = $email;
         $this->rol = $rol;
+        $this->id = $id;
     }
 
     public static function login($username, $password) {
@@ -37,8 +38,7 @@ class Usuario {
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol']);
-                $user->id = $fila['id'];
+                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'],$fila['id']);
                 $result = $user;
             }
             $rs->free();
@@ -48,13 +48,32 @@ class Usuario {
         }
         return $result;
     }
+     public static function buscaIdUsuario($username)
+    {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT id FROM users WHERE username = '%s'", $conn->real_escape_string($username));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $result = $fila;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
     
-    public static function crea($username, $fullname, $password, $email, $rol) {
+    public static function crea($username, $fullname, $password, $email, $rol,$id) {
         $user = self::buscaUsuario($username);
         if ($user) {
             return false;
         }
-        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol);
+        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol,$id);
         return self::guarda($user);
     }
 

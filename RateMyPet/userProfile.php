@@ -1,8 +1,9 @@
 <?php
 	require_once __DIR__.'/include/Usuario.php';
+	require_once __DIR__.'/include/Pet.php';
     require_once __DIR__.'/include/config.php';
     
-    $user = 'SELECT * FROM users WHERE id = '.$_GET['id']; // Return owner id
+ /*   $user = 'SELECT * FROM users WHERE id = '.$_GET['id']; // Return owner id
     $this_user = $conn->query($user); // List of my pets (If I have any)
     if ($this_user->num_rows > 0) {
         $this_user = $this_user->fetch_assoc();
@@ -16,8 +17,11 @@
 		if ($_GET['id'] == $user->id()) {
 			header('Location: ownerProfile.php');
 		}
-	}
-		
+	}*/
+		$user = Usuario::buscaUsuario($_SESSION['username']);
+		$userid = Usuario::buscaIdUsuario($_SESSION['username']);
+		$num = Pet::numPets($userid['id']);
+		$myPets = Pet::allPets($userid['id']);
 ?>
 
 <!DOCTYPE html>
@@ -35,7 +39,7 @@
 	?>
 
 	<div class="content">
-        <?php echo '<h1>'.$this_user['username'].'</h1>'; ?>
+        <?php echo '<h1>'.$user->username().'</h1>'; ?>
 		
 		<?php
 			$_SESSION["ownerOpet"]="owner";
@@ -52,7 +56,7 @@
 			}
 		?>
 
-		<?php echo '<h1>'.$this_user['username'].'\'s info: </h1>'; ?>
+
 
 		<table id="info">
 		<?php
@@ -82,12 +86,13 @@
 		</tr>
 		</table>
 
-		<?php echo '<h1>'.$this_user['username'].'\' pets: </h1>'; ?> 
+		<?php echo '<h1>'.$user->username().'\' pets: </h1>'; ?> 
 		<div class="display-pets">
 			<ul>
 				<?php
-				if ($myPets->num_rows > 0) { // Iterate through all of my pets
-					while($pet = $myPets->fetch_assoc()) {
+
+				if ($num > 0) { // Iterate through all of my pets
+					foreach($myPets as $item => $pet) {
 						echo '<li><div class="image">
 								<a href="petProfile.php?idPet='.$pet['idPet'].'">
 								<img src="img/animals/'.$pet['type'].'.png">
@@ -96,7 +101,8 @@
 						</div></li>';
 					}
 				} else {
-					echo '<h2>'.$this_user['username'].' doesn\'t own any pets!</h2>';
+					echo $num;
+					echo '<h2>'.$user->username().' doesn\'t own any pets!</h2>';
 				}
 				?>
 			</ul>
