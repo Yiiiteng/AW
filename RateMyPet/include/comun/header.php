@@ -5,9 +5,12 @@
 	</div>
 	<nav>
 		<ul>
-			<?php // echo ''.$_SESSION['user']->id(); ?>
+
 			<li><a href="index.php">Home</a></li>
-			<li><a href="userProfile.php">Profile</a></li>
+			<?php 
+			 $name = $_SESSION['username'];
+			 echo "<li><a href='userProfile.php?name=$name'>Profile</a></li>";
+			 ?>
 			<li>
 				<div class="search bar1"> 
 				<form method="GET" action="searchResult.php">

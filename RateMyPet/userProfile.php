@@ -62,9 +62,15 @@
 			<!--echo $_SESSION['followed']; need add a function-->
 				<td>Following: </td> <td>49</td>
 			</tr>
-			<tr>
-				<td><button type="button" id="button-follow"> Follow </button> </td>
-			</tr>
+			<?php
+				$nameUser = $_GET['name'];
+				if ($nameUser != $_SESSION['username']){
+					echo "<tr>
+						<td><button type='button' id='button-follow'> Follow </button> </td>
+					</tr>";
+				}
+			?>
+
 
 		</table>
 		
@@ -102,7 +108,13 @@
 				}
 				?>
 			</ul>
-			<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> + </button>
+			<?php
+				$nameUser = $_GET['name'];
+				if ($nameUser == $_SESSION['username']){
+					echo "<button type='button' id='button-add-pet' onclick='window.location.href='addPet.php''> + </button>";
+				}
+			?>
+			
 		</div>
 
 		
