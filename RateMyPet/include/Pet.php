@@ -71,15 +71,15 @@ class Pet {
         return $result;
     }
 
-    /* public static function crea($petName, $petId, $petType, $petBreed, $petDescript, $treats)
-    {
-        $pet = self::buscarPet($petName);
-        if ($pet) {
-            return false;
-        }
-        $pet = new Pet($petName,$petId,$petType,$petBreed,$petDescript,$treats);
-        return self::guarda($pet);
-    }*/
+    public static function updateTreat(){
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $numtreats = $this->treats +1;
+        $sql = sprintf("UPDATE pets SET treats=".$numtreats."WHERE idPet=".$this->petId."",
+            $conn->real_escape_string($numtreats));
+        $conn->query($sql);
+    }
+
 
     public static function insertar($petName, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $app = Aplicacion::getSingleton();
