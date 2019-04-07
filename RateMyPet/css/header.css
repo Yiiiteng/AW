@@ -3,10 +3,12 @@
 .header {
     width: 100%;
     margin: 0 auto;
-    background: #DB5254;
+   /* background: #DB5254;*/
+  background-image: linear-gradient(45deg, #8baaaa 0%, #ae8b9c 100%);
     font-family: Arial, Helvetica, sans-serif;
     font-weight: 300;
     padding: 10px 0;
+   
 }
 
 .logo {

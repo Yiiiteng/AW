@@ -3,25 +3,10 @@
 	require_once __DIR__.'/include/Pet.php';
     require_once __DIR__.'/include/config.php';
     
- /*   $user = 'SELECT * FROM users WHERE id = '.$_GET['id']; // Return owner id
-    $this_user = $conn->query($user); // List of my pets (If I have any)
-    if ($this_user->num_rows > 0) {
-        $this_user = $this_user->fetch_assoc();
-    }
-    
-	$sql = 'SELECT * FROM pets WHERE owner_id = '.$_GET['id']; // Return owner id
-    $myPets = $conn->query($sql); // List of my pets (If I have any)
-    
-    if (isset($_GET['id'])) {
-		$user = $_SESSION['user'];
-		if ($_GET['id'] == $user->id()) {
-			header('Location: ownerProfile.php');
-		}
-	}*/
-		$user = Usuario::buscaUsuario($_SESSION['username']);
-		$userid = Usuario::buscaIdUsuario($_SESSION['username']);
-		$num = Pet::numPets($userid['id']);
-		$myPets = Pet::allPets($userid['id']);
+	$user = Usuario::buscaUsuario($_SESSION['username']);
+	$userid = Usuario::buscaIdUsuario($_SESSION['username']);
+	$num = Pet::numPets($userid['id']);
+	$myPets = Pet::allPets($userid['id']);
 ?>
 
 <!DOCTYPE html>
@@ -31,63 +16,74 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/content.css">
+    <link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 	<?php
 		require("include/comun/header.php");
 	?>
 
-	<div class="content">
-        <?php echo '<h1>'.$user->username().'</h1>'; ?>
-		
+	<div class="content"> 
+		<div id="image">
 		<?php
+		
 			$_SESSION["ownerOpet"]="owner";
 
 			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img src='.$path.'.jpg alt="Logo" width="100" height="100" />';
+				echo '<img src='.$path.'.jpg alt="Logo" width="150" height="150" />';
 			}
 			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-				echo '<img src='.$path.'.png alt="Logo" width="100" height="100" />';
+				echo '<img src='.$path.'.png alt="Logo" width="150" height="150" />';
 			}
 			else{
-				echo '<img src="usuarios/default.png" alt="Logo" width="100" height="100" />';
+				echo '<img src="usuarios/default.png" alt="Logo" width="150" height="150" />';
 			}
-		?>
+		?> 
+		</div>
 
 
 
 		<table id="info">
-		<?php
-			echo "
+			<?php
+				echo "
+				<tr>
+					 <td>".$_SESSION['username']."</td>
+				</tr>
+				<tr>
+					 <td>".$_SESSION['email']."</td>
+				</tr>";
+			?>
 			<tr>
-				<td> Name: </td> <td>".$_SESSION['username']."</td>
+			<!--echo $_SESSION['followed']; need add a function-->
+				<td>Followers: </td> <td>48</td>
 			</tr>
 			<tr>
-				<td> Email: </td> <td>".$_SESSION['email']."</td>
-			</tr>";
-		?>
-		<tr>
-		<!--echo $_SESSION['followed']; need add a function-->
-			<td>Followers: </td> <td>48</td>
-		</tr>
-		<tr>
-		<!--echo $_SESSION['followed']; need add a function-->
-			<td>Following: </td> <td>49</td>
-		</tr>
-		<tr>
-		<!--echo $_SESSION['weekrank'];-->
-			<td>Current Weekly Rank: </td> <td>#302</td>
-		</tr>
-		<tr>
-		<!--echo $_SESSION['bestrank'];-->
-			<td>Best Weekly Rank: </td> <td>#3</td>
-		</tr>
-		</table>
+			<!--echo $_SESSION['followed']; need add a function-->
+				<td>Following: </td> <td>49</td>
+			</tr>
+			<tr>
+				<td><button type="button" id="button-follow"> Follow </button> </td>
+			</tr>
 
-		<?php echo '<h1>'.$user->username().'\' pets: </h1>'; ?> 
+		</table>
+		
+		<div id="rankingPerfil">
+			<table>
+			<tr>
+			<!--echo $_SESSION['weekrank'];-->
+				<td>Current Weekly Rank: </td> <td>#302</td>
+			</tr>
+			<tr>
+			<!--echo $_SESSION['bestrank'];-->
+				<td>Best Weekly Rank: </td> <td>#3</td>
+			</tr>
+		</table>	
+		</div>
+
+	
 		<div class="display-pets">
+			<?php echo '<h1>'.$user->username().'\' pets: </h1>'; ?> 
 			<ul>
 				<?php
 
@@ -106,8 +102,10 @@
 				}
 				?>
 			</ul>
+			<button type="button" id="button-add-pet" onclick="window.location.href='addPet.php'"> + </button>
 		</div>
-	</div>
+
+		
 
 	<?php
 		require("include/comun/footer.php");
