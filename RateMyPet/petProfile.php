@@ -12,6 +12,8 @@
     $petType = "";
     $isYours = false;
     $petDesc ="";
+    $pettreat ="";
+    $petOwnerId ="";
 
     $otherUser = "";
 
@@ -21,9 +23,18 @@
             $petID = $pet;
             $petType = $row['type'];
             $petDesc = $row['description'];
-            if ($_SESSION['user']->id() == $row['owner_id']) $isYours = true; // My pet
+            $pettreat = $row['treats'];
+            $petOwnerId = $row['owner_id'];
+
+            $idYours = $_SESSION['owner_id'];
+
+            if ($idYours == $petOwnerId) $isYours = true;
+
+            if ($_SESSION['user']->id() == $row['owner_id']){
+                $isYours = true; // My pet
+            }
             else { // Not my pet
-                $sql = 'SELECT * FROM users WHERE id = '.$row['owner_id']; // Return owner id
+                $sql = 'SELECT * FROM users WHERE id = '.$petOwnerId; // Return owner id
                 $otherUser = ($conn->query($sql))->fetch_assoc();
             }
         }
@@ -40,6 +51,7 @@
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
 <body>
 	<?php
@@ -64,9 +76,41 @@
             echo '<p>'.$petDesc.'</p>';
         ?>
         <h4>Followers: 324 | Following: 30</h4>
-        <button type="button" class="button-create" onclick="window.location.href='petPost.php'">New Post</button>
+
+        <?php
+            if (!$isYours){
+        ?>
+            <button type="button" class="button-create" onclick="window.location.href='/RateMyPet/FoemularioFollow.php'"> FOLLOW! </button>
+            <i class="fa fa-paw" id="treatNum"> <?php echo $pettreat; ?></i>
+            <button type="button" id="giveTreat" class="button-create"> Give a treat! </button>
+            
+            <div class="pet-post">
+                <h2>POST</h2>
+        <?php
+            
+            }
+            else{
+        ?>
+            <div class="pet-post">
+                <h2>POST</h2>
+                <button type="button" class="button-create" onclick="window.location.href='petPost.php'">New Post</button>
+                
+        <?php 
+            }
+        ?>
+            </div>
 	</div>
-    
+
+    <script>
+        document.getElementById("giveTreat").addEventListener("click", GiveTreat);
+
+        function GiveTreat(){
+            var pettreat = <?php echo $pettreat ?>;
+            pettreat++;
+            document.getElementById("treatNum").innerHTML = pettreat;
+        }
+    </script>
+
     <?php
 		require("include/comun/footer.php");
 	?>
