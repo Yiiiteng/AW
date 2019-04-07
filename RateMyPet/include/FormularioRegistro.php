@@ -31,8 +31,8 @@ class FormularioRegistro extends Form {
                     <input type="checkbox" name="terms"> I have read the <a href="terms.php">Terms & Conditions<a/><br>
                 </div>
 
-                <div class="grupo-control">
-                    <button type="submit" name="registro">Create an Account</button>
+                <div>
+                    <button class="btn" type="submit" name="registro">Create an Account</button>
                 </div>
                 </fieldset>';
     }
