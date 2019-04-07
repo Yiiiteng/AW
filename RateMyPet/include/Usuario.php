@@ -1,5 +1,6 @@
 <?php
 require_once __DIR__ . '/Aplicacion.php';
+require_once __DIR__ . '/Pet.php';
 
 class Usuario {
 
@@ -12,13 +13,20 @@ class Usuario {
     private $email; // User specified
     private $rol; // Admin specified
 
-    private function __construct($username, $fullname, $password, $email, $rol,$id) {
+    // Followers & Following
+
+    private $following; // Number of people I follow
+    private $followers; // Number of people who follow me
+
+    private function __construct($username, $fullname, $password, $email, $rol) {
         $this->username= $username;
         $this->fullname = $fullname;
         $this->password = $password;
         $this->email = $email;
         $this->rol = $rol;
-        $this->id = $id;
+
+        // Add to the constructor the amount of followers or followed
+
     }
 
     public static function login($username, $password) {
@@ -37,49 +45,10 @@ class Usuario {
         $result = false;
         if ($rs) {
             if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'],$fila['id']);
+                $fila = $rs->fetch_assoc(); // Add following parameters
+                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol']);
+                $user->id = $fila['id'];
                 $result = $user;
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }
-
-    public static function buscaUsuariowithID($id) {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT * FROM users U WHERE U.id = '%s'", $conn->real_escape_string($id));
-        $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'],$fila['id']);
-                $result = $user;
-            }
-            $rs->free();
-        } else {
-            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-        return $result;
-    }
-
-     public static function buscaIdUsuario($username)
-    {
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $query = sprintf("SELECT id FROM users WHERE username = '%s'", $conn->real_escape_string($username));
-        $rs = $conn->query($query);
-        $result = false;
-        if ($rs) {
-            if ( $rs->num_rows == 1) {
-                $fila = $rs->fetch_assoc();
-                $result = $fila;
             }
             $rs->free();
         } else {
@@ -89,21 +58,17 @@ class Usuario {
         return $result;
     }
     
-    public static function crea($username, $fullname, $password, $email, $rol,$id) {
+    public static function crea($username, $fullname, $password, $email, $rol) {
         $user = self::buscaUsuario($username);
         if ($user) {
             return false;
         }
-        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol,$id);
+        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol);
         return self::guarda($user);
     }
 
-    public static function buscaMascotas() { // Return all my pets
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $pets = Pet::allPets($conn->real_escape_string($id)); // Look for my pets (with my id)
-
-        return $result;
+    public static function buscaMascotas($user) { // Return all my pets
+        return Pet::allPets($user->id()); // Look for my pets (with my id)
     }
     
     private static function hashPassword($password) {
@@ -172,6 +137,14 @@ class Usuario {
 
     public function email() {
         return $this->email;
+    }
+
+    public function followingAmount() {
+        return $this->following;
+    }
+
+    public function followerAmount() {
+        return $this->followers;
     }
 
     public function compruebaPassword($password) {

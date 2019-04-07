@@ -17,8 +17,8 @@ class FormularioLogin extends Form {
                     <label>Password:</label> 
                     <input class="form-control" type="password" name="password" placeholder="*****"/>
                 </div>
-                <div>
-                    <button class="btn" type="submit" name="login">Login</button>
+                <div class="grupo-control">
+                    <button type="submit" name="login">Login</button>
                 </div>
                 </fieldset>';
     }

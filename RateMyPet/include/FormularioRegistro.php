@@ -31,8 +31,8 @@ class FormularioRegistro extends Form {
                     <input type="checkbox" name="terms"> I have read the <a href="terms.php">Terms & Conditions<a/><br>
                 </div>
 
-                <div>
-                    <button class="btn" type="submit" name="registro">Create an Account</button>
+                <div class="grupo-control">
+                    <button type="submit" name="registro">Create an Account</button>
                 </div>
                 </fieldset>';
     }
@@ -76,7 +76,7 @@ class FormularioRegistro extends Form {
         }
         
         if (count($erroresFormulario) === 0) {
-            $usuario = Usuario::crea($username, $fullname, $password, $email, 'user',0);
+            $usuario = Usuario::crea($username, $fullname, $password, $email, 'user');
             
             if (! $usuario ) {
                 $erroresFormulario[] = "Username already in use.";

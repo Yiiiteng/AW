@@ -1,0 +1,125 @@
+/* Split the screen in half */
+
+.split {
+    text-align: center;
+    height: 100%;
+    width: 50%;
+    position: fixed;
+    z-index: 1;
+    top: 0;
+    overflow-x: hidden;
+    padding-top: 20px;
+}
+
+.title {
+    width: 100%;
+    transform: translateY(300px);
+}
+  
+/* Control the left side */
+.left {
+    left: 0;
+    background-color: #DB5254;
+}
+  
+/* Control the right side */
+.right {
+    right: 0;
+    background-color: white;
+}
+
+/* Title Position*/
+
+.login {
+    transform: translateY(150px);
+    font: helvetica;
+    font-size: 30px;
+    left: 25%;
+    position: absolute;
+    z-index: 2;
+}
+
+body {
+    width:100%;
+}
+
+.register {
+    transform: translateY(150px);
+    font: helvetica;
+    left: 75%;
+    position: absolute;
+    z-index: 2;
+}
+
+
+/* If you want the content centered horizontally and vertically */
+.centered {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    text-align: center;
+}
+  
+/* Style the image inside the centered container, if needed */
+.centered img {
+    height: 80px;
+    border-radius: 50%;
+}
+
+body {
+    display: block;
+}
+
+/*Footer siempre abajo: body min-height como minimo el alto del viewport*/
+
+legend {
+    display: block;
+    padding-left: 2px;
+    padding-right: 2px;
+    border: none;
+    color: black;
+}
+
+header {
+    display: inline;
+    clear: both;
+}
+
+.header h1 {
+    transform: translateX(-40px);
+    font: helvetica;
+    font-size: 80px;
+    text-align: center;
+    position: relative;
+    left: 0px;
+    top: 0px;
+    z-index: 2;
+}
+
+.header img {
+    transform: translate(-50%, -365px);
+    height: 150px;
+    position: fixed;
+    top: 50%;
+    left: 50%;
+    z-index: 2;
+}
+
+.footer h1 {
+    font: helvetica;
+    font-size: 30px;
+    text-align: center;
+    position: relative;
+    top: 600px;
+    z-index: 2;
+}
+
+.footer a {
+    color: black;
+}
+
+.title {
+    display: flexbox;
+    
+}

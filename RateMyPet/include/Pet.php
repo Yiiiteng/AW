@@ -9,77 +9,84 @@ class Pet {
     private $petBreed;
     private $petDescript;
     private $treats;
-    private $petOwnerId;
+    private $owner_id;
 
-    public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats, $petOwnerId) {
+    public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $this->petName = $petName;
         $this->petId = $petId;
         $this->petType = $petType;
         $this->petBreed = $petBreed;
         $this->petDescript = $petDescript;
         $this->treats = $treats;
-        $this->petOwnerId = $petOwnerId;
+        $this->owner_id = $owner_id;
     }
 
-    public static function existePet($iduser, $petId) {
+    public static function existePet($idOwner, $petName) {
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
         $sql = sprintf(
-            "SELECT * FROM pets WHERE idPet = '%s' ", 
-            $connect->real_escape_string($petId)
+            "SELECT petName FROM pets WHERE idOwner = '%s' AND petName = '%s' ",
+            $idOwner,
+            $connect->real_escape_string($petName)
         );
         $consulta = mysqli_query($connect, $sql);
 
-        if ($consulta) {
-            if ($consulta->num_rows == 1) {
-                $fila = $consulta->fetch_assoc();
-                $idOwner = $fila['owner_id'];
-                if ($idOwner == $iduser) {
-                    $consulta->free();
-                    return true;
-                }
-                else return false; 
-            } else {
-                return false;
-            }
+        if ($consulta && $consulta->num_rows == 1) {
+            $consulta->free();
+            return true;
+        } else {
+            return false;
         }
     }
 
     public static function buscarPet($idPet) {
         $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql = sprintf(
-            "SELECT * FROM pets WHERE idPet = '%s'",
-            $connect->real_escape_string($idPet)
-        );
-
-        $consulta = mysqli_query($connect, $sql);
+        $conn = $control->conexionBd();
+        $sql = "SELECT * FROM pets WHERE idPet = $idPet";
+        $rs = $conn->query($sql);
         $result = false;
-
-        if ($consulta) {
-            if ($consulta->num_rows == 1) {
-                $fila = $consulta->fetch_assoc();
-
-                $pet = new Pet($fila['name'], $fila['idPet'], $fila['type'], $fila['breed'], $fila['description'],$fila['treats'],$fila['owner_id']);
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $pet = new Pet($fila['name'], $fila["idPet"], $fila["type"], $fila["breed"], $fila["description"], $fila["treats"], $fila['owner_id']);
                 $result = $pet;
             }
-            $consulta->free();
+            $rs->free();
         } else {
-            echo "Error al consultar en la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
         }
         return $result;
     }
 
-    public static function updateTreat(){
+    public static function buscarNombreDueño($idOwner) {
         $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $numtreats = $this->treats +1;
-        $sql = sprintf("UPDATE pets SET treats=".$numtreats."WHERE idPet=".$this->petId."",
-            $conn->real_escape_string($numtreats));
-        $conn->query($sql);
+        $conn = $control->conexionBd();
+        $sql = "SELECT * FROM users WHERE id = $idOwner";
+        $rs = $conn->query($sql);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc();
+                $result = $fila['username'];
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
     }
 
+    /* public static function crea($petName, $petId, $petType, $petBreed, $petDescript, $treats)
+    {
+        $pet = self::buscarPet($petName);
+        if ($pet) {
+            return false;
+        }
+        $pet = new Pet($petName,$petId,$petType,$petBreed,$petDescript,$treats);
+        return self::guarda($pet);
+    }*/
 
     public static function insertar($petName, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $app = Aplicacion::getSingleton();
@@ -152,40 +159,20 @@ class Pet {
         }
     
     }*/
-     public static function numPets($idOwner){
-        
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql=sprintf("SELECT COUNT(*) AS numero FROM pets WHERE  owner_id = '%u' GROUP BY owner_id",$idOwner);
-        $consulta =$connect-> query($sql);
-        if($consulta){
-            $num =$consulta->fetch_assoc();
-            
-            return $num['numero'];
-        }
-
-        else return 0;
-     }
 
     public static function allPets($idOwner) { // Given an Owner ID, returns a list with all the pets
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
-        $sql = sprintf("SELECT * FROM pets  WHERE owner_id = '%u'", $idOwner);
+        $sql = "SELECT * FROM pets  WHERE owner_id =$idOwner";
         $rs = $connect->query($sql);
-
         if ($rs) {
-            $producto = array();
-            while ($row =  $rs->fetch_assoc()) {
-                $producto[] = $row;
-            }
-            $rs->free();
-
-            return $producto;
+            return $rs;
         } else {
             echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
             exit();
         }
     }
+
 
     public function petName() {
         return $this->petName;
@@ -203,7 +190,7 @@ class Pet {
         return $this->petBreed;
     }
 
-    public function petDescript() {
+    public function petDescription() {
         return $this->petDescript;
     }
 
@@ -211,8 +198,8 @@ class Pet {
         return $this->treats;
     }
 
-    public function petOwnerId() {
-        return $this->petOwnerId;
+    public function owner_id() {
+        return $this->owner_id;
     }
 
     public function toString($pet) {

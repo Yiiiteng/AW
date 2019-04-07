@@ -1,9 +1,9 @@
 <?php
     require_once __DIR__.'/include/config.php';
 
-   /* if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
+    if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
         header("Location: signup.php");
-    }*/
+    }
 
 ?>
 

@@ -1,0 +1,79 @@
+img#centered-offline {
+    width: 200px;
+    height: 200px;
+}
+
+.content {
+    text-align: center;
+}
+
+.content-error {
+    text-align: center;
+    font-size: 50px;
+}
+
+table {
+    text-align: center;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+.display-pets {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.display-pets img {
+    width: 80px;
+    height: 80px;
+}
+
+.display-pets ul {
+    display: flex;
+    align-items: center;
+}
+
+.display-pets li {
+    display: flex;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 150px;
+}
+
+.display-pets ul li a {
+    display: flex;
+    text-decoration: none;
+}
+
+#info, #rankingPerfil{
+    text-align:left;
+    font-weight: bold;
+    width:350px;
+}
+
+.button-create{
+    border:none;
+    display:inline-block;
+    padding:8px 16px;
+    vertical-align:middle;
+    text-decoration:none;
+    color:inherit;
+    background-color: #FADBD8;
+    font-size: 18px;
+    text-align:center;
+    cursor:pointer;
+    white-space:nowrap
+}
+
+.button-create:hover{
+    color:#fff!important;
+    background-color:#CD5C5C!important
+}
+
+a {
+    color: black;
+    /*text-decoration: none;*/
+}
