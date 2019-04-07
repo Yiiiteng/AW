@@ -9,41 +9,48 @@ class Pet {
     private $petBreed;
     private $petDescript;
     private $treats;
+    private $petOwnerId;
 
-    public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats) {
+    public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats, $petOwnerId) {
         $this->petName = $petName;
         $this->petId = $petId;
         $this->petType = $petType;
         $this->petBreed = $petBreed;
         $this->petDescript = $petDescript;
         $this->treats = $treats;
+        $this->petOwnerId = $petOwnerId;
     }
 
-    public static function existePet($idOwner, $petName) {
+    public static function existePet($iduser, $petId) {
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
         $sql = sprintf(
-            "SELECT petName FROM pets WHERE idOwner = '%s' AND petName = '%s' ",
-            $idOwner,
-            $connect->real_escape_string($petName)
+            "SELECT * FROM pets WHERE idPet = '%s' ", 
+            $connect->real_escape_string($petId)
         );
         $consulta = mysqli_query($connect, $sql);
 
-        if ($consulta && $consulta->num_rows == 1) {
-            $consulta->free();
-            return true;
-        } else {
-            return false;
+        if ($consulta) {
+            if ($consulta->num_rows == 1) {
+                $fila = $consulta->fetch_assoc();
+                $idOwner = $fila['owner_id'];
+                if ($idOwner == $iduser) {
+                    $consulta->free();
+                    return true;
+                }
+                else return false; 
+            } else {
+                return false;
+            }
         }
     }
 
-    public static function buscarPet($idOwner, $petName) {
+    public static function buscarPet($idPet) {
         $control = Aplicacion::getSingleton();
         $connect = $control->conexionBd();
         $sql = sprintf(
-            "SELECT * FROM pets WHERE idOwner = '%s' AND petName = '%s'",
-            $idOwner,
-            $connect->real_escape_string($petName)
+            "SELECT * FROM pets WHERE idPet = '%s'",
+            $connect->real_escape_string($idPet)
         );
 
         $consulta = mysqli_query($connect, $sql);
@@ -52,7 +59,9 @@ class Pet {
         if ($consulta) {
             if ($consulta->num_rows == 1) {
                 $fila = $consulta->fetch_assoc();
-                $result = $fila;
+
+                $pet = new Pet($fila['name'], $fila['idPet'], $fila['type'], $fila['breed'], $fila['description'],$fila['treats'],$fila['owner_id']);
+                $result = $pet;
             }
             $consulta->free();
         } else {
@@ -178,7 +187,6 @@ class Pet {
         }
     }
 
-
     public function petName() {
         return $this->petName;
     }
@@ -201,6 +209,10 @@ class Pet {
 
     public function treats() {
         return $this->treats;
+    }
+
+    public function petOwnerId() {
+        return $this->petOwnerId;
     }
 
     public function toString($pet) {
