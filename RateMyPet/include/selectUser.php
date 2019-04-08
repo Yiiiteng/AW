@@ -2,6 +2,7 @@
 $me = false;
 $user = "";
 $myPets = "";
+$following = false;
 
 if (isset($_GET['id'])) { // Check who the requested user is
     $sql = 'SELECT * FROM users WHERE id = '.$_GET['id']; // Return the user
@@ -13,14 +14,14 @@ if (isset($_GET['id'])) { // Check who the requested user is
     }
     if ($_SESSION['user']->id() == $user->id()) {  // This is me
         $me = true;
+    } else { // Check if following
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sqlFollowing = 'SELECT * FROM seguimientos WHERE userId ='.$_SESSION['user']->id().' AND seguidorId = '.$_GET['id'].''; // Return the user ID
+        $result = $conn->query($sqlFollowing);
+        $following = $result->num_rows ? true : false;
     }
     $myPets = Usuario::buscaMascotas($user);
-
-    // Add the necessary values to User
-
-    // Get number of followers
-    // Get number of followed
-
 } else { // You shouldn't be here
     header('Location: error.php');
 }

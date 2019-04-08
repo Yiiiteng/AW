@@ -47,10 +47,15 @@
 				<input type="file" name="file" accept="image/*" id="upload" >
 				<input type="submit" value="Change">
 			</form>';
-
 				echo '<h1>My info:</h1>';
 			} else {
 				echo '<h1>'.$user->username().'\'s Info</h1>';
+				// Allow follow / unfollow
+				if ($following) {
+					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/followUser.php?action=unfollow&id2='.$user->id().'\'">Unfollow</button>';
+				} else {
+					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/followUser.php?action=follow&id2='.$user->id().'\'">Follow</button>';
+				}
 			}
 		?>
 
