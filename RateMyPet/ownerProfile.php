@@ -27,7 +27,6 @@
 
 			} else { // This is someone else's profile
 				echo '<h1>This is '.$user->username().'\'s Page</h1>';
-				
 			}
 		
 			$_SESSION["ownerOpet"]="owner";
@@ -57,18 +56,18 @@
 
 		<table id="info">
 		<?php // Añadir queries para coger los parámetros Following, Followers, rank...
-			echo "
+			echo '
 			<tr>
-				<td> Name: </td> <td>".$user->username()."</td>
+				<td> Name: </td> <td>'.$user->username().'</td>
 			</tr>
 			<tr>
-				<td> Email: </td> <td>".$user->email()."</td>
+				<td> Email: </td> <td>'.$user->email().'</td>
 			</tr>
 			<tr>
-				<td>Followers: </td> <td>48</td>
+				<td><a href="followers.php?id='.$user->id().'&followers">Followers</a></td> <td>'.$user->followerAmount().'</td>
 			</tr>
 			<tr>
-				<td>Following: </td> <td>49</td>
+				<td><a href="followers.php?id='.$user->id().'&following">Following</a></td> <td>'.$user->followingAmount().'</td>
 			</tr>
 			<tr>
 				<td>Current Weekly Rank: </td> <td>#302</td>
@@ -76,7 +75,7 @@
 			<tr>
 				<td>Best Weekly Rank: </td> <td>#3</td>
 			</tr>
-			";
+			';
 		?>
 		</table>
 
@@ -110,7 +109,7 @@
 			</ul>
 			<?php
 				if ($me) {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'"> Add a Pet </button>';
+					echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'">Add a pet</button>';
 				}
 			?>
 		</div>

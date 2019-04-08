@@ -40,7 +40,7 @@
             echo '<p>'.$pet->petDescription().'</p>';
             echo '<h4>Followers: 324 | Following: 30</h4>';
             if($mine) {
-                echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'"> Post! </button>';
+                echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
             } else {
             }
         ?>

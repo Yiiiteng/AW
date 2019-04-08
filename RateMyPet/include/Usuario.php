@@ -18,12 +18,14 @@ class Usuario {
     private $following; // Number of people I follow
     private $followers; // Number of people who follow me
 
-    private function __construct($username, $fullname, $password, $email, $rol) {
+    private function __construct($username, $fullname, $password, $email, $rol, $followers, $following) {
         $this->username= $username;
         $this->fullname = $fullname;
         $this->password = $password;
         $this->email = $email;
         $this->rol = $rol;
+        $this->followers = $followers;
+        $this->following = $following;
 
         // Add to the constructor the amount of followers or followed
 
@@ -46,7 +48,28 @@ class Usuario {
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc(); // Add following parameters
-                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol']);
+                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'], $fila['numFollowers'], $fila['numFollowing']);
+                $user->id = $fila['id'];
+                $result = $user;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
+
+    public static function buscaUsuarioId($id) { // Returns user given an ID
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = sprintf("SELECT * FROM users U WHERE U.id = '%s'", $conn->real_escape_string($id));
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $fila = $rs->fetch_assoc(); // Add following parameters
+                $user = new Usuario($fila['username'], $fila['fullname'], $fila['password'], $fila['email'], $fila['rol'], $fila['numFollowers'], $fila['numFollowing']);
                 $user->id = $fila['id'];
                 $result = $user;
             }
@@ -139,12 +162,24 @@ class Usuario {
         return $this->email;
     }
 
-    public function followingAmount() {
-        return $this->following;
+    public function followerAmount() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sqlFollowing = 'SELECT * FROM seguimientos WHERE seguidorId ='.$this->id; // Return the user ID
+        $result = $conn->query($sqlFollowing);
+        $followers = $result->num_rows;
+        return $followers;
     }
 
-    public function followerAmount() {
-        return $this->followers;
+    public function followingAmount() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sqlFollowing = 'SELECT * FROM seguimientos WHERE userId ='.$this->id; // Return the user ID
+        $result = $conn->query($sqlFollowing);
+        $following = $result->num_rows;
+        return $following;
     }
 
     public function compruebaPassword($password) {
