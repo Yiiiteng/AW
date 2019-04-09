@@ -41,7 +41,7 @@
     } else if (isset($_GET['followersPets'])) { // Check if it is the following list
         echo '<h1 class="follower">Followers</h1>';
         if (sizeof($allUsers) == 0) {
-            echo '<h2 class="follower">Nobody follows you! :(</h2>';
+            echo '<h2 class="follower">Nobody loves '.$pet->petName().'! :(</h2>';
         } else {
             foreach ($allUsers as &$user) {
                 echo '<h2 class="follower"><a href="ownerProfile.php?id='.$user->id().'">'.$user->username().'</a></h2>';

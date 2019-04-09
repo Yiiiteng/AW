@@ -3,6 +3,7 @@
 $followers = '';
 $following = '';
 $allUsers = '';
+$pet = '';
 
 if (isset($_GET['followersUsers'])) { // Check if it is the followers list
     $sqlFollowing = 'SELECT * FROM seguimientos WHERE seguidorId = '.$_GET['id']; // Return the user ID
@@ -32,6 +33,7 @@ if (isset($_GET['followersUsers'])) { // Check if it is the followers list
             $allUsers[] = Usuario::buscaUsuarioId($row['userId']);
         }
     }
+    $pet = Pet::buscarPet($petId);
 } else { 
     header('Location: ../error.php');
 }

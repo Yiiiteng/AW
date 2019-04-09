@@ -89,7 +89,7 @@ class FormularioPet extends Form {
             $treats = 0;
             $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
 
-            header('Location: ownerprofile.php');
+            header('Location: ownerProfile.php?id='.$owner_id);
             exit();
         }
     }
