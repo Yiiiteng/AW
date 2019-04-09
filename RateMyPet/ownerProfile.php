@@ -12,6 +12,7 @@
 	<link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
+	<link rel="stylesheet" href="css/profile.css">
 </head>
 <body>
 	<?php
@@ -19,54 +20,49 @@
 	?>
 
 	<div class="content">
+		<div id="image">
 		<?php
-			if ($me) { // If this is me
+			/*if ($me) { // If this is me
 				echo '<h1>This is your Profile Page</h1>
 				<p>Here you will be able to select any of your pet accounts, add a new pet, change your profile settings...</p>';
 
 
 			} else { // This is someone else's profile
 				echo '<h1>This is '.$user->username().'\'s Page</h1>';
-			}
+						
+			}*/
 		
 			$_SESSION["ownerOpet"]="owner";
 			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img src='.$path.'.jpg alt="Logo" width="100" height="100" />';
+				echo '<img src='.$path.'.jpg alt="Logo" width="150" height="150" />';
 			}
 			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-				echo '<img src='.$path.'.png alt="Logo" width="100" height="100" />';
+				echo '<img src='.$path.'.png alt="Logo" width="150" height="150" />';
 			}
 			else{
-				echo '<img src="usuarios/default.png" alt="Logo" width="100" height="100" />';
+				echo '<img src="usuarios/default.png" alt="Logo" width="150" height="150" />';
 			}
 
-			if ($me) { // Allow me to change my profile picture
-				echo '<form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
-				Change foto(jpg/png): 
-				<input type="file" name="file" accept="image/*" id="upload" >
-				<input type="submit" value="Change">
-			</form>';
-				echo '<h1>My info:</h1>';
-			} else {
-				echo '<h1>'.$user->username().'\'s Info</h1>';
-				// Allow follow / unfollow
-				if ($following) {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowUser&id2='.$user->id().'\'">Unfollow</button>';
-				} else {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followUser&id2='.$user->id().'\'">Follow</button>';
-				}
-			}
+			//cambiar foto de perfil
+			/*echo '<form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
+			Change foto(jpg/png): 
+			<input type="file" name="file" accept="image/*" id="upload" >
+			<input type="submit" value="Change">
+			</form>';*/
 		?>
-
+		</div>
+		<div>
 		<table id="info">
+		
 		<?php // Añadir queries para coger los parámetros Following, Followers, rank...
+			
 			echo '
 			<tr>
-				<td> Name: </td> <td>'.$user->username().'</td>
+				<td>'.$user->username().'</td>
 			</tr>
 			<tr>
-				<td> Email: </td> <td>'.$user->email().'</td>
+				 <td>'.$user->email().'</td>
 			</tr>
 			<tr>
 				<td><a href="followers.php?id='.$user->id().'&followersUsers">Followers</a></td> <td>'.$user->followerAmount().'</td>
@@ -74,24 +70,52 @@
 			<tr>
 				<td><a href="followers.php?id='.$user->id().'&followingUsers">Following</a></td> <td>'.$user->followingAmount().'</td>
 			</tr>
+			';
+
+			if ($me){
+				echo "<tr>
+					<td><button type='button' id='button-follow'> Edit </button> </td>
+				</tr>";
+			}
+			else{
+				if ($following) {
+					echo '<tr>
+					<td><button type="button" id="button-follow" onclick="window.location.href=\'include/follow.php?action=unfollowUser&id2='.$user->id().'\'"> Unfollow </button></td>
+				</tr>';
+				} else {
+					echo '<tr>
+					<td><button type="button" id="button-follow" onclick="window.location.href=\'include/follow.php?action=followUser&id2='.$user->id().'\'"> Follow </button></td>
+				</tr>';
+				}
+			}
+			
+			
+			
+		?>
+		</table>
+		</div>
+		<div id="rankingPerfil">
+		<table>
 			<tr>
 				<td>Current Weekly Rank: </td> <td>#302</td>
 			</tr>
 			<tr>
 				<td>Best Weekly Rank: </td> <td>#3</td>
 			</tr>
-			';
-		?>
 		</table>
+		</div>
 
-		<?php
-			if ($me) {
-				echo '<h1>My pets</h1>';
-			} else {
-				echo '<h1>'.$user->username().'\'s Pets</h1>';
-			}
-		?>
 		<div class="display-pets">
+			<div>
+			<?php
+				if ($me) {
+					echo '<h1>My pets</h1>';
+				} else {
+					echo '<h1>'.$user->username().'\'s Pets</h1>';
+				}
+			?>
+			</div>
+			<div>
 			<ul>
 				<?php
 				if ($myPets->num_rows > 0) { // Iterate through all of my pets
@@ -111,12 +135,14 @@
 					}
 				}
 				?>
-			</ul>
 			<?php
 				if ($me) {
 					echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'">Add a pet</button>';
 				}
 			?>
+			</ul>
+			
+			</div>
 		</div>
 	</div>
 
