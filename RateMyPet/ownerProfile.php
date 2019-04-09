@@ -52,9 +52,9 @@
 				echo '<h1>'.$user->username().'\'s Info</h1>';
 				// Allow follow / unfollow
 				if ($following) {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/followUser.php?action=unfollow&id2='.$user->id().'\'">Unfollow</button>';
+					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowUser&id2='.$user->id().'\'">Unfollow</button>';
 				} else {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/followUser.php?action=follow&id2='.$user->id().'\'">Follow</button>';
+					echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followUser&id2='.$user->id().'\'">Follow</button>';
 				}
 			}
 		?>
@@ -69,10 +69,10 @@
 				<td> Email: </td> <td>'.$user->email().'</td>
 			</tr>
 			<tr>
-				<td><a href="followers.php?id='.$user->id().'&followers">Followers</a></td> <td>'.$user->followerAmount().'</td>
+				<td><a href="followers.php?id='.$user->id().'&followersUsers">Followers</a></td> <td>'.$user->followerAmount().'</td>
 			</tr>
 			<tr>
-				<td><a href="followers.php?id='.$user->id().'&following">Following</a></td> <td>'.$user->followingAmount().'</td>
+				<td><a href="followers.php?id='.$user->id().'&followingUsers">Following</a></td> <td>'.$user->followingAmount().'</td>
 			</tr>
 			<tr>
 				<td>Current Weekly Rank: </td> <td>#302</td>

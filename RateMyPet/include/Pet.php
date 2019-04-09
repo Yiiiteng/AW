@@ -10,6 +10,7 @@ class Pet {
     private $petDescript;
     private $treats;
     private $owner_id;
+    private $followers;
 
     public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $this->petName = $petName;
@@ -202,12 +203,25 @@ class Pet {
         return $this->owner_id;
     }
 
+    public function followerAmount() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sqlFollowing = 'SELECT * FROM followedPets WHERE petId ='.$this->petId; // Return the user ID
+        $result = $conn->query($sqlFollowing);
+        $followers = $result->num_rows;
+        return $followers;
+    }
+
     public function toString($pet) {
         $name = $pet['name'];
         $type = $pet['type'];
         $breed = $pet['breed'];
         $id = $pet['idPet'];
+        $owner_id = $pet['owner_id'];
+        $owner = Pet::buscarNombreDueño($owner_id);
         return '<h1><a href="petProfile.php?idPet='.$id.'">'.$name.'</a></h1>
+                <h3>Owned by: <a href="ownerProfile.php?id='.$owner_id.'">'.$owner.'</a></h3>
                 <h2>'.$type.'</h2>
                 <h3>'.$breed.'</h3>
                 </br>';

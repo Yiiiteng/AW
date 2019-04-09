@@ -9,7 +9,7 @@
     $conn = $control->conexionBd();
 
     $sql_users = 'SELECT * FROM users WHERE username LIKE \''.$search.'%\''; // Return owner id
-    $sql_pets = 'SELECT * FROM pets WHERE name LIKE \''.$search.'%\''; // Return owner id
+    $sql_pets = 'SELECT * FROM pets WHERE name LIKE \''.$search.'%\''; // Return pet id
     
     $users = $conn->query($sql_users);
     $pets = $conn->query($sql_pets);

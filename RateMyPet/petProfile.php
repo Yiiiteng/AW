@@ -38,10 +38,15 @@
         </div>
         <?php
             echo '<p>'.$pet->petDescription().'</p>';
-            echo '<h4>Followers: 324 | Following: 30</h4>';
+            echo '<h4><a href="followers.php?idPet='.$pet->petId().'&followersPets">Followers:</a> '.$pet->followerAmount().'</h4>';
             if($mine) {
                 echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
             } else {
+                if ($following) {
+                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowPet&id2='.$pet->petId().'\'">Unfollow</button>';
+                } else {
+                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
+                }
             }
         ?>
         

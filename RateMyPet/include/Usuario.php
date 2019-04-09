@@ -80,6 +80,24 @@ class Usuario {
         }
         return $result;
     }
+
+    public function followsPet($petId) { // Returns user given an ID
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $query = "SELECT * FROM followedpets U WHERE U.userId = ".$this->id." AND U.petId = ".$petId."";
+        $rs = $conn->query($query);
+        $result = false;
+        if ($rs) {
+            if ( $rs->num_rows == 1) {
+                $result = true;
+            }
+            $rs->free();
+        } else {
+            echo "Error al consultar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+        return $result;
+    }
     
     public static function crea($username, $fullname, $password, $email, $rol) {
         $user = self::buscaUsuario($username);
