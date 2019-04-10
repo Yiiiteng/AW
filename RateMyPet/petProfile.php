@@ -43,7 +43,7 @@
 
             if (!$mine) {
                 echo '
-                <form method="post" action="include/giveTreat.php?idPet="'.$pet->petId().'>
+                <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'">
                     <input type="submit" class="button-create" value="Give a treat!">
                 </form>
                 ';
@@ -59,8 +59,12 @@
                     } else {
                         echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
                     }
-                } else {
-                    echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
+                } else {?>
+                    <form method="POST" action="petPost.php">
+                        <input type="hidden" name="idPet" value="<?php echo $_GET['idPet']; ?>">
+                        <input class="button-create" type="submit" value="New Post">
+                    </form>
+                    <?php
                     $myPosts = Post::allPosts($pet->petId());
                     if ($myPosts->num_rows > 0) { 
                         echo '<div class="posts">';

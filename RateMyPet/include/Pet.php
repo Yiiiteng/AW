@@ -1,6 +1,7 @@
 <?php
 require_once __DIR__ . '/Aplicacion.php';
 require_once __DIR__ . '/Usuario.php';
+require_once __DIR__ . '/Post.php';
 
 class Pet {
     private $petName;
@@ -47,7 +48,7 @@ class Pet {
         $rs = $conn->query($sql);
         $result = false;
         if ($rs) {
-            if ( $rs->num_rows == 1) {
+            if ($rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $pet = new Pet($fila['name'], $fila["idPet"], $fila["type"], $fila["breed"], $fila["description"], $fila["treats"], $fila['owner_id']);
                 $result = $pet;
@@ -172,6 +173,11 @@ class Pet {
             echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
             exit();
         }
+    }
+
+    public function addPost($title, $tags, $description, $image) {
+        $post = new Post($this->petId, $title, $description, 0, 0, time(), $image);
+        $post->submitPost();
     }
 
 

@@ -9,7 +9,7 @@ $whoIsFollowed = $_GET['id2'];
 
 $action = $_GET['action'];
 
-if ($action == 'followUser') {
+if ($action == 'followUser') { // We should pass these functions to the User / Pet class
     $sql = 'INSERT INTO seguimientos VALUES ('.$whoFollows.', '.$whoIsFollowed.')';
     $result = $conn->query($sql);
     header('Location: ../ownerProfile.php?id='.$whoIsFollowed.'');

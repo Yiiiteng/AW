@@ -26,9 +26,6 @@ class Usuario {
         $this->rol = $rol;
         $this->followers = $followers;
         $this->following = $following;
-
-        // Add to the constructor the amount of followers or followed
-
     }
 
     public static function login($username, $password) {
