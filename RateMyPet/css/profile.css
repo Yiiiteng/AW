@@ -25,7 +25,11 @@ table {
 }
 
 #image{
-      margin-left: 5%;
+    margin-left: 5%;
+    width:200px;
+    font-size: 15px;
+    text-align:left;
+    font-weight: bold;
 }
 
 .display-pets {
