@@ -45,11 +45,13 @@
 			}
 
 			//cambiar foto de perfil
-			/*echo '<form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
-			Change foto(jpg/png): 
+			echo '<tr>
+				<td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
+			Change photo(jpg/png): 
 			<input type="file" name="file" accept="image/*" id="upload" >
 			<input type="submit" value="Change">
-			</form>';*/
+			</form></td>
+			</tr>';
 		?>
 		</div>
 		<div>
@@ -73,9 +75,10 @@
 			';
 
 			if ($me){
-				echo "<tr>
-					<td><button type='button' id='button-follow'> Edit </button> </td>
-				</tr>";
+			
+				echo '<tr>
+					<td><button type="button" id="button-follow" onclick="window.location.href=\'updateUser.php?id='.$user->id().'\'">Edit</button></td>
+				</tr>';
 			}
 			else{
 				if ($following) {

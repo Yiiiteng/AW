@@ -63,7 +63,7 @@ class FormularioUser extends Form {
         $id = $datos['id_user'];
         if (count($erroresFormulario) === 0) {
             $user = Usuario::actualiza($datos);
-            if( !$user){
+            if(!$user){
                  $result[] = "No se ha podido actualizar";
             } else {
     
