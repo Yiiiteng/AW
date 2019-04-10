@@ -21,7 +21,7 @@ class FormularioPost extends Form {
                             </tr>
                             <tr>
                                 <td>Tags: </td>
-                                <td><input class="form-control" id = "tags" type="text" name="tags" placeholder="#Dog" required>
+                                <td><input class="form-control" id = "tags" type="text" name="tags" placeholder="#Dog">
                                 </td>
                             </tr>
                             <tr>
@@ -41,53 +41,39 @@ class FormularioPost extends Form {
                             </table>
                         </div>
                     </div>
+                    <input type="hidden" name="idPet" value="'.$_POST["idPet"].'">
                     <button class="button-create">Post!</button>
                 </div>';
     }
 
-    protected function procesaFormulario($datos) { // Procesa los datos del formulario.
+    protected function procesaFormulario($datos) { // Procesa los datos del formulario nuevo PetPost
 
-        $petName = isset($_POST['petName']) ? $_POST['petName'] : null;
-        $petType = isset($_POST['petType']) ? $_POST['petType'] : null;
-        $petBreed = isset($_POST['petBreed']) ? $_POST['petBreed'] : null;
-        $petDescript = isset($_POST['petDescript']) ? $_POST['petDescript'] : null;
-        $owner_id = isset($_SESSION['owner_id']) ? $_SESSION['owner_id'] : null;
+        $title = isset($_POST['title']) ? $_POST['title'] : null;
+        $tags = isset($_POST['tags']) ? $_POST['tags'] : null;
+        $description = isset($_POST['description']) ? $_POST['description'] : null;
+        $image = "";
 
-        if (empty($petName) or empty($petType) or empty($petBreed))	{
-            header('Location: ownerprofile.php');
-            exit();
-        } else{
-            $dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
-            if (is_dir($dir)) {
-                echo "This pet already exists!";
-            }
-            else{
-                $dir='../usuarios/'.$_SESSION["username"];
-                if (is_dir($dir)===false) {
-                    mkdir($dir);
-                }
-                $petdir=$dir.'/'.$petName;
-                mkdir($petdir);
+        // Pet Variables
 
-                move_uploaded_file($_FILES["file"]["tmp_name"], $petdir.'/'.$_FILES["file"]["name"]);
+        $idPet = isset($_POST['idPet']) ? $_POST['idPet'] : null;
 
-                if($_FILES["file"]["type"]==="image/png"){
-                    rename( $petdir.'/'.$_FILES["file"]["name"], $petdir.'/'.$petName.'.png');
-                }
-                else if($_FILES["file"]["type"]==="image/jpg"){
-                    rename( $petdir.'/'.$_FILES["file"]["name"], $petdir.'/'.$petName.'.jpg');
-                }
-                else {
-                    
-                }
-            }
-
-            $treats = 0;
-            $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
-
-            header('Location: ownerprofile.php');
+        if (empty($idPet)) { // You can't createa post without the ID
+            header('Location: error.php');
             exit();
         }
+
+        $pet = Pet::buscarPet($idPet);
+
+        if (empty($title))	{
+            header('Location: petProfile.php?idPet='.$idPet.'');
+            exit();
+        }
+
+        // We also need to check whether or not the image exists (you can't post anything without an Image)
+
+        $pet->addPost($title, $tags, $description, $image); // Create the Post
+        header('Location: petProfile.php?idPet='.$idPet.'');
+        exit();
     }
 
 }

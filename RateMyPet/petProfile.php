@@ -43,7 +43,7 @@
 
             if (!$mine) {
                 echo '
-                <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'&numtreat='.$pet->treats().'">
+                <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'">
                     <input type="submit" class="button-create" value="Give a treat!">
                 </form>
                 ';
@@ -59,17 +59,18 @@
                     } else {
                         echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
                     }
-                } else {
-                    echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
+                } else {?>
+                    <form method="POST" action="petPost.php">
+                        <input type="hidden" name="idPet" value="<?php echo $_GET['idPet']; ?>">
+                        <input class="button-create" type="submit" value="New Post">
+                    </form>
+                    <?php
                     $myPosts = Post::allPosts($pet->petId());
                     if ($myPosts->num_rows > 0) { 
                         echo '<div class="posts">';
                         while($post = $myPosts->fetch_assoc()) {
-                            echo '<div class="fourinline container card">';
-                            if($mine){
-                                echo '<i class="fa fa-times-circle borrar"></i>';
-                            }
-                                echo '
+                            echo '
+                            <div class="fourinline container card">
                                 <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
                                 <div class="container white">
                                 <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>

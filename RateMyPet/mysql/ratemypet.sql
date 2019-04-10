@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 09-04-2019 a las 14:11:21
+-- Tiempo de generación: 10-04-2019 a las 12:22:57
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -87,11 +87,11 @@ CREATE TABLE `pets` (
 --
 
 INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`) VALUES
-(29, 'Kiwi', '                ', 'Cat', 'Siamesse', 0, 6),
-(30, 'Mickey', '                ', 'Hamster', 'White', 0, 6),
-(31, 'Jeffrey', '                ', 'Rabbit', 'Grey', 0, 6),
+(29, 'Kiwi', '							', 'Cat', 'Siamesse', 0, 6),
+(30, 'Mickey', '							', 'Hamster', 'White', 0, 6),
+(31, 'Jeffrey', '							', 'Rabbit', 'Grey', 0, 6),
 (35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7),
-(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 0, 7),
+(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 1, 7),
 (37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7),
 (38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6),
 (39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6),
@@ -107,23 +107,22 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 --
 
 CREATE TABLE `posts` (
-  `idpost` varchar(10) NOT NULL,
-  `tiempo` date NOT NULL,
+  `idpost` int(10) NOT NULL,
+  `time` date NOT NULL,
   `likes` int(11) NOT NULL,
   `repets` int(11) NOT NULL,
-  `userid` int(11) NOT NULL,
   `petid` int(11) NOT NULL,
-  `content` varchar(140) NOT NULL,
-  `petname` varchar(20) NOT NULL
+  `description` varchar(140) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `posts`
 --
 
-INSERT INTO `posts` (`idpost`, `tiempo`, `likes`, `repets`, `userid`, `petid`, `content`, `petname`) VALUES
-('1', '2019-04-08', 13, 5, 6, 29, 'hola soy un post y kiwi es genial!', 'Kiwi'),
-('2', '2019-04-10', 5, 2, 6, 29, 'i like fish', 'kiwi');
+INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES
+(1, '0000-00-00', 0, 0, 29, '..'),
+(2, '0000-00-00', 0, 0, 29, '..'),
+(3, '0000-00-00', 0, 0, 29, '..');
 
 -- --------------------------------------------------------
 
@@ -235,6 +234,12 @@ ALTER TABLE `users`
 --
 ALTER TABLE `pets`
   MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=44;
+
+--
+-- AUTO_INCREMENT de la tabla `posts`
+--
+ALTER TABLE `posts`
+  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

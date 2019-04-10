@@ -10,27 +10,23 @@ class Post {
     private $idpost; // Auto-set
     private $petid; // Auto-set
     private $userid; // Auto-set
-    private $content; // User specified
+    private $description; // User specified
     private $likes; // Auto-set
     private $repets; // Auto-set
-    private $tiempo; // Auto-set
-    private $petname; // Auto-set
+    private $time; // Auto-set
+    private $image; // Auto-set
 
-
-       private function __construct($idpost, $petid, $userid, $content, $likes, $repets, $tiempo, $petname) {
-        $this->idpost= $idpost;
+    public function __construct($petid, $title, $description, $likes, $repets, $time, $image) {
         $this->petid = $petid;
-        $this->userid = $userid;
-        $this->content = $content;
+        $this->title = $title;
+        $this->$description = $description;
         $this->likes = $likes;
         $this->repets = $repets;
-        $this->tiempo = $tiempo;
-        $this->petname = $petname;
-        //falta la imagen que ni idea de como va
-
+        $this->time = $time;
+        $this->image = $image;
     }
 
-       public static function buscaPost($idpost) {
+    public static function buscaPost($idpost) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query = sprintf("SELECT * FROM posts U WHERE U.idpost = '%s'", $conn->real_escape_string($idpost));
@@ -62,13 +58,22 @@ class Post {
             exit();
         }
     }
-    
-    public static function borrarPost($idpost){
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql = "DELETE FROM posts where idpost = '$idpost'";
-        $mysqli->query($sql) or die ($mysqli->error. " en la línea ".(__LINE__‐1));
+
+    public function submitPost() {
+        // idpost / time / likes / repets / petid / description
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = "INSERT INTO posts VALUES ('', '.$this->time.', '.$this->likes.', '.$this->repets.', '.$this->petid.', '.$this->description.')";
+        $rs = $conn->query($sql);
+        $idPost = $conn->insert_id;
+        if ($rs) {
+            return $rs;
+        } else {
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
     }
+    
 
     public function idpost() {
         return $this->idpost;
@@ -95,9 +100,6 @@ class Post {
     }
     public function contenido() {
         return $this->content;
-    }
-    public function petName() {
-        return $this->petname;
     }
 
 

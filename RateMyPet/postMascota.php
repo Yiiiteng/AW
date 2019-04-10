@@ -23,7 +23,6 @@
 	<div class="content">
 		<?php
 			echo ''.Post::toString($postSimple);
-
 		?>
 	</div>
 
