@@ -50,6 +50,18 @@ class Post {
         return $result;
     }
 
+    public static function allPosts($idPet) { // Given an Owner ID, returns a list with all the pets
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = "SELECT * FROM posts  WHERE petid =$idPet";
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return $rs;
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
+    }
     
 
     public function idpost() {

@@ -78,3 +78,35 @@ a {
     color: black;
     /*text-decoration: none;*/
 }
+
+.posts{
+    display: flex;
+    margin-top: 5px;
+    margin-bottom: 20px;
+}
+
+.fourinline{
+    float:left;
+    width:25%;
+}
+.card{
+    box-shadow:0 2px 5px 0 rgba(0,0,0,0.16)
+}
+.container{
+    padding:10px 10px;
+    margin-left: 2px;
+    margin-right: 2px;
+    margin-bottom:16px!important;
+}
+.hover-opacity:hover{opacity:0.50}
+.white:hover{
+    color:#000!important;
+    background-color:#fff!important;
+}
+.iright{
+    float: right;
+    text-shadow: 1px 1px 2px;
+}
+.like{
+    color: #FA8072;
+}

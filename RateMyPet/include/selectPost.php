@@ -1,7 +1,5 @@
 <?php
 
-
-
 if (isset($_GET['id'])) { // Check who the requested user is
     $sql = 'SELECT * FROM posts WHERE idpost = '.$_GET['id']; // Return the user
     $data = $conn->query($sql);

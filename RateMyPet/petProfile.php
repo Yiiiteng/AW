@@ -2,7 +2,7 @@
     require_once __DIR__.'/include/Usuario.php';
     require_once __DIR__.'/include/config.php';
     require_once __DIR__.'/include/selectPet.php';
-    
+    require_once __DIR__.'/include/Post.php';
 
 ?>
 <!DOCTYPE html>
@@ -39,19 +39,49 @@
         <?php
             echo '<p>'.$pet->petDescription().'</p>';
             echo '<h4><a href="followers.php?idPet='.$pet->petId().'&followersPets">Followers:</a> '.$pet->followerAmount().'</h4>';
-            if($mine) {
-                echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
-            } else {
-                if ($following) {
-                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowPet&id2='.$pet->petId().'\'">Unfollow</button>';
-                } else {
-                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
-                }
+            echo '<h4><i class="fa fa-paw" id="treatNum">'.$pet->treats().'</i></h4>';
+
+            if (!$mine) {
+                echo '
+                <form method="post" action="include/giveTreat.php?idPet="'.$pet->petId().'>
+                    <input type="submit" class="button-create" value="Give a treat!">
+                </form>
+                ';
             }
         ?>
+
+        <div class="pet-post">
+            <h3>POST</h3>
+            <?php
+                if(!$mine) {
+                    if ($following) {
+                        echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowPet&id2='.$pet->petId().'\'">Unfollow</button>';
+                    } else {
+                        echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
+                    }
+                } else {
+                    echo '<button type="button" class="button-create" onclick="window.location.href=\'petPost.php\'">New Post</button>';
+                    $myPosts = Post::allPosts($pet->petId());
+                    if ($myPosts->num_rows > 0) { 
+                        echo '<div class="posts">';
+                        while($post = $myPosts->fetch_assoc()) {
+                            echo '
+                            <div class="fourinline container card">
+                                <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
+                                <div class="container white">
+                                <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>
+                                </div>
+
+                            </div>';
+                        }
+                        echo '</div>';
+                    }
+                }
+            ?>
+        </div>
         
 	</div>
-    
+
     <?php
 		require("include/comun/footer.php");
 	?>

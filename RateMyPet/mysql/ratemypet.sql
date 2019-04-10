@@ -122,7 +122,8 @@ CREATE TABLE `posts` (
 --
 
 INSERT INTO `posts` (`idpost`, `tiempo`, `likes`, `repets`, `userid`, `petid`, `content`, `petname`) VALUES
-('1', '2019-04-08', 13, 5, 6, 29, 'hola soy un post y kiwi es genial!', 'Kiwi');
+('1', '2019-04-08', 13, 5, 6, 29, 'hola soy un post y kiwi es genial!', 'Kiwi'),
+('2', '2019-04-10', 5, 2, 6, 29, 'i like fish', 'kiwi');
 
 -- --------------------------------------------------------
 
