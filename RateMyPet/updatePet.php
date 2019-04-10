@@ -1,7 +1,7 @@
 <?php
 	require_once __DIR__.'/include/Aplicacion.php';
 	require_once __DIR__.'/include/config.php';
-	require_once __DIR__.'/include/FormularioPet.php';
+	require_once __DIR__.'/include/FormularioEditPet.php';
 ?>
 
 <!DOCTYPE html>

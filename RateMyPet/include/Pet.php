@@ -130,28 +130,16 @@ class Pet {
         }
     }
 
-    /*public static function actualizar($id_inventario,$datos){
+    public static function actualizar($pet){
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
 
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $productoBD = self::buscarProducto($id_inventario,$datos['nombre']);
+        $sql=sprintf("UPDATE pets SET name = '%s', description='%s' WHERE idPet=%s"
+            , $conn->real_escape_string($pet['petName'])
+            , $conn->real_escape_string($pet['petDescript'])
+            , $conn->real_escape_string($pet['id_pet']));
 
-
-        if ( $datos['precio'] == NULL) {
-            $datos['precio'] = $productoBD['precio'];
-        }
-
-        if ( $datos['cantidad'] == NULL){
-             $datos['cantidad'] = $productoBD['cantidad'];
-        }
-        
-        $sql=sprintf("UPDATE productos SET  cantidad = '%s', precio = '%s' WHERE id_inventario = '%s' AND nombre = '%s'"
-            ,$connect->real_escape_string($datos['cantidad'])
-            ,$connect->real_escape_string($datos['precio'])
-            ,$id_inventario
-            ,$connect->real_escape_string($datos['nombre']));
-
-        $consulta = mysqli_query($connect,$sql);
+        $consulta = mysqli_query($conn,$sql);
 
         if($consulta)
             return true;
@@ -160,7 +148,7 @@ class Pet {
         return false;
         }
     
-    }*/
+    }
 
     public static function allPets($idOwner) { // Given an Owner ID, returns a list with all the pets
         $control = Aplicacion::getSingleton();
