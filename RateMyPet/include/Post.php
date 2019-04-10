@@ -63,6 +63,12 @@ class Post {
         }
     }
     
+    public static function borrarPost($idpost){
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = "DELETE FROM posts where idpost = '$idpost'";
+        $mysqli->query($sql) or die ($mysqli->error. " en la línea ".(__LINE__‐1));
+    }
 
     public function idpost() {
         return $this->idpost;

@@ -43,7 +43,7 @@
 
             if (!$mine) {
                 echo '
-                <form method="post" action="include/giveTreat.php?idPet="'.$pet->petId().'>
+                <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'&numtreat='.$pet->treats().'">
                     <input type="submit" class="button-create" value="Give a treat!">
                 </form>
                 ';
@@ -65,8 +65,11 @@
                     if ($myPosts->num_rows > 0) { 
                         echo '<div class="posts">';
                         while($post = $myPosts->fetch_assoc()) {
-                            echo '
-                            <div class="fourinline container card">
+                            echo '<div class="fourinline container card">';
+                            if($mine){
+                                echo '<i class="fa fa-times-circle borrar"></i>';
+                            }
+                                echo '
                                 <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
                                 <div class="container white">
                                 <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>

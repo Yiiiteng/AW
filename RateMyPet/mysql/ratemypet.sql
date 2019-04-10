@@ -87,9 +87,9 @@ CREATE TABLE `pets` (
 --
 
 INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`) VALUES
-(29, 'Kiwi', '							', 'Cat', 'Siamesse', 0, 6),
-(30, 'Mickey', '							', 'Hamster', 'White', 0, 6),
-(31, 'Jeffrey', '							', 'Rabbit', 'Grey', 0, 6),
+(29, 'Kiwi', '                ', 'Cat', 'Siamesse', 0, 6),
+(30, 'Mickey', '                ', 'Hamster', 'White', 0, 6),
+(31, 'Jeffrey', '                ', 'Rabbit', 'Grey', 0, 6),
 (35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7),
 (36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 0, 7),
 (37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7),

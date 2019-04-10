@@ -110,3 +110,7 @@ a {
 .like{
     color: #FA8072;
 }
+.borrar{
+    float: right;
+    size: 10px;
+}
