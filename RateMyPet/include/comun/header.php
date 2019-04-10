@@ -10,14 +10,17 @@
 				echo '<li><a href="ownerProfile.php?id='.$_SESSION["user"]->id().'">Profile</a></li>';
 			?>
 			<li>
-			<div class="bar1"> 
-				<form method="GET" action="searchResult.php">
-					<input type="search" id="search" name="search" placeholder="Search...">
-					<button type="submit"></button>
-				</form>
+				<div class="bar1"> 
+					<form method="GET" action="searchResult.php">
+						<input type="search" id="search" name="search" placeholder="Search...">
+						<button type="submit"></button>
+					</form>
 				</div>
 			<li>
-
+		</ul>
+	</nav>
+	<nav id="log">
+		<ul>
 			<li><?php
 			if (isset($_SESSION["username"]) && ($_SESSION["login"]===true)) {
 				echo '<a href="logoutConfirm.php">Logout</a>';

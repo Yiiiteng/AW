@@ -18,6 +18,11 @@ nav {
     float: left;
 }
 
+nav#log {
+    float: right;
+    margin-right: 100px;
+}
+
 /*At this point, the container dissappears*/
 
 .header::after { /* Magic? */

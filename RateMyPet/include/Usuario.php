@@ -109,7 +109,7 @@ class Usuario {
         return Pet::allPets($user->id()); // Look for my pets (with my id)
     }
     
-    public static function hashPassword($password) {
+    private static function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
     }
     
@@ -120,7 +120,7 @@ class Usuario {
         return self::inserta($usuario);
     }
     
-    public static function inserta($usuario) {
+    private static function inserta($usuario) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $query=sprintf("INSERT INTO users(username, fullname, password, email, rol) VALUES('%s', '%s', '%s', '%s', '%s')"
@@ -138,36 +138,27 @@ class Usuario {
         return $usuario;
     }
     
-    public static function actualiza($usuario) {
+    private static function actualiza($usuario) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        echo"id".$usuario['id_user'];
-        $query=sprintf("UPDATE users U SET username = '%s', fullname='%s', email='%s' WHERE U.id=%u"
-            , $conn->real_escape_string($usuario['username'])
-            , $conn->real_escape_string($usuario['FullName'])
-            , $conn->real_escape_string($usuario['email'])
-            , $usuario['id_user']);
-       /* if ( $conn->query($query) ) {
+        $query=sprintf("UPDATE users U SET username = '%s', fullname='%s', password='%s', email='%s', rol='%s' WHERE U.id=%i"
+            , $conn->real_escape_string($usuario->username)
+            , $conn->real_escape_string($usuario->fullname)
+            , $conn->real_escape_string($usuario->password)
+            , $conn->real_escape_string($usuario->email)
+            , $conn->real_escape_string($usuario->rol)
+            , $usuario->id);
+        if ( $conn->query($query) ) {
             if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el usuario: " . $usuario['username'];
+                echo "No se ha podido actualizar el usuario: " . $usuario->id;
                 exit();
             }
         } else {
-            echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
-        }*/
-        $consulta = mysqli_query($conn,$query);
-
-        if($consulta){
-           // $user = self::buscaUsuario($usuario['username']);
-             return true;
-        }
-        else{
-            echo "Error al actualizar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-           return true;
         }
         
-       
+        return $usuario;
     }
 
     public function id() {
