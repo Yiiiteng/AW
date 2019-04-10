@@ -79,12 +79,18 @@ a {
     /*text-decoration: none;*/
 }
 
-.posts{
+.posts, .petInfo{
     display: flex;
     margin-top: 5px;
     margin-bottom: 20px;
 }
-
+.petImg{
+    width: 18%;
+    float: left;
+}
+.three-four{
+    width: 75%;
+}
 .fourinline{
     float:left;
     width:25%;
@@ -100,8 +106,8 @@ a {
 }
 .hover-opacity:hover{opacity:0.50}
 .white:hover{
-    color:#000!important;
-    background-color:#fff!important;
+    color:#000;
+    background-color:#fff;
 }
 .iright{
     float: right;
@@ -109,4 +115,12 @@ a {
 }
 .like{
     color: #FA8072;
+}
+.borrar{
+    border: 0;
+    background-color: transparent;
+    outline: none;
+    float: right;
+    color: #a3bb72;
+    padding-bottom: 3px;
 }

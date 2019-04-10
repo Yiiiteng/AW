@@ -21,34 +21,36 @@
     
     <div class="content">
         <h1>This is <?php echo ''.$pet->petName(); ?> the <?php echo ''.$pet->petType(); ?>'s Page</h1>
-        <?php
-            if($mine) {
-                echo '<p>Here you will be able to browse the pet\'s posts, as well as see everything related with the pet\'s ranking.</p>';
-                echo '<h2>I belong to you!</h2>';
-            } else {
-                echo '<h2>This pet belongs to: <a href="ownerProfile.php?id='.$pet->owner_id().'">'.$name.'</a></h2>';
-            }
-        ?>
-        
-        <?php 
-            
-        ?>
-        <div class="display-pets">
-            <img src="img/animals/<?php echo $pet->petType()?>.png"></a>
-        </div>
-        <?php
-            echo '<p>'.$pet->petDescription().'</p>';
-            echo '<h4><a href="followers.php?idPet='.$pet->petId().'&followersPets">Followers:</a> '.$pet->followerAmount().'</h4>';
-            echo '<h4><i class="fa fa-paw" id="treatNum">'.$pet->treats().'</i></h4>';
+        <div class ="petInfo">
+            <img class="petImg" src="img/animals/<?php echo $pet->petType()?>.png"></a>
+            <div class="three-four"> 
+                <?php
+                    if($mine) {
+                        echo '<p>Here you will be able to browse the pet\'s posts, as well as see everything related with the pet\'s ranking.</p>';
+                        echo '<h2>I belong to you!</h2>';
+                    } else {
+                        echo '<h2>This pet belongs to: <a href="ownerProfile.php?id='.$pet->owner_id().'">'.$name.'</a></h2>';
+                    }
+                ?>
+                <?php
+                    echo '<p>'.$pet->petDescription().'</p>';
+                    echo '<h4><a href="followers.php?idPet='.$pet->petId().'&followersPets">Followers:</a> '.$pet->followerAmount().'</h4>';
+                    echo '<h4><i class="fa fa-paw" id="treatNum">'.$pet->treats().'</i></h4>';
 
-            if (!$mine) {
-                echo '
-                <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'">
-                    <input type="submit" class="button-create" value="Give a treat!">
-                </form>
-                ';
-            }
-        ?>
+                    if (!$mine) {
+                        echo '
+                        <form method="post" action="include/giveTreat.php?idPet='.$pet->petId().'">
+                            <input type="submit" class="button-create" value="Give a treat!">
+                        </form>
+                        ';
+                    }
+                    else{
+
+                        echo '<button type="button" class="button-create" onclick="window.location.href=\'updatePet.php?id='.$pet->petId().'\'">Edit</button>';
+                    }
+                ?>
+            </div>  
+        </div>
 
         <div class="pet-post">
             <h3>POST</h3>
@@ -69,14 +71,22 @@
                     if ($myPosts->num_rows > 0) { 
                         echo '<div class="posts">';
                         while($post = $myPosts->fetch_assoc()) {
-                            echo '
-                            <div class="fourinline container card">
-                                <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
-                                <div class="container white">
-                                <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>
-                                </div>
+                        echo '<div class="fourinline container card">';
+                            if($mine){
+                                echo'
+                                <form method="post" action="include/borrarPost.php?idpost='.$post["idpost"].'&idpet='.$pet->petId().'">
+                                <button class="borrar fa-lg">
+                                    <i class="fa fa-times-circle-o fa-lg"></i></button>
+                                </form>';
 
-                            </div>';
+                            }
+                            echo'
+                            <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
+                            <div class="container white">
+                            <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>
+                            </div>
+
+                        </div>';
                         }
                         echo '</div>';
                     }

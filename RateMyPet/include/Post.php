@@ -73,6 +73,13 @@ class Post {
             exit();
         }
     }
+
+    public function borrarPost($postid){
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = "DELETE FROM posts where idpost = '$postid'";
+        $result = $conn->query($sql);
+    }
     
 
     public function idpost() {

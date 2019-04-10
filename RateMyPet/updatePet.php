@@ -1,14 +1,14 @@
 <?php
 	require_once __DIR__.'/include/Aplicacion.php';
 	require_once __DIR__.'/include/config.php';
-	require_once __DIR__.'/include/FormularioUser.php';
+	require_once __DIR__.'/include/FormularioPet.php';
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
 	<meta charset="utf-8">
-	<title>Rate My Pet: update user</title>
+	<title>Rate My Pet: update pet</title>
 	<link rel="stylesheet" type="text/css" href="css/profile.css">
 	<link rel="stylesheet" type="text/css" href="css/header.css">
 	<link rel="stylesheet" type="text/css" href="css/footer.css">
@@ -19,7 +19,7 @@
 	<div>
 		<?php
 			$opciones = array(); // Ninguna por defecto
-			$formulario = new FormularioUser("User",$opciones); // Créame una instancia hija de Form de tipo FormularioPet
+			$formulario = new FormularioEditPet("EditPet",$opciones); // Créame una instancia hija de Form de tipo FormularioPet
 			$formulario->gestiona(); // Búscame el HTML correspondiente al formulario de tipo Añadir Pet
 		?>
 	<div>
