@@ -109,18 +109,27 @@ class Post {
         return $this->content;
     }
 
+    public function displayHome($postList, $numPosts) {
+        $counter = 0;
+        while($counter < $numPosts && $postList->num_rows > $counter) {
+            $post = $postList->fetch_assoc();
+            echo Post::toString($post);
+            $counter = $counter + 1;
+        }
+    }
 
-        public function toString($post) { // te printea un post a poartir de una row
-        $pet = $post['petname'];
+
+    public function toString($post) { // te printea un post a poartir de una row
         $idpet = $post['petid'];
-        $tiempo = $post['tiempo'];
+        $name = $post['name'];
+        $time = $post['time'];
         $likes = $post['likes'];
-        $content = $post['content'];
+        $description = $post['description'];
         $repets = $post['repets'];
-        return '<h1><a href="petProfile.php?idPet='.$idpet.'">'.$pet.'</a></h1>
-                <h2>'.$content.'</h2>
+        return '<h1><a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1>
+                <h2>'.$description.'</h2>
                 <h3>'.$repets.' Repets '.$likes.' Likes</h3>
-                <h3>Date: '.$tiempo.'</h3>
+                <h3>Date: '.$time.'</h3>
                 </br>';
     }
 }

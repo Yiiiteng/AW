@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.5
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 10-04-2019 a las 12:22:57
--- Versión del servidor: 10.1.38-MariaDB
--- Versión de PHP: 7.3.2
+-- Tiempo de generación: 11-04-2019 a las 11:34:42
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -50,8 +50,11 @@ CREATE TABLE `followedpets` (
 --
 
 INSERT INTO `followedpets` (`userId`, `petId`) VALUES
+(6, 35),
 (6, 36),
 (6, 37),
+(7, 29),
+(7, 31),
 (9, 29),
 (9, 38);
 
@@ -91,7 +94,7 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 (30, 'Mickey', '							', 'Hamster', 'White', 0, 6),
 (31, 'Jeffrey', '							', 'Rabbit', 'Grey', 0, 6),
 (35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7),
-(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 1, 7),
+(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 9, 7),
 (37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7),
 (38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6),
 (39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6),
@@ -122,7 +125,10 @@ CREATE TABLE `posts` (
 INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES
 (1, '0000-00-00', 0, 0, 29, '..'),
 (2, '0000-00-00', 0, 0, 29, '..'),
-(3, '0000-00-00', 0, 0, 29, '..');
+(3, '0000-00-00', 0, 0, 29, '..'),
+(4, '2019-04-12', 0, 0, 35, 'cosas'),
+(5, '2019-04-17', 4, 5, 31, 'Soy un post de Jeffrey!'),
+(6, '2019-04-17', 4, 5, 31, 'Soy un post de Jeffrey!');
 
 -- --------------------------------------------------------
 
@@ -239,7 +245,7 @@ ALTER TABLE `pets`
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

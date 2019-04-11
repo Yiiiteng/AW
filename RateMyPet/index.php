@@ -1,5 +1,8 @@
 <?php
     require_once __DIR__.'/include/config.php';
+    require_once __DIR__.'/include/selectHome.php';
+    require_once __DIR__.'/include/Post.php';
+    
 
     if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
         header("Location: signup.php");
@@ -20,9 +23,9 @@
         require('include/comun/header.php');
     ?>
     <div class="content">
-        <h1>This is your Home Page</h1>
-        <p>Here you will be able to browse all of the new posts from your followed pets.</p>
-        <img src="img/offline.png" alt="logo" id="centered-offline">
+        <?php
+        Post::displayHome($postList, 10);
+        ?>
     </div>
     <?php 
         require('include/comun/footer.php');
