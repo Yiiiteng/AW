@@ -101,7 +101,7 @@ class Usuario {
         if ($user) {
             return false;
         }
-        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol);
+        $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol, 0, 0);
         return self::guarda($user);
     }
 
@@ -138,35 +138,40 @@ class Usuario {
         return $usuario;
     }
     
-    public static function actualiza($usuario) {
+    public function actualiza($datos) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        echo"id".$usuario['id_user'];
-        $query=sprintf("UPDATE users U SET username = '%s', fullname='%s', email='%s' WHERE U.id=%u"
-            , $conn->real_escape_string($usuario['username'])
-            , $conn->real_escape_string($usuario['FullName'])
-            , $conn->real_escape_string($usuario['email'])
-            , $usuario['id_user']);
-       /* if ( $conn->query($query) ) {
+
+        // Check that what you're changing is different from what you have
+
+        $name = isset($datos['username']) ? $datos['username'] : null;
+        $fullName = isset($datos['FullName']) ? $datos['FullName'] : null;
+        $email = isset($datos['email']) ? $datos['email'] : null;
+
+        if ($name != "" && $name != $this->username) { // Change username
+            $this->username = $name;
+        }
+
+        if ($fullName != "" && $fullName != $this->fullname) {
+            $this->fullname = $fullName;
+        }
+
+        if ($email != "" && $name != $this->email) {
+            $this->email = $email;
+        }
+
+        $sql = 'UPDATE users U SET username = \''.$this->username.'\', fullname = \''.$this->fullname.'\', email = \''.$this->email.'\' WHERE U.id = '.$this->id.'';
+        
+        if ($conn->query($sql) ) {
             if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el usuario: " . $usuario['username'];
+                echo "No se ha podido actualizar el usuario: " . $this->username;
+                header("Location: updateUser.php?id=".$datos['id_user'].'&error=repeat');
                 exit();
             }
         } else {
             echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
-        }*/
-        $consulta = mysqli_query($conn,$query);
-
-        if($consulta){
-           // $user = self::buscaUsuario($usuario['username']);
-             return true;
         }
-        else{
-            echo "Error al actualizar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-           return true;
-        }
-        
        
     }
 

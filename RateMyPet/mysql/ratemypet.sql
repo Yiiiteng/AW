@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.5
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-04-2019 a las 11:34:42
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.10
+-- Tiempo de generación: 12-04-2019 a las 21:13:25
+-- Versión del servidor: 10.1.38-MariaDB
+-- Versión de PHP: 7.3.2
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -100,8 +100,7 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 (39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6),
 (40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6),
 (41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 0, 9),
-(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9),
-(43, 'Mishell', '                                    ', 'Hamster', 'Estudiante', 0, 9);
+(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9);
 
 -- --------------------------------------------------------
 
@@ -111,7 +110,8 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 
 CREATE TABLE `posts` (
   `idpost` int(10) NOT NULL,
-  `time` date NOT NULL,
+  `title` varchar(80) NOT NULL,
+  `time` date DEFAULT NULL,
   `likes` int(11) NOT NULL,
   `repets` int(11) NOT NULL,
   `petid` int(11) NOT NULL,
@@ -122,13 +122,11 @@ CREATE TABLE `posts` (
 -- Volcado de datos para la tabla `posts`
 --
 
-INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES
-(1, '0000-00-00', 0, 0, 29, '..'),
-(2, '0000-00-00', 0, 0, 29, '..'),
-(3, '0000-00-00', 0, 0, 29, '..'),
-(4, '2019-04-12', 0, 0, 35, 'cosas'),
-(5, '2019-04-17', 4, 5, 31, 'Soy un post de Jeffrey!'),
-(6, '2019-04-17', 4, 5, 31, 'Soy un post de Jeffrey!');
+INSERT INTO `posts` (`idpost`, `title`, `time`, `likes`, `repets`, `petid`, `description`) VALUES
+(4, 'Probando, probando.', '2019-04-12', 0, 0, 35, 'My first post!'),
+(16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              '),
+(17, 'Hmmmmmmmmmmmmmm... Tarta...', '2019-04-12', 0, 0, 35, 'Estoy probando esta nueva red social. ¿Está en construcción?                '),
+(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ');
 
 -- --------------------------------------------------------
 
@@ -172,7 +170,7 @@ CREATE TABLE `users` (
 --
 
 INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `numFollowers`, `numFollowing`) VALUES
-(6, 'aaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 0, 0),
+(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 0, 0),
 (7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0),
 (8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0),
 (9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0),
@@ -245,7 +243,7 @@ ALTER TABLE `pets`
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
 
 --
 -- AUTO_INCREMENT de la tabla `users`

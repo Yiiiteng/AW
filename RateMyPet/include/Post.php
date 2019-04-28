@@ -15,11 +15,13 @@ class Post {
     private $repets; // Auto-set
     private $time; // Auto-set
     private $image; // Auto-set
+    private $title; // Auto-set
 
-    public function __construct($petid, $title, $description, $likes, $repets, $time, $image) {
+    public function __construct($idpost, $petid, $title, $description, $likes, $repets, $time, $image) {
+        $this->idpost = $idpost;
         $this->petid = $petid;
         $this->title = $title;
-        $this->$description = $description;
+        $this->description = $description;
         $this->likes = $likes;
         $this->repets = $repets;
         $this->time = $time;
@@ -35,7 +37,7 @@ class Post {
         if ($rs) {
             if ( $rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc(); // Add following parameters
-                $post = new Post($fila['idpost'], $fila['petid'], $fila['userid'], $fila['content'], $fila['likes'], $fila['repets'], $fila['tiempo'], $fila['petname']);
+                $post = new Post($fila['idpost'], $fila['petid'], $fila['title'], $fila['description'], $fila['likes'], $fila['repets'], $fila['time'], '');
                 $result = $post;
             }
             $rs->free();
@@ -63,7 +65,9 @@ class Post {
         // idpost / time / likes / repets / petid / description
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $sql = "INSERT INTO posts VALUES ('', '.$this->time.', '.$this->likes.', '.$this->repets.', '.$this->petid.', '.$this->description.')";
+        // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
+        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\')';
+        echo ''.$sql;
         $rs = $conn->query($sql);
         $idPost = $conn->insert_id;
         if ($rs) {
@@ -102,11 +106,16 @@ class Post {
         return $this->repets;
     }
 
-    public function tiempo() {
-        return $this->tiempo;
+    public function time() {
+        return $this->time;
     }
-    public function contenido() {
-        return $this->content;
+
+    public function description() {
+        return $this->description;
+    }
+
+    public function title() {
+        return $this->title;
     }
 
     public function displayHome($postList, $numPosts) {
@@ -118,15 +127,16 @@ class Post {
         }
     }
 
-
     public function toString($post) { // te printea un post a poartir de una row
+        $title = $post['title'];
         $idpet = $post['petid'];
         $name = $post['name'];
         $time = $post['time'];
         $likes = $post['likes'];
         $description = $post['description'];
         $repets = $post['repets'];
-        return '<h1><a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1>
+        return '<h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1>
+                <h2>'.$title.'</h2>
                 <h2>'.$description.'</h2>
                 <h3>'.$repets.' Repets '.$likes.' Likes</h3>
                 <h3>Date: '.$time.'</h3>

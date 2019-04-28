@@ -25,7 +25,7 @@ if (isset($_GET['followersUsers'])) { // Check if it is the followers list
     }
 } else if (isset($_GET['followersPets'])) { // Check if it is the followers list
     $petId = $_GET['idPet'];
-    $sqlFollowing = 'SELECT * FROM followedPets  WHERE petId = '.$petId; // Return the user ID
+    $sqlFollowing = 'SELECT * FROM followedPets WHERE petId = '.$petId; // Return the user ID
     $following = $conn->query($sqlFollowing);
     $allUsers = array(); // Retrieve users that you are following
     if ($following->num_rows > 0) {   

@@ -21,17 +21,7 @@
 
 	<div class="content">
 		<div id="image">
-		<?php
-			/*if ($me) { // If this is me
-				echo '<h1>This is your Profile Page</h1>
-				<p>Here you will be able to select any of your pet accounts, add a new pet, change your profile settings...</p>';
-
-
-			} else { // This is someone else's profile
-				echo '<h1>This is '.$user->username().'\'s Page</h1>';
-						
-			}*/
-		
+		<?php	
 			$_SESSION["ownerOpet"]="owner";
 			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {

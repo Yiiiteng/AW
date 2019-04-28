@@ -164,7 +164,7 @@ class Pet {
     }
 
     public function addPost($title, $tags, $description, $image) {
-        $post = new Post($this->petId, $title, $description, 0, 0, time(), $image);
+        $post = new Post($this->petId, $title, $description, 0, 0, date("Y/m/d"), $image);
         $post->submitPost();
     }
 

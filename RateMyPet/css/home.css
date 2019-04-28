@@ -1,0 +1,15 @@
+.feed-post {
+    border: solid black 2px;
+    text-align: center;
+    margin-bottom: 20px;
+}
+
+.feed-post #title {
+    border: solid black 2px;
+    text-align: center;
+}
+
+.feed-post #post{
+    border: solid black 2px;
+    text-align: center;
+}

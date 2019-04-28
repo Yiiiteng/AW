@@ -10,6 +10,12 @@ define('BD_HOST', 'localhost');
 define('BD_NAME', 'ratemypet');
 define('BD_USER', 'root');
 define('BD_PASS', '');
+define('RAIZ_APP', __DIR__);
+define('RUTA_APP', 'VM-0014/RateMyPet/');
+define('RUTA_IMGS', RUTA_APP.'img/');
+define('RUTA_CSS', RUTA_APP.'css/');
+define('RUTA_JS', RUTA_APP.'js/');
+define('INSTALADA', true );
 
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
@@ -26,7 +32,7 @@ $conn = $app->conexionBd();
 // Retrieve user ID if possible
 
 if (isset($_SESSION['username'])) {
-    $sql = sprintf("SELECT id FROM users  WHERE username = '%s'", $_SESSION['username']); // Retrieve user id
+    $sql = sprintf("SELECT id FROM users WHERE id = '%s'", $_SESSION['user']->id()); // Retrieve user id
     $result = $conn->query($sql);
     $owner_id = -1;
 

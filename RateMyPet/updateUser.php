@@ -1,7 +1,7 @@
 <?php
 	require_once __DIR__.'/include/Aplicacion.php';
 	require_once __DIR__.'/include/config.php';
-	require_once __DIR__.'/include/FormularioUser.php';
+	require_once __DIR__.'/include/FormularioEditUser.php';
 ?>
 
 <!DOCTYPE html>
@@ -19,7 +19,7 @@
 	<div>
 		<?php
 			$opciones = array(); // Ninguna por defecto
-			$formulario = new FormularioUser("User",$opciones); // Créame una instancia hija de Form de tipo FormularioPet
+			$formulario = new FormularioEditUser("User",$opciones); // Créame una instancia hija de Form de tipo FormularioPet
 			$formulario->gestiona(); // Búscame el HTML correspondiente al formulario de tipo Añadir Pet
 		?>
 	<div>

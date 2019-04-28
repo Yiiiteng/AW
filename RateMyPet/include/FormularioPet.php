@@ -22,7 +22,7 @@ class FormularioPet extends Form {
                             <tr>
                                 <td>Type: </td>
                                 <td>
-                                <select class="form-control id="petType" type="text" name="petType">
+                                <select class="form-"control" id="petType" type="text" name="petType">
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Hamster">Hamster</option>
@@ -47,6 +47,13 @@ class FormularioPet extends Form {
                     </div>
                     <button class="button-create">Create!</button>
                 </div>';
+
+                /*<script>       ------ RETRIEVE VALUE WITHOUT SUBMIT
+ var changeInput = function  (val){
+            var input = document.getElementById("age");
+            input.value = val;
+        }
+</script>*/
     }
 
     protected function procesaFormulario($datos) { // Procesa los datos del formulario.
