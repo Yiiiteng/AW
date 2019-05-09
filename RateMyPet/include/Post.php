@@ -127,15 +127,14 @@ class Post {
         }
     }
 
-    public function toString($post) { // te printea un post a poartir de una row
+    public function toString($post) { // te printea un post a partir de una row
         $title = $post['title'];
         $idpet = $post['petid'];
-        $name = $post['name'];
         $time = $post['time'];
         $likes = $post['likes'];
         $description = $post['description'];
-        $repets = $post['repets'];
-        return '<h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1>
+        $repets = $post['repets'];                                                            //coger el nombre del pet de algun stitio
+        return '<h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
                 <h2>'.$title.'</h2>
                 <h2>'.$description.'</h2>
                 <h3>'.$repets.' Repets '.$likes.' Likes</h3>

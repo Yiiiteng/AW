@@ -37,7 +37,7 @@
                         echo '<div id="title">'; // Titlte of the post
                             echo '<h1>Post from: <a href="petProfile.php?idPet='.$pet->petId().'">'.$pet->petName().'</a></h1>';
                             echo '<h3>at: '.$post->time().'</h3>';
-                            echo '<h2>Title: '.$post->title().'</h2>';
+                            echo '<h2>Title: <a href="postMascota.php?id='.$post->idpost().'">'.$post->title().'</a></h2>';
                         echo '</div>';
                         echo '<div id="post">'; // Titlte of the post
                             echo ''.$post->description();
