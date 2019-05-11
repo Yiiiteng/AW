@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 06-05-2019 a las 12:37:14
+-- Tiempo de generación: 11-05-2019 a las 22:05:53
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -139,18 +139,39 @@ CREATE TABLE `posts` (
   `likes` int(11) NOT NULL,
   `repets` int(11) NOT NULL,
   `petid` int(11) NOT NULL,
-  `description` varchar(140) DEFAULT NULL
+  `description` varchar(140) DEFAULT NULL,
+  `pending` tinyint(1) NOT NULL DEFAULT '1'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `posts`
 --
 
-INSERT INTO `posts` (`idpost`, `title`, `time`, `likes`, `repets`, `petid`, `description`) VALUES
-(4, 'Probando, probando.', '2019-04-12', 0, 0, 35, 'My first post!'),
-(16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              '),
-(17, 'Hmmmmmmmmmmmmmm... Tarta...', '2019-04-12', 0, 0, 35, 'Estoy probando esta nueva red social. ¿Está en construcción?                '),
-(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ');
+INSERT INTO `posts` (`idpost`, `title`, `time`, `likes`, `repets`, `petid`, `description`, `pending`) VALUES
+(4, 'Probando, probando.', '2019-04-12', 0, 0, 35, 'My first post!', 1),
+(16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              ', 1),
+(17, 'Hmmmmmmmmmmmmmm... Tarta...', '2019-04-12', 0, 0, 35, 'Estoy probando esta nueva red social. ¿Está en construcción?                ', 1),
+(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ', 1);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `postvalidation`
+--
+
+CREATE TABLE `postvalidation` (
+  `idPost` int(11) NOT NULL,
+  `idMod` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `postvalidation`
+--
+
+INSERT INTO `postvalidation` (`idPost`, `idMod`) VALUES
+(4, 6),
+(16, 6),
+(17, 6);
 
 -- --------------------------------------------------------
 
@@ -184,6 +205,7 @@ CREATE TABLE `users` (
   `password` varchar(80) NOT NULL,
   `email` varchar(20) NOT NULL,
   `rol` varchar(10) NOT NULL,
+  `moderator` tinyint(1) NOT NULL DEFAULT '0',
   `numFollowers` int(5) NOT NULL,
   `numFollowing` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -192,12 +214,12 @@ CREATE TABLE `users` (
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `numFollowers`, `numFollowing`) VALUES
-(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 0, 0),
-(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0),
-(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0),
-(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0),
-(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0);
+INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `moderator`, `numFollowers`, `numFollowing`) VALUES
+(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 1, 0, 0),
+(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0),
+(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0),
+(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0),
+(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
