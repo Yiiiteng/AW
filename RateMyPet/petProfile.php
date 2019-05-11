@@ -73,14 +73,15 @@
                 $myPosts = Post::allPosts($pet->petId());
                 if ($myPosts->num_rows > 0) { 
                     echo '<div class="posts">';
-                    while($post = $myPosts->fetch_assoc()) {
+                    while($row = $myPosts->fetch_assoc()) {
+                        $post = Post::buscaPost($row['idpost']);
                         echo '
                         <div class="fourinline container card">
-                            <img src="posts/'.$post['idpost'].'.png" style="width:100%" class="hover-opacity">
+                            <a href="postMascota.php?id='.$post->idPost().'"><img src="posts/'.$post->idPost().'.png" style="width:100%" class="hover-opacity"></a>
                             <div class="container white">
-                            <p>'.$post['title'].'</p>
-                            <p>'.$post['description'].'</p>
-                            <p class="iright"><i class="fa fa-heart like"></i>'.$post['likes'].'</p>
+                            <p>'.$post->title().'</p>
+                            <p>'.$post->description().'</p>
+                            <p class="iright"><i class="fa fa-heart like"></i>'.$post->likes().'</p>
                             </div>
                         </div>';
                     }

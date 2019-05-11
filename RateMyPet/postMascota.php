@@ -22,7 +22,23 @@
     
 	<div class="content">
 		<?php
-			echo ''.Post::toString($postSimple);
+			if ($mod) { // You are a mod
+				if ($pending) {
+					echo '<h1>This post needs to be verified.</h1>';
+					if (!$signed) {
+						echo '
+							<form action="include/verifyPost.php" method="POST">
+								<input type="hidden" name="postId" value="'.$post->idpost().'">
+								<button type="submit">Verify</button>
+							</form>
+						';
+					} else {
+						echo '<h1>You have already signed the petition. Awaiting aproval from the other mods.</h1>';
+					}
+				}
+			} else { // You are not a mod
+				echo ''.$post->toString();
+			}
 		?>
 	</div>
 

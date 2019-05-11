@@ -8,6 +8,12 @@
 			<li><a href="index.php">Home</a></li>
 			<?php
 				echo '<li><a href="ownerProfile.php?id='.$_SESSION["user"]->id().'">Profile</a></li>';
+				if ($_SESSION["user"]->rol() == "admin") {
+					echo '<li><a href="adminOptions.php">Admin Options</a></li>';
+				}
+				if ($_SESSION["user"]->isMod()) {
+					echo '<li><a href="moderatorOptions.php">Moderator Options</a></li>';
+				}
 			?>
 			<li>
 				<div class="bar1"> 

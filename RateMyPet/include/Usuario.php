@@ -229,4 +229,44 @@ class Usuario {
                 <h3>'.$email.'</h3>
                 </br>';
     }
+
+    // Administrator Settings
+
+    public static function getMods() { // Retrieves a list of current moderators for Rate My Pet
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM users WHERE moderator = 1'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else return false;
+    }
+
+    public static function revokeMod($id) { // Revokes moderator priviledges from a user
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'UPDATE users U SET moderator = 0 WHERE id = '.$id.'';
+        $result = $conn->query($sql);
+        return $result;
+    }
+
+    public static function giveMod($id) { // Grants moderator priviledges for a user
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'UPDATE users SET moderator = 1 WHERE id = '.$id.'';
+        $result = $conn->query($sql);
+        return $result;
+    }
+
+    public function isMod() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM users WHERE id = '.$this->id.'';
+        $result = $conn->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            if ($row['moderator'] == 1) return true;
+            else return false;
+        } else return false; 
+    }
+
 }

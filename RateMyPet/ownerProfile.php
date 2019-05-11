@@ -71,6 +71,23 @@
 				</tr>';
 			}
 			else{
+				if ($_SESSION['user']->rol() == "admin") {
+					// You can give someone Moderator Priviledges
+					if ($user->isMod()) { // If the user is not a moderator
+						echo '<h1>'.$user->username().' is a Moderator</h1>'; // You can give him moderator priviledges
+						echo '<form action="include/manageMods.php" method="POST">
+							<input type="hidden" value="'.$user->id().'" name="id">
+							<input type="hidden" value="revoke" name="action">
+							<button type="submit" name="revoke" value="your_value" class="btn-link">Revoke</button>
+						</form>';
+					} else { // The user is a Moderator of Rate My Pet
+						echo '<form action="include/manageMods.php" method="POST">
+							<input type="hidden" value="'.$user->id().'" name="id">
+							<input type="hidden" value="give" name="action">
+							<button type="submit" name="revoke" value="your_value" class="btn-link">Give Mod</button>
+						</form>';
+					}
+				} 
 				if ($following) {
 					echo '<tr>
 					<td><button type="button" id="button-follow" onclick="window.location.href=\'include/follow.php?action=unfollowUser&id2='.$user->id().'\'"> Unfollow </button></td>
