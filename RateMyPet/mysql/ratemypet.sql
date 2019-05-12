@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 11-05-2019 a las 22:05:53
+-- Tiempo de generación: 12-05-2019 a las 19:04:40
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -29,10 +29,11 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `comments` (
+  `idcomment` int(11) NOT NULL,
+  `idPost` int(11) NOT NULL,
+  `idUser` int(11) NOT NULL,
   `content` text NOT NULL,
-  `likes` int(11) NOT NULL,
-  `idcomment` varchar(9) NOT NULL,
-  `idPost` int(11) NOT NULL
+  `likes` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 -- --------------------------------------------------------
@@ -82,6 +83,14 @@ CREATE TABLE `likedposts` (
   `idPost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
+--
+-- Volcado de datos para la tabla `likedposts`
+--
+
+INSERT INTO `likedposts` (`idUser`, `idPost`) VALUES
+(6, 4),
+(6, 16);
+
 -- --------------------------------------------------------
 
 --
@@ -106,25 +115,26 @@ CREATE TABLE `pets` (
   `type` text NOT NULL,
   `breed` text NOT NULL,
   `treats` int(11) NOT NULL,
-  `owner_id` int(11) NOT NULL
+  `owner_id` int(11) NOT NULL,
+  `verified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `pets`
 --
 
-INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`) VALUES
-(29, 'Kiwi', '							', 'Cat', 'Siamesse', 0, 6),
-(30, 'Mickey', '							', 'Hamster', 'White', 0, 6),
-(31, 'Jeffrey', '							', 'Rabbit', 'Grey', 0, 6),
-(35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7),
-(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 9, 7),
-(37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7),
-(38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6),
-(39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6),
-(40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6),
-(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 81, 9),
-(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9);
+INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`, `verified`) VALUES
+(29, 'Kiwi', '              ', 'Cat', 'Siamesse', 0, 6, 0),
+(30, 'Mickey', '              ', 'Hamster', 'White', 0, 6, 0),
+(31, 'Jeffrey', '             ', 'Rabbit', 'Grey', 0, 6, 0),
+(35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7, 0),
+(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 9, 7, 0),
+(37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7, 0),
+(38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6, 0),
+(39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6, 0),
+(40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6, 0),
+(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 81, 9, 0),
+(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9, 0);
 
 -- --------------------------------------------------------
 
@@ -133,7 +143,7 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 --
 
 CREATE TABLE `posts` (
-  `idpost` int(10) NOT NULL,
+  `idpost` int(11) NOT NULL,
   `title` varchar(80) NOT NULL,
   `time` date DEFAULT NULL,
   `likes` int(11) NOT NULL,
@@ -149,9 +159,10 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`idpost`, `title`, `time`, `likes`, `repets`, `petid`, `description`, `pending`) VALUES
 (4, 'Probando, probando.', '2019-04-12', 0, 0, 35, 'My first post!', 1),
-(16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              ', 1),
+(16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              ', 0),
 (17, 'Hmmmmmmmmmmmmmm... Tarta...', '2019-04-12', 0, 0, 35, 'Estoy probando esta nueva red social. ¿Está en construcción?                ', 1),
-(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ', 1);
+(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ', 1),
+(19, 'Prueba', '2019-05-12', 0, 0, 29, 'Prueba                                    ', 1);
 
 -- --------------------------------------------------------
 
@@ -171,7 +182,27 @@ CREATE TABLE `postvalidation` (
 INSERT INTO `postvalidation` (`idPost`, `idMod`) VALUES
 (4, 6),
 (16, 6),
-(17, 6);
+(17, 6),
+(18, 6),
+(19, 6);
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `repets`
+--
+
+CREATE TABLE `repets` (
+  `idUser` int(11) NOT NULL,
+  `idPost` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `repets`
+--
+
+INSERT INTO `repets` (`idUser`, `idPost`) VALUES
+(6, 16);
 
 -- --------------------------------------------------------
 
@@ -229,22 +260,31 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `
 -- Indices de la tabla `comments`
 --
 ALTER TABLE `comments`
-  ADD PRIMARY KEY (`idcomment`,`idPost`),
-  ADD KEY `idPost` (`idPost`);
+  ADD PRIMARY KEY (`idcomment`,`idPost`,`idUser`),
+  ADD KEY `idcomment` (`idcomment`,`idPost`),
+  ADD KEY `idPost` (`idPost`),
+  ADD KEY `idUser` (`idUser`);
 
 --
 -- Indices de la tabla `followedpets`
 --
 ALTER TABLE `followedpets`
   ADD PRIMARY KEY (`userId`,`petId`),
-  ADD KEY `userId` (`userId`),
   ADD KEY `petId` (`petId`);
 
 --
 -- Indices de la tabla `likedcomments`
 --
 ALTER TABLE `likedcomments`
-  ADD PRIMARY KEY (`idComment`,`idUser`);
+  ADD PRIMARY KEY (`idComment`,`idUser`),
+  ADD KEY `idUser` (`idUser`);
+
+--
+-- Indices de la tabla `likedposts`
+--
+ALTER TABLE `likedposts`
+  ADD PRIMARY KEY (`idUser`,`idPost`),
+  ADD KEY `idPost` (`idPost`);
 
 --
 -- Indices de la tabla `messages`
@@ -256,24 +296,36 @@ ALTER TABLE `messages`
 -- Indices de la tabla `pets`
 --
 ALTER TABLE `pets`
-  ADD PRIMARY KEY (`idPet`),
-  ADD KEY `pets_ibfk_1` (`owner_id`);
+  ADD PRIMARY KEY (`idPet`);
 
 --
 -- Indices de la tabla `posts`
 --
 ALTER TABLE `posts`
   ADD PRIMARY KEY (`idpost`,`petid`),
-  ADD UNIQUE KEY `index` (`idpost`),
-  ADD KEY `idpost` (`idpost`,`petid`);
+  ADD KEY `petid` (`petid`);
+
+--
+-- Indices de la tabla `postvalidation`
+--
+ALTER TABLE `postvalidation`
+  ADD PRIMARY KEY (`idPost`,`idMod`),
+  ADD KEY `idMod` (`idMod`);
+
+--
+-- Indices de la tabla `repets`
+--
+ALTER TABLE `repets`
+  ADD PRIMARY KEY (`idUser`,`idPost`),
+  ADD KEY `idPost` (`idPost`);
 
 --
 -- Indices de la tabla `seguimientos`
 --
 ALTER TABLE `seguimientos`
   ADD PRIMARY KEY (`userId`,`seguidorId`),
-  ADD KEY `userId` (`userId`),
-  ADD KEY `seguimientos_ibfk_1` (`seguidorId`);
+  ADD KEY `userId` (`userId`,`seguidorId`),
+  ADD KEY `seguidorId` (`seguidorId`);
 
 --
 -- Indices de la tabla `users`
@@ -296,7 +348,7 @@ ALTER TABLE `pets`
 -- AUTO_INCREMENT de la tabla `posts`
 --
 ALTER TABLE `posts`
-  MODIFY `idpost` int(10) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=19;
+  MODIFY `idpost` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=20;
 
 --
 -- AUTO_INCREMENT de la tabla `users`
@@ -312,7 +364,8 @@ ALTER TABLE `users`
 -- Filtros para la tabla `comments`
 --
 ALTER TABLE `comments`
-  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`idPost`) REFERENCES `posts` (`idpost`);
+  ADD CONSTRAINT `comments_ibfk_1` FOREIGN KEY (`idPost`) REFERENCES `posts` (`idpost`),
+  ADD CONSTRAINT `comments_ibfk_2` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`);
 
 --
 -- Filtros para la tabla `followedpets`
@@ -322,17 +375,45 @@ ALTER TABLE `followedpets`
   ADD CONSTRAINT `followedpets_ibfk_2` FOREIGN KEY (`petId`) REFERENCES `pets` (`idPet`);
 
 --
--- Filtros para la tabla `pets`
+-- Filtros para la tabla `likedcomments`
 --
-ALTER TABLE `pets`
-  ADD CONSTRAINT `pets_ibfk_1` FOREIGN KEY (`owner_id`) REFERENCES `users` (`id`) ON DELETE CASCADE ON UPDATE CASCADE;
+ALTER TABLE `likedcomments`
+  ADD CONSTRAINT `likedcomments_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `likedcomments_ibfk_2` FOREIGN KEY (`idComment`) REFERENCES `comments` (`idcomment`);
+
+--
+-- Filtros para la tabla `likedposts`
+--
+ALTER TABLE `likedposts`
+  ADD CONSTRAINT `likedposts_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `likedposts_ibfk_2` FOREIGN KEY (`idPost`) REFERENCES `posts` (`idpost`);
+
+--
+-- Filtros para la tabla `posts`
+--
+ALTER TABLE `posts`
+  ADD CONSTRAINT `posts_ibfk_1` FOREIGN KEY (`petid`) REFERENCES `pets` (`idPet`);
+
+--
+-- Filtros para la tabla `postvalidation`
+--
+ALTER TABLE `postvalidation`
+  ADD CONSTRAINT `postvalidation_ibfk_1` FOREIGN KEY (`idMod`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `postvalidation_ibfk_2` FOREIGN KEY (`idPost`) REFERENCES `posts` (`idpost`);
+
+--
+-- Filtros para la tabla `repets`
+--
+ALTER TABLE `repets`
+  ADD CONSTRAINT `repets_ibfk_1` FOREIGN KEY (`idUser`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `repets_ibfk_2` FOREIGN KEY (`idPost`) REFERENCES `posts` (`idpost`);
 
 --
 -- Filtros para la tabla `seguimientos`
 --
 ALTER TABLE `seguimientos`
-  ADD CONSTRAINT `seguimientos_ibfk_1` FOREIGN KEY (`seguidorId`) REFERENCES `users` (`id`),
-  ADD CONSTRAINT `seguimientos_ibfk_2` FOREIGN KEY (`userId`) REFERENCES `users` (`id`);
+  ADD CONSTRAINT `seguimientos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
+  ADD CONSTRAINT `seguimientos_ibfk_2` FOREIGN KEY (`seguidorId`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

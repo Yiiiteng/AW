@@ -3,8 +3,8 @@
     require_once __DIR__.'/include/config.php';
     require_once __DIR__.'/include/selectPet.php';
     require_once __DIR__.'/include/Post.php';
-
 ?>
+
 <!DOCTYPE html>
 <html>
 <head>
@@ -27,6 +27,12 @@
                 echo '<h2>I belong to you!</h2>';
             } else {
                 echo '<h2>This pet belongs to: <a href="ownerProfile.php?id='.$pet->owner_id().'">'.$name.'</a></h2>';
+            }
+
+            if ($verified) { // You are accepted by the community
+                
+            } else { // Make the profile invisible for other users
+                echo '<h1>This profile is awaiting validation.</h1>';
             }
         ?>
         

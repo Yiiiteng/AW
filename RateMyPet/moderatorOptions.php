@@ -28,7 +28,7 @@
                 $post = Post::buscaPost($row['idpost']);
                 $pet = Pet::buscarPet($post->petid());
                 echo '
-                    <h1>Post from: '.$pet->petName().'</h1>';
+                    <h1>Post from: <a href="postMascota.php?id='.$post->idpost().'">'.$pet->petName().'</a></h1>';
                 if (!$post->checkSigned($_SESSION['user']->id(), $post->idpost())) { // If you still haven't signed this petition
                     echo '<form action="postMascota.php" method="GET">
                             <input type="hidden" value="'.$post->idPost().'" name="id">

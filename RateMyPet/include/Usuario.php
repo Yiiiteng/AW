@@ -230,6 +230,76 @@ class Usuario {
                 </br>';
     }
 
+    // Post functions
+
+    public function checkLiked($postId) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM likedposts WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
+    public function checkRepeted($postId) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM repets WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
+    public function likedPosts() { // Return a list with the liked posts
+        
+    }
+
+    public function likePost($postId) { // Like a post (add it to your liked list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO likedposts VALUES ('.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unlikePost($postId) { // Unlike a post (remove it from your liked list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM likedposts WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function repetedPosts() { // Return a list with the repeted posts
+        
+    }
+
+    public function repetPost($postId) { // Repet a post (add it to your repeted list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO repets VALUES ('.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unrepetPost($postId) { // Unrepet a post (remove it from your repeted list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM repets WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
     // Administrator Settings
 
     public static function getMods() { // Retrieves a list of current moderators for Rate My Pet

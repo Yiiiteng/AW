@@ -13,7 +13,8 @@
 	<meta charset="utf-8">
 	<link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
-    <link rel="stylesheet" href="css/content.css">
+	<link rel="stylesheet" href="css/content.css">
+	<link rel="stylesheet" href="css/post.css">
 </head>
 <body>
 	<?php
@@ -22,23 +23,54 @@
     
 	<div class="content">
 		<?php
-			if ($mod) { // You are a mod
-				if ($pending) {
-					echo '<h1>This post needs to be verified.</h1>';
-					if (!$signed) {
-						echo '
-							<form action="include/verifyPost.php" method="POST">
-								<input type="hidden" name="postId" value="'.$post->idpost().'">
-								<button type="submit">Verify</button>
-							</form>
-						';
-					} else {
-						echo '<h1>You have already signed the petition. Awaiting aproval from the other mods.</h1>';
+
+			if ($pending && ($me || $mod)) { // I'm the only one that can see this post (and a moderator)
+				echo '<h1>This post needs to be verified.</h1>';
+				echo '<h2>You are seeing a preview.</h2>';
+				if ($mod) {
+					if (!$me) {
+						if (!$signed) {
+							echo '
+								<form action="include/verifyPost.php" method="POST">
+									<input type="hidden" name="postId" value="'.$post->idpost().'">
+									<button type="submit">Verify</button>
+								</form>
+							';
+						} else {
+							echo '<h1>You have already signed the petition. Awaiting aproval from the other mods.</h1>';
+						}
+					} else { 
+						echo ''.$post->toString(); // Print the Post				
 					}
 				}
-			} else { // You are not a mod
-				echo ''.$post->toString();
+			} else { // Not pending || Not me
+				echo ''.$post->toString(); // Print the Post
+				echo '<div id="like">';
+					echo '<form action="include/likePost.php" method="POST">'; // Like / dislike the post
+						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
+						if ($like) { // I already like the post
+							echo '<input type="hidden" name="type" value="dislike">';
+							echo '<button type="submit">Un-Pet</button>';
+						} else { // I like the post
+							echo '<input type="hidden" name="type" value="like">';
+							echo '<button type="submit">Pet</button>';
+						}
+					echo '</form>'; // Like / dislike the post
+				echo '</div>';
+				echo '<div id="repet">';
+					echo '<form action="include/repetPost.php" method="POST">'; // Like / dislike the post
+						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
+						if ($repet) { // I already like the post
+							echo '<input type="hidden" name="type" value="dislike">';
+							echo '<button type="submit">Un-Repet</button>';
+						} else { // I like the post
+							echo '<input type="hidden" name="type" value="like">';
+							echo '<button type="submit">Repet</button>';
+						}
+					echo '</form>'; // Like / dislike the post
+				echo '</div>';
 			}
+			
 		?>
 	</div>
 

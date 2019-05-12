@@ -66,7 +66,7 @@ class Post {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
-        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\')';
+        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\', 1)';
         echo ''.$sql;
         $rs = $conn->query($sql);
         $idPost = $conn->insert_id;
@@ -98,12 +98,30 @@ class Post {
         return $this->userid;
     }
 
-    public function likes() {
-        return $this->likes;
+    public function likes() { // Loads the amount of likes
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM likedposts WHERE idPost = '.$this->idpost.'';
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return ($rs->num_rows);
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
     }
 
-    public function repets() {
-        return $this->repets;
+    public function repets() { // Loads the amount of repets
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM repets WHERE idPost = '.$this->idpost.'';
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return ($rs->num_rows);
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
     }
 
     public function time() {
@@ -140,7 +158,7 @@ class Post {
         }
     }
 
-    public function toString() { // te printea un post a partir de una row
+    public function toString() { //
         $title = $this->title();
         $idpet = $this->petid();
         $time = $this->time();
@@ -148,12 +166,22 @@ class Post {
         $description = $this->description();;
         $repets = $this->repets();
         $name = Pet::buscarPet($idpet)->petName();//coger el nombre del pet de algun stitio
-        return '<h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
-                <h2>'.$title.'</h2>
-                <h2>'.$description.'</h2>
-                <h3>'.$repets.' Repets '.$likes.' Likes</h3>
-                <h3>Date: '.$time.'</h3>
-                </br>';
+        $string = '<img id="post" src="upload/posts/'.$this->idpost().'.jpg">
+        <h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
+        <h2>'.$title.'</h2>
+        <h2>'.$description.'</h2>';
+        if ($repets > 0) {
+            $string = $string.'<h3>'.$repets.' <a href="viewRepets.php?id='.$this->idpost().'">Repets</a> | ';
+        } else {
+            $string = $string.'<h3>'.$repets.' Repets | ';
+        }
+        if ($likes > 0) {
+            $string = $string.''.$likes.' <a href="viewLikes.php?id='.$this->idpost().'">Likes</a></h3>';
+        } else {
+            $string = $string.''.$likes.' Likes</h3>';
+        }
+        $string = $string.'<h3>Date: '.$time.'</h3>';
+        return $string;
     }
 
     // Mod Functions
