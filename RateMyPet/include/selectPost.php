@@ -21,6 +21,9 @@
 
         $like = $_SESSION['user']->checkLiked($_GET['id']); // Check if you've liked this post before
         $repet = $_SESSION['user']->checkRepeted($_GET['id']); // Check if you've reposted this post before
+    
+        $comments = Comment::allComments($_GET['id']);
+   
     } else { // You shouldn't be here
         header('Location: error.php');
     }

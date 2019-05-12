@@ -2,8 +2,10 @@
 	require_once __DIR__.'/include/Usuario.php';
 	require_once __DIR__.'/include/Post.php';
     require_once __DIR__.'/include/config.php';
+    require_once __DIR__.'/include/Comment.php';//devuelve un objeto de tipo Post
     require_once __DIR__.'/include/selectPost.php';//devuelve un objeto de tipo Post
-    //css a tope en esta vista uwu
+	
+	//css a tope en esta vista uwu
 ?>
 
 <!DOCTYPE html>
@@ -26,7 +28,31 @@
 
 			if ($pending && ($me || $mod)) { // I'm the only one that can see this post (and a moderator)
 				echo '<h1>This post needs to be verified.</h1>';
-				echo '<h2>You are seeing a preview.</h2>';
+				echo ''.$post->toString(); // Print the Post
+				echo '<div id="like">';
+					echo '<form action="include/likePost.php" method="POST">'; // Like / dislike the post
+						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
+						if ($like) { // I already like the post
+							echo '<input type="hidden" name="type" value="dislike">';
+							echo '<button type="submit">Un-Pet</button>';
+						} else { // I like the post
+							echo '<input type="hidden" name="type" value="like">';
+							echo '<button type="submit">Pet</button>';
+						}
+					echo '</form>'; // Like / dislike the post
+				echo '</div>';
+				echo '<div id="repet">';
+					echo '<form action="include/repetPost.php" method="POST">'; // Like / dislike the post
+						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
+						if ($repet) { // I already like the post
+							echo '<input type="hidden" name="type" value="dislike">';
+							echo '<button type="submit">Un-Repet</button>';
+						} else { // I like the post
+							echo '<input type="hidden" name="type" value="like">';
+							echo '<button type="submit">Repet</button>';
+						}
+					echo '</form>'; // Like / dislike the post
+				echo '</div>';
 				if ($mod) {
 					if (!$me) {
 						if (!$signed) {
@@ -39,9 +65,7 @@
 						} else {
 							echo '<h1>You have already signed the petition. Awaiting aproval from the other mods.</h1>';
 						}
-					} else { 
-						echo ''.$post->toString(); // Print the Post				
-					}
+					} 
 				}
 			} else { // Not pending || Not me
 				echo ''.$post->toString(); // Print the Post
@@ -70,6 +94,15 @@
 					echo '</form>'; // Like / dislike the post
 				echo '</div>';
 			}
+
+			if($comments->num_rows > 0) {
+				echo '<h1>Comments</h1>';
+				while($row = $comments->fetch_assoc()) {
+					$comment = Comment::parseComment($row['idPost'], $row['idUser'], $row['idcomment']);
+					echo $comment->toString();
+				}
+			}
+			else echo 'No comments to display!'
 			
 		?>
 	</div>

@@ -83,7 +83,7 @@
                         $post = Post::buscaPost($row['idpost']);
                         echo '
                         <div class="fourinline container card">
-                            <a href="postMascota.php?id='.$post->idPost().'"><img src="posts/'.$post->idPost().'.png" style="width:100%" class="hover-opacity"></a>
+                            <a href="postMascota.php?id='.$post->idPost().'"><img src="upload/posts/'.$post->idPost().'.jpg" style="width:100%" class="hover-opacity"></a>
                             <div class="container white">
                             <p>'.$post->title().'</p>
                             <p>'.$post->description().'</p>

@@ -163,7 +163,7 @@ class Post {
         $idpet = $this->petid();
         $time = $this->time();
         $likes = $this->likes();
-        $description = $this->description();;
+        $description = $this->description();
         $repets = $this->repets();
         $name = Pet::buscarPet($idpet)->petName();//coger el nombre del pet de algun stitio
         $string = '<img id="post" src="upload/posts/'.$this->idpost().'.jpg">

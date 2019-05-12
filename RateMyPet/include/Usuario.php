@@ -187,6 +187,10 @@ class Usuario {
         return $this->username;
     }
 
+    public function fullname() {
+        return $this->fullname;
+    }
+
     public function email() {
         return $this->email;
     }
