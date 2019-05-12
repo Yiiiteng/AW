@@ -49,32 +49,7 @@ class Comment {
         }
     }
 
-    public function submitPost() {
-        // idpost / time / likes / repets / petid / description
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
-        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\', 1)';
-        echo ''.$sql;
-        $rs = $conn->query($sql);
-        $idPost = $conn->insert_id;
-        if ($rs) {
-            return $rs;
-        } else {
-            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
-        }
-    }
-
-    public function borrarPost($postid){
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $sql = "DELETE FROM posts where idpost = '$postid'";
-        $result = $conn->query($sql);
-    }
-    
-
-    public function idpost() {
+     public function idpost() {
         return $this->idpost;
     }
 
@@ -103,28 +78,6 @@ class Comment {
         }
     }
 
-    public function isPending() {
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql = 'SELECT * FROM posts WHERE idpost = '.$this->idpost.'';
-        $rs = $connect->query($sql);
-        if ($post = $rs->fetch_assoc()) {
-            return ($post['pending'] == '1');
-        } else {
-            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-            exit();
-        }
-    }
-
-    public function displayHome($postList, $numPosts) {
-        $counter = 0;
-        while($counter < $numPosts && $postList->num_rows > $counter) {
-            $post = $postList->fetch_assoc();
-            echo Post::toString($post);
-            $counter = $counter + 1;
-        }
-    }
-
     public function toString() { //
         $content = $this->content();
         $likes = $this->likes();
@@ -138,46 +91,6 @@ class Comment {
         }
         return $string;
     }
-
-    // Mod Functions
-
-    public static function getPending() {
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql = "SELECT * FROM posts  WHERE pending = 1";
-        $rs = $connect->query($sql);
-        if ($rs) {
-            return $rs;
-        } else {
-            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-            exit();
-        }
-    }
-
-    public static function checkSigned($mod, $post) { // Checks if a moderator has already signed the petition to verify a post
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql = 'SELECT * FROM postvalidation WHERE idPost = '.$post.' AND idMod = '.$mod.'';
-        $rs = $connect->query($sql);
-        if ($rs->num_rows != 1) {
-            return false;
-        } else {
-            return true;
-        }
-    }
-
-    public function sign() {
-        $control = Aplicacion::getSingleton();
-        $connect = $control->conexionBd();
-        $sql= 'INSERT INTO postvalidation VALUES ('.$this->idpost().', '.$_SESSION['user']->id().')';
-        $rs = $connect->query($sql);
-        if ($rs) {
-            return true;
-        } else {
-            return false;
-        }
-    }
-
 }
 
 
