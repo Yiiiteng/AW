@@ -191,6 +191,10 @@ class Usuario {
         return $this->email;
     }
 
+      public function fullname() {
+        return $this->fullname;
+    }
+
     public function followerAmount() {
         // Update amount
         $app = Aplicacion::getSingleton();

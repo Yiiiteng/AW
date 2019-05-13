@@ -14,6 +14,8 @@
     <link rel="stylesheet" href="css/content.css">
 	<link rel="stylesheet" href="css/profile.css">
 </head>
+
+<script src="js/changeImage.js"> </script>
 <body>
 	<?php
 		require("include/comun/header.php");
@@ -25,23 +27,26 @@
 			$_SESSION["ownerOpet"]="owner";
 			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img src='.$path.'.jpg alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage" style="cursor:pointer" onclick= src='.$path.'.jpg alt="Logo" width="150" height="150" />';
+	
 			}
 			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-				echo '<img src='.$path.'.png alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage" style="cursor:pointer"  src='.$path.'.png alt="Logo" width="150" height="150" />';
+			
 			}
 			else{
-				echo '<img src="usuarios/default.png" alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage"style="cursor:pointer" src="usuarios/default.png" alt="Logo" width="150" height="150" />';
+		
 			}
 
 			//cambiar foto de perfil
-			echo '<tr>
+			/*echo '<tr>
 				<td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
 			Change photo(jpg/png): 
 			<input type="file" name="file" accept="image/*" id="upload" >
 			<input type="submit" value="Change">
 			</form></td>
-			</tr>';
+			</tr>';*/
 		?>
 		</div>
 		<div>
@@ -112,14 +117,30 @@
 			<ul>
 				<?php
 				if ($myPets->num_rows > 0) { // Iterate through all of my pets
+					echo '<div id="Arrows">
+							<i id="Prev" class="fa fa-chevron-left fa-2x" aria-hidden="true"></i></div>';
 					while($pet = $myPets->fetch_assoc()) {
-						echo '<li><div class="image">
+						/*echo '<li><div class="image">
 								<a href="petProfile.php?idPet='.$pet['idPet'].'">
 								<img src="img/animals/'.$pet['type'].'.png">
 								</a>
 								'.$pet['name'].'
-						</div></li>';
+						</div></li>';*/
+						echo'<section id="Wrapper">
+							<div id="Slideshow">
+								<div id="Slider">
+									<a href="petProfile.php?idPet='.$pet['idPet'].'">
+									<img src="img/animals/'.$pet['type'].'.png"/>
+								</div>
+								
+							</div>
+							</section>';
 					}
+					echo '<div id="Arrows">
+							
+							<i id="Next" class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
+							</div>';
+					
 				} else {
 					if ($me) {
 						echo "<h2>You don't own any pets!</h2>";
