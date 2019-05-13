@@ -23,11 +23,6 @@
         <h1>This is <?php echo ''.$pet->petName(); ?> the <?php echo ''.$pet->petType(); ?>'s Page</h1>
         <?php
             if($mine) {
-                echo'
-                    <form method="post" action="include/borrarPet.php?id='.$pet->owner_id().'&idpet='.$pet->petId().'">
-                    <button class="borrar fa-lg hover-opacity"> Delete this pet
-                        <i class="fa fa-times-circle-o fa-lg"></i></button>
-                    </form>';
                 echo '<p>Here you will be able to browse the pet\'s posts, as well as see everything related with the pet\'s ranking.</p>';
                 echo '<h2>I belong to you!</h2>';
             } else {
@@ -37,7 +32,14 @@
             if ($verified) { // You are accepted by the community
                 
             } else { // Make the profile invisible for other users
-                echo '<h1>This profile is awaiting validation.</h1>';
+                echo '<h1>This pet is awaiting validation.</h1>';
+                if ($_SESSION['user']->isMod() && $mine) {
+                    echo '<h1>Validate now!</h1>';
+                    echo '<form action="petTest.php" method="GET">'; // Like / dislike the post
+						echo '<input type="hidden" name="idPet" value="'.$pet->petId().'">';
+						echo '<button type="submit">Validate</button>';
+					echo '</form>'; // Like / dislike the post
+                }
             }
         ?>
         
@@ -86,16 +88,8 @@
                     echo '<div class="posts">';
                     while($row = $myPosts->fetch_assoc()) {
                         $post = Post::buscaPost($row['idpost']);
-                        
-                        echo'<div class="fourinline container card">';
-                        if($mine){
-                            echo'
-                            <form method="post" action="include/borrarPost.php?idpost='.$post->idPost().'&idpet='.$pet->petId().'">
-                            <button class="borrar fa-lg hover-opacity">
-                                <i class="fa fa-times-circle-o fa-lg"></i></button>
-                            </form>';
-                        }
                         echo '
+                        <div class="fourinline container card">
                             <a href="postMascota.php?id='.$post->idPost().'"><img src="upload/posts/'.$post->idPost().'.jpg" style="width:100%" class="hover-opacity"></a>
                             <div class="container white">
                             <p>'.$post->title().'</p>

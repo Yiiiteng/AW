@@ -47,25 +47,17 @@ class FormularioPet extends Form {
                     </div>
                     <button class="button-create">Create!</button>
                 </div>';
-
-                /*<script>       ------ RETRIEVE VALUE WITHOUT SUBMIT
- var changeInput = function  (val){
-            var input = document.getElementById("age");
-            input.value = val;
-        }
-</script>*/
     }
 
     protected function procesaFormulario($datos) { // Procesa los datos del formulario.
 
-        $petName = isset($_POST['petName']) ? $_POST['petName'] : null;
-        $petType = isset($_POST['petType']) ? $_POST['petType'] : null;
-        $petBreed = isset($_POST['petBreed']) ? $_POST['petBreed'] : null;
-        $petDescript = isset($_POST['petDescript']) ? $_POST['petDescript'] : null;
-        $owner_id = isset($_SESSION['owner_id']) ? $_SESSION['owner_id'] : null;
+        $petName = isset($datos['petName']) ? $datos['petName'] : null;
+        $petType = isset($datos['petType']) ? $datos['petType'] : null;
+        $petBreed = isset($datos['petBreed']) ? $datos['petBreed'] : null;
+        $petDescript = isset($datos['petDescript']) ? $datos['petDescript'] : null;
 
         if (empty($petName) or empty($petType) or empty($petBreed))	{
-            header('Location: ownerprofile.php');
+            header('Location: ownerProfile.php?id='.$_SESSION['user']->id().'');
             exit();
         } else{
             $dir='../usuarios/'.$_SESSION["username"].'/'.$petName;
@@ -94,9 +86,9 @@ class FormularioPet extends Form {
             }
 
             $treats = 0;
-            $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$owner_id);
+            $pet = Pet::insertar($petName,$petType,$petBreed,$petDescript,$treats,$_SESSION['user']->id());
 
-            header('Location: ownerProfile.php?id='.$owner_id);
+            header('Location: ownerProfile.php?id='.$_SESSION['user']->id().'');
             exit();
         }
     }

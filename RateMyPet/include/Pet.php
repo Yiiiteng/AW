@@ -168,13 +168,6 @@ class Pet {
         $post->submitPost();
     }
 
-    public static function borrarPet($petid){
-        $app = Aplicacion::getSingleton();
-        $conn = $app->conexionBd();
-        $sql = "DELETE FROM pets where idPet = '$petid'";
-        $result = $conn->query($sql);
-    }
-
 
     public function petName() {
         return $this->petName;

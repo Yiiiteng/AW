@@ -25,6 +25,6 @@
 	<div>
 	<?php
 		require("include/comun/footer.php");
-    ?>
+  ?>
 </body>
 </html>
