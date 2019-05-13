@@ -64,7 +64,7 @@ class Pet {
     public static function buscarNombreDueño($idOwner) {
         $control = Aplicacion::getSingleton();
         $conn = $control->conexionBd();
-        $sql = "SELECT * FROM users WHERE id = $idOwner";
+        $sql = 'SELECT * FROM users WHERE id = '.$idOwner.'';
         $rs = $conn->query($sql);
         $result = false;
         if ($rs) {
@@ -164,7 +164,7 @@ class Pet {
     }
 
     public function addPost($title, $tags, $description, $image) {
-        $post = new Post($this->petId, $title, $description, 0, 0, date("Y/m/d"), $image);
+        $post = new Post(NULL, $this->petId, $title, $description, 0, 0, date("Y/m/d"), $image);
         $post->submitPost();
     }
 
@@ -195,6 +195,17 @@ class Pet {
 
     public function owner_id() {
         return $this->owner_id;
+    }
+
+    public function isVerified() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM pets WHERE idPet = '.$this->petId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return ($result->fetch_assoc()['verified'] == 1);
+        }
     }
 
     public function followerAmount() {

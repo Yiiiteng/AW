@@ -187,6 +187,10 @@ class Usuario {
         return $this->username;
     }
 
+    public function fullname() {
+        return $this->fullname;
+    }
+
     public function email() {
         return $this->email;
     }
@@ -233,4 +237,145 @@ class Usuario {
                 <h3>'.$email.'</h3>
                 </br>';
     }
+
+    // Post functions
+
+    public function checkLiked($postId) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM likedposts WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
+    public function checkLikedComment($postId, $idComment) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM likedcomments WHERE idUser = '.$this->id.' AND idPost = '.$postId.' AND idcomment = '.$idComment.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
+    public function checkRepeted($postId) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM repets WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
+    public function likedPosts() { // Return a list with the liked posts
+        
+    }
+
+    public function likePost($postId) { // Like a post (add it to your liked list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO likedposts VALUES ('.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unlikePost($postId) { // Unlike a post (remove it from your liked list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM likedposts WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function repetedPosts() { // Return a list with the repeted posts
+        
+    }
+
+    public function repetPost($postId) { // Repet a post (add it to your repeted list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO repets VALUES ('.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unrepetPost($postId) { // Unrepet a post (remove it from your repeted list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM repets WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function likeComment($postId, $idcomment) { // Like a comment (add it to your likedcomments list)
+        $app = Aplicacion::getSingleton();
+        echo 'verga';
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO likedcomments VALUES ('.$idcomment.', '.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unlikeComment($postId, $idcomment) { // Unlike a comment (remove it from your likedcomments list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM likedcomments WHERE idUser = '.$this->id.' AND idPost = '.$postId.' AND idComment = '.$idcomment.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    // Administrator Settings
+
+    public static function getMods() { // Retrieves a list of current moderators for Rate My Pet
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM users WHERE moderator = 1'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows > 0) {
+            return $result;
+        } else return false;
+    }
+
+    public static function revokeMod($id) { // Revokes moderator priviledges from a user
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'UPDATE users U SET moderator = 0 WHERE id = '.$id.'';
+        $result = $conn->query($sql);
+        return $result;
+    }
+
+    public static function giveMod($id) { // Grants moderator priviledges for a user
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'UPDATE users SET moderator = 1 WHERE id = '.$id.'';
+        $result = $conn->query($sql);
+        return $result;
+    }
+
+    public function isMod() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM users WHERE id = '.$this->id.'';
+        $result = $conn->query($sql);
+        if ($row = $result->fetch_assoc()) {
+            if ($row['moderator'] == 1) return true;
+            else return false;
+        } else return false; 
+    }
+
 }

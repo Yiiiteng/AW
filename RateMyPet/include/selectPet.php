@@ -14,4 +14,5 @@ if (!$mine) { // Give me the other owner's name
 if (!$pet) { // No pet with that id was found
     header('Location: error.php');
 }
+$verified = $pet->isVerified();
 ?>

@@ -66,7 +66,7 @@ class Post {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
-        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\')';
+        $sql = 'INSERT INTO posts VALUES (NULL, \''.$this->title.'\',\''.$this->time.'\', '.$this->likes.', '.$this->repets.', '.$this->petid.', \''.$this->description.'\', 1)';
         echo ''.$sql;
         $rs = $conn->query($sql);
         $idPost = $conn->insert_id;
@@ -78,12 +78,38 @@ class Post {
         }
     }
 
-    public function borrarPost($postid){
+     public static function borrarPost($postid){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $sql = "DELETE FROM likedposts where idpost = '$postid'";
+        $conn->query($sql);
+        $sql = "DELETE FROM postvalidation where idpost = '$postid'";
+        $conn->query($sql);
+        $sql = "DELETE FROM repets where idpost = '$postid'";
+        $conn->query($sql);
+        $sql = "DELETE FROM comments where idpost = '$postid'";
+        $conn->query($sql);
+        
         $sql = "DELETE FROM posts where idpost = '$postid'";
         $result = $conn->query($sql);
     }
+
+    public function addComment($idUser, $idPost, $content) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
+        $sql = 'INSERT INTO comments VALUES (NULL, \''.$idPost.'\',\''.$idUser.'\', \''.$content.'\', 0)';
+        echo ''.$sql;
+        $rs = $conn->query($sql);
+        $idPost = $conn->insert_id;
+        if ($rs) {
+            return $rs;
+        } else {
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+    }
+    
     
 
     public function idpost() {
@@ -98,12 +124,30 @@ class Post {
         return $this->userid;
     }
 
-    public function likes() {
-        return $this->likes;
+    public function likes() { // Loads the amount of likes
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM likedposts WHERE idPost = '.$this->idpost.'';
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return ($rs->num_rows);
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
     }
 
-    public function repets() {
-        return $this->repets;
+    public function repets() { // Loads the amount of repets
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM repets WHERE idPost = '.$this->idpost.'';
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return ($rs->num_rows);
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
     }
 
     public function time() {
@@ -118,6 +162,19 @@ class Post {
         return $this->title;
     }
 
+    public function isPending() {
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM posts WHERE idpost = '.$this->idpost.'';
+        $rs = $connect->query($sql);
+        if ($post = $rs->fetch_assoc()) {
+            return ($post['pending'] == '1');
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
+    }
+
     public function displayHome($postList, $numPosts) {
         $counter = 0;
         while($counter < $numPosts && $postList->num_rows > $counter) {
@@ -127,18 +184,69 @@ class Post {
         }
     }
 
-    public function toString($post) { // te printea un post a partir de una row
-        $title = $post['title'];
-        $idpet = $post['petid'];
-        $time = $post['time'];
-        $likes = $post['likes'];
-        $description = $post['description'];
-        $repets = $post['repets'];                                                            //coger el nombre del pet de algun stitio
-        return '<h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
-                <h2>'.$title.'</h2>
-                <h2>'.$description.'</h2>
-                <h3>'.$repets.' Repets '.$likes.' Likes</h3>
-                <h3>Date: '.$time.'</h3>
-                </br>';
+    public function toString() { //
+        $title = $this->title();
+        $idpet = $this->petid();
+        $time = $this->time();
+        $likes = $this->likes();
+        $description = $this->description();
+        $repets = $this->repets();
+        $name = Pet::buscarPet($idpet)->petName();//coger el nombre del pet de algun stitio
+        $string = '<img id="post" src="upload/posts/'.$this->idpost().'.jpg">
+        <h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
+        <h2>'.$title.'</h2>
+        <h2>'.$description.'</h2>';
+        if ($repets > 0) {
+            $string = $string.'<h3>'.$repets.' <a href="viewRepets.php?id='.$this->idpost().'">Repets</a> | ';
+        } else {
+            $string = $string.'<h3>'.$repets.' Repets | ';
+        }
+        if ($likes > 0) {
+            $string = $string.''.$likes.' <a href="viewLikes.php?id='.$this->idpost().'">Likes</a></h3>';
+        } else {
+            $string = $string.''.$likes.' Likes</h3>';
+        }
+        $string = $string.'<h3>Date: '.$time.'</h3>';
+        return $string;
     }
+
+    // Mod Functions
+
+    public static function getPending() {
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = "SELECT * FROM posts  WHERE pending = 1";
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return $rs;
+        } else {
+            echo "Error al consultar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
+            exit();
+        }
+    }
+
+    public static function checkSigned($mod, $post) { // Checks if a moderator has already signed the petition to verify a post
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql = 'SELECT * FROM postvalidation WHERE idPost = '.$post.' AND idMod = '.$mod.'';
+        $rs = $connect->query($sql);
+        if ($rs->num_rows != 1) {
+            return false;
+        } else {
+            return true;
+        }
+    }
+
+    public function sign() {
+        $control = Aplicacion::getSingleton();
+        $connect = $control->conexionBd();
+        $sql= 'INSERT INTO postvalidation VALUES ('.$this->idpost().', '.$_SESSION['user']->id().')';
+        $rs = $connect->query($sql);
+        if ($rs) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
 }

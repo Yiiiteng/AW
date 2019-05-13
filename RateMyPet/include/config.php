@@ -11,11 +11,16 @@ define('BD_NAME', 'ratemypet');
 define('BD_USER', 'root');
 define('BD_PASS', '');
 define('RAIZ_APP', __DIR__);
-define('RUTA_APP', 'VM-0014/RateMyPet/');
+define('RUTA_APP', '/RateMyPet/');
 define('RUTA_IMGS', RUTA_APP.'img/');
 define('RUTA_CSS', RUTA_APP.'css/');
 define('RUTA_JS', RUTA_APP.'js/');
 define('INSTALADA', true );
+
+if (!INSTALADA) {
+echo "La aplicación no está configurada";
+exit();
+}
 
 /**
  * Configuración del soporte de UTF-8, localización (idioma y país) y zona horaria
@@ -24,33 +29,42 @@ ini_set('default_charset', 'UTF-8');
 setLocale(LC_ALL, 'es_ES.UTF.8');
 date_default_timezone_set('Europe/Madrid');
 
+/**
+ * Función para autocargar clases PHP.
+ *
+ * @see http://www.php-fig.org/psr/psr-4/
+ */
+spl_autoload_register(function ($class) {
+
+    // project-specific namespace prefix
+    $prefix = 'RateMyPet';
+
+    // base directory for the namespace prefix
+    $base_dir = __DIR__ . '/';
+
+    // does the class use the namespace prefix?
+    $len = strlen($prefix);
+    if (strncmp($prefix, $class, $len) !== 0) {
+        // no, move to the next registered autoloader
+        return;
+    }
+
+    // get the relative class name
+    $relative_class = substr($class, $len);
+
+    // replace the namespace prefix with the base directory, replace namespace
+    // separators with directory separators in the relative class name, append
+    // with .php
+    $file = $base_dir . str_replace('\\', '/', $relative_class) . '.php';
+    // if the file exists, require it
+    if (file_exists($file)) {
+        require $file;
+    }
+});
+
 // Inicializa la aplicación
 $app = Aplicacion::getSingleton();
-$app->init(array('host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS));
+$app->init(array('host'=>BD_HOST, 'bd'=>BD_NAME, 'user'=>BD_USER, 'pass'=>BD_PASS), RUTA_APP, RAIZ_APP);
 $conn = $app->conexionBd();
-
-// Retrieve user ID if possible
-
-if (isset($_SESSION['username'])) {
-    $sql = sprintf("SELECT id FROM users WHERE id = '%s'", $_SESSION['user']->id()); // Retrieve user id
-    $result = $conn->query($sql);
-    $owner_id = -1;
-
-    if ($result->num_rows > 0) {
-        // output data of each row
-        while($row = $result->fetch_assoc()) {
-            $owner_id = $row['id'];
-            $_SESSION['owner_id'] = $owner_id;
-        }
-    } else {
-        unset($_SESSION['owner_id']);
-    }
-}
-
-/**
- * @see http://php.net/manual/en/function.register-shutdown-function.php
- * @see http://php.net/manual/en/language.types.callable.php
- */
-register_shutdown_function(array($app, 'shutdown'));
 
 ?>
