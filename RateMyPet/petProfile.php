@@ -81,8 +81,16 @@
                     echo '<div class="posts">';
                     while($row = $myPosts->fetch_assoc()) {
                         $post = Post::buscaPost($row['idpost']);
+                        
+                        echo'<div class="fourinline container card">';
+                        if($mine){
+                            echo'
+                            <form method="post" action="include/borrarPost.php?idpost='.$post->idPost().'&idpet='.$pet->petId().'">
+                            <button class="borrar fa-lg hover-opacity">
+                                <i class="fa fa-times-circle-o fa-lg"></i></button>
+                            </form>';
+                        }
                         echo '
-                        <div class="fourinline container card">
                             <a href="postMascota.php?id='.$post->idPost().'"><img src="upload/posts/'.$post->idPost().'.jpg" style="width:100%" class="hover-opacity"></a>
                             <div class="container white">
                             <p>'.$post->title().'</p>
