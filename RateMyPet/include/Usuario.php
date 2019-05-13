@@ -138,39 +138,38 @@ class Usuario {
         return $usuario;
     }
     
-    public function actualiza($datos) {
+    public function actualiza($datos,$id) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $user =self::buscaUsuarioId($id);
+
 
         // Check that what you're changing is different from what you have
 
-        $name = isset($datos['username']) ? $datos['username'] : null;
-        $fullName = isset($datos['FullName']) ? $datos['FullName'] : null;
-        $email = isset($datos['email']) ? $datos['email'] : null;
+        $name = isset($datos['username']) ? $datos['username'] : $user->username();
+        $fullName =isset($datos['FullName']) ? $datos['FullName'] : $user->fullname();
+        $email = isset($datos['email']) ? $datos['email'] : $user->email();
 
-        if ($name != "" && $name != $this->username) { // Change username
+
+        if ($name != "") { // Change username
             $this->username = $name;
         }
 
-        if ($fullName != "" && $fullName != $this->fullname) {
+        if ($fullName != "") {
             $this->fullname = $fullName;
         }
 
-        if ($email != "" && $name != $this->email) {
+        if ($email != "" ) {
             $this->email = $email;
         }
 
         $sql = 'UPDATE users U SET username = \''.$this->username.'\', fullname = \''.$this->fullname.'\', email = \''.$this->email.'\' WHERE U.id = '.$this->id.'';
         
         if ($conn->query($sql) ) {
-            if ( $conn->affected_rows != 1) {
-                echo "No se ha podido actualizar el usuario: " . $this->username;
-                header("Location: updateUser.php?id=".$datos['id_user'].'&error=repeat');
-                exit();
-            }
+            return true;
         } else {
             echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
+            return false;
         }
        
     }
@@ -195,9 +194,6 @@ class Usuario {
         return $this->email;
     }
 
-      public function fullname() {
-        return $this->fullname;
-    }
 
     public function followerAmount() {
         // Update amount

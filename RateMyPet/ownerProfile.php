@@ -27,15 +27,15 @@
 			$_SESSION["ownerOpet"]="owner";
 			$path='usuarios/'.$_SESSION["username"];
 			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img id="myImage" style="cursor:pointer" onclick= src='.$path.'.jpg alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage" src='.$path.'.jpg alt="Logo" width="150" height="150" />';
 	
 			}
 			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-				echo '<img id="myImage" style="cursor:pointer"  src='.$path.'.png alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage"   src='.$path.'.png alt="Logo" width="150" height="150" />';
 			
 			}
 			else{
-				echo '<img id="myImage"style="cursor:pointer" src="usuarios/default.png" alt="Logo" width="150" height="150" />';
+				echo '<img id="myImage" src="usuarios/default.png" alt="Logo" width="150" height="150" />';
 		
 			}
 

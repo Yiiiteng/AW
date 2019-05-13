@@ -65,21 +65,16 @@ class FormularioEditUser extends Form {
         $fullName = isset($datos['FullName']) ? $datos['FullName'] : null;
         $email = isset($datos['email']) ? $datos['email'] : null;
 
-       /* if (empty($fullName) && empty($userName) && empty($email)) {
-            $erroresFormulario[] = "You need to at least change one of the fields." ;
-            $_GET['id'] = $_POST['id_user'];
-        } else {*/
             $id = $_POST['id_user'];
             $user = Usuario::buscaUsuarioId($id);
-            if (count($erroresFormulario) === 0) {
-                $user->actualiza($datos);
-                if (count($erroresFormulario) != 0) {
-                    $erroresFormulario[] = "The information is the same!";
+            if ($user != null) {
+                $user->actualiza($datos,$id);
+                if (!$user) {
+                    echo "No se ha podido actualizar los datos";
                 } else {
                     header("Location: ownerProfile.php?id=".$datos['id_user']);
                 }
             }
-        //}
         return $erroresFormulario;
     }
 
