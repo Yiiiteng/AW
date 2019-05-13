@@ -78,9 +78,13 @@ class Post {
         }
     }
 
-    public function borrarPost($postid){
+    public static function borrarPost($postid){
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $sql = "DELETE FROM postvalidation where idpost = '$postid'";
+        $result = $conn->query($sql);
+        $sql = "DELETE FROM comments where idpost = '$postid'";
+        $result = $conn->query($sql);
         $sql = "DELETE FROM posts where idpost = '$postid'";
         $result = $conn->query($sql);
     }
