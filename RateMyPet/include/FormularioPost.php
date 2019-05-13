@@ -31,6 +31,9 @@ class FormularioPost extends Form {
                                     </textarea>
                                 </td>
                             </tr>
+                        </div>
+                        <div>
+                            <table>
                             <tr>
                                 <td>Image: </td>
                                 <td>

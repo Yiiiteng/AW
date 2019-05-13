@@ -12,6 +12,10 @@ img#centered-offline {
 	min-height:150px;
 	padding-bottom: 10px;
 }
+
+.content-inline{
+    display: flex; 
+}
 .content-error {
     text-align: center;
     font-size: 50px;
