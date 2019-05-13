@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.3
+-- version 4.8.0
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-05-2019 a las 19:22:29
--- Versión del servidor: 10.1.36-MariaDB
--- Versión de PHP: 7.2.10
+-- Tiempo de generación: 14-05-2019 a las 01:58:48
+-- Versión del servidor: 10.1.31-MariaDB
+-- Versión de PHP: 7.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -244,6 +244,17 @@ INSERT INTO `seguimientos` (`userId`, `seguidorId`) VALUES
 -- --------------------------------------------------------
 
 --
+-- Estructura de tabla para la tabla `treaters`
+--
+
+CREATE TABLE `treaters` (
+  `pet_id` int(11) NOT NULL,
+  `treater_id` int(11) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+-- --------------------------------------------------------
+
+--
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -256,19 +267,20 @@ CREATE TABLE `users` (
   `rol` varchar(10) NOT NULL,
   `moderator` tinyint(1) NOT NULL DEFAULT '0',
   `numFollowers` int(5) NOT NULL,
-  `numFollowing` int(5) NOT NULL
+  `numFollowing` int(5) NOT NULL,
+  `numTreats` int(1) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `moderator`, `numFollowers`, `numFollowing`) VALUES
-(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 1, 0, 0),
-(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0),
-(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0),
-(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0),
-(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0);
+INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `moderator`, `numFollowers`, `numFollowing`, `numTreats`) VALUES
+(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 1, 0, 0, 0),
+(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0, 0),
+(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0, 0),
+(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0, 0),
+(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -347,6 +359,13 @@ ALTER TABLE `seguimientos`
   ADD PRIMARY KEY (`userId`,`seguidorId`),
   ADD KEY `userId` (`userId`,`seguidorId`),
   ADD KEY `seguidorId` (`seguidorId`);
+
+--
+-- Indices de la tabla `treaters`
+--
+ALTER TABLE `treaters`
+  ADD PRIMARY KEY (`pet_id`,`treater_id`),
+  ADD KEY `treater_id` (`treater_id`);
 
 --
 -- Indices de la tabla `users`
@@ -441,6 +460,13 @@ ALTER TABLE `repets`
 ALTER TABLE `seguimientos`
   ADD CONSTRAINT `seguimientos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `seguimientos_ibfk_2` FOREIGN KEY (`seguidorId`) REFERENCES `users` (`id`);
+
+--
+-- Filtros para la tabla `treaters`
+--
+ALTER TABLE `treaters`
+  ADD CONSTRAINT `treaters_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`idPet`),
+  ADD CONSTRAINT `treaters_ibfk_2` FOREIGN KEY (`treater_id`) REFERENCES `users` (`id`);
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

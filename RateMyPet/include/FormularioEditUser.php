@@ -24,8 +24,7 @@ class FormularioEditUser extends Form {
                         <table>
                         <tr>
                         <td>Profile photo(jpg/png): </td>
-                           <td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
-                                Change photo(jpg/png): 
+                           <td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data"> 
                                 <input type="file" name="file" accept="image/*" id="upload" >
                                 <input type="submit" value="Change">
                                 </form>

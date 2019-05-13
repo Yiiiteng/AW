@@ -6,9 +6,9 @@
 	// 1st: Find Pet
 
 	$pet = Pet::buscarPet($_GET['idPet']);
-	$user_id = $_SESSION['users']->id();
+	//$user_id = $_SESSION['users']->id();
 
-	if()
+	//if()
 
 	$numtreats = $pet->treats() + 1;
 	$petId = $pet->petId();
