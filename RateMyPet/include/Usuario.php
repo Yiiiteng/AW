@@ -246,6 +246,16 @@ class Usuario {
         } else return false;
     }
 
+    public function checkLikedComment($postId, $idComment) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM likedcomments WHERE idUser = '.$this->id.' AND idPost = '.$postId.' AND idcomment = '.$idComment.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result->num_rows == 1) {
+            return true;
+        } else return false;
+    }
+
     public function checkRepeted($postId) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -298,6 +308,27 @@ class Usuario {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
         $sql = 'DELETE FROM repets WHERE idUser = '.$this->id.' AND idPost = '.$postId.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function likeComment($postId, $idcomment) { // Like a comment (add it to your likedcomments list)
+        $app = Aplicacion::getSingleton();
+        echo 'verga';
+        $conn = $app->conexionBd();
+        $sql = 'INSERT INTO likedcomments VALUES ('.$idcomment.', '.$this->id.', '.$postId.')'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        } else return false;
+    }
+
+    public function unlikeComment($postId, $idcomment) { // Unlike a comment (remove it from your likedcomments list)
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM likedcomments WHERE idUser = '.$this->id.' AND idPost = '.$postId.' AND idComment = '.$idcomment.''; // Return the user ID
         $result = $conn->query($sql);
         if ($result) {
             return true;

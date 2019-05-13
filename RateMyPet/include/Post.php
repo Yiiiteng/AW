@@ -84,6 +84,23 @@ class Post {
         $sql = "DELETE FROM posts where idpost = '$postid'";
         $result = $conn->query($sql);
     }
+
+    public function addComment($idUser, $idPost, $content) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        // INSERT INTO `posts` (`idpost`, `time`, `likes`, `repets`, `petid`, `description`) VALUES (NULL, '2019-04-12', '9', '7', '29', NULL);
+        $sql = 'INSERT INTO comments VALUES (NULL, \''.$idPost.'\',\''.$idUser.'\', \''.$content.'\', 0)';
+        echo ''.$sql;
+        $rs = $conn->query($sql);
+        $idPost = $conn->insert_id;
+        if ($rs) {
+            return $rs;
+        } else {
+            echo "Error al consultar la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            exit();
+        }
+    }
+    
     
 
     public function idpost() {

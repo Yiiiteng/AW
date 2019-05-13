@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 12-05-2019 a las 23:38:43
+-- Tiempo de generación: 13-05-2019 a las 19:22:29
 -- Versión del servidor: 10.1.36-MariaDB
 -- Versión de PHP: 7.2.10
 
@@ -41,7 +41,10 @@ CREATE TABLE `comments` (
 --
 
 INSERT INTO `comments` (`idcomment`, `idPost`, `idUser`, `content`, `likes`) VALUES
-(0, 16, 6, 'lindo perro!  Mis dieses', 0);
+(1, 16, 6, 'lindo perro!  Mis dieses', 0),
+(2, 16, 6, '10/10 would pet again', 0),
+(3, 4, 6, 'este bicho es feisimo', 0),
+(4, 4, 6, 'es broma es super adorable', 0);
 
 -- --------------------------------------------------------
 
@@ -76,8 +79,16 @@ INSERT INTO `followedpets` (`userId`, `petId`) VALUES
 
 CREATE TABLE `likedcomments` (
   `idComment` int(11) NOT NULL,
-  `idUser` int(11) NOT NULL
+  `idUser` int(11) NOT NULL,
+  `idPost` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
+
+--
+-- Volcado de datos para la tabla `likedcomments`
+--
+
+INSERT INTO `likedcomments` (`idComment`, `idUser`, `idPost`) VALUES
+(1, 6, 16);
 
 -- --------------------------------------------------------
 
@@ -268,9 +279,12 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `
 --
 ALTER TABLE `comments`
   ADD PRIMARY KEY (`idcomment`,`idPost`,`idUser`),
+  ADD UNIQUE KEY `idx` (`idcomment`,`idPost`),
   ADD KEY `idcomment` (`idcomment`,`idPost`),
   ADD KEY `idPost` (`idPost`),
-  ADD KEY `idUser` (`idUser`);
+  ADD KEY `idUser` (`idUser`),
+  ADD KEY `idcomment_2` (`idcomment`),
+  ADD KEY `idcomment_3` (`idcomment`,`idPost`,`idUser`);
 
 --
 -- Indices de la tabla `followedpets`
@@ -283,7 +297,7 @@ ALTER TABLE `followedpets`
 -- Indices de la tabla `likedcomments`
 --
 ALTER TABLE `likedcomments`
-  ADD PRIMARY KEY (`idComment`,`idUser`),
+  ADD PRIMARY KEY (`idComment`,`idUser`,`idPost`),
   ADD KEY `idUser` (`idUser`);
 
 --
@@ -344,6 +358,12 @@ ALTER TABLE `users`
 --
 -- AUTO_INCREMENT de las tablas volcadas
 --
+
+--
+-- AUTO_INCREMENT de la tabla `comments`
+--
+ALTER TABLE `comments`
+  MODIFY `idcomment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT de la tabla `pets`

@@ -100,10 +100,25 @@
 				while($row = $comments->fetch_assoc()) {
 					$comment = Comment::parseComment($row['idPost'], $row['idUser'], $row['idcomment']);
 					echo $comment->toString();
-				}
+				$likedComment = $_SESSION['user']->checkLikedComment($_GET['id'], $comment->idcomment());
+				echo '<form action="include/likeComment.php" method="POST">'; // Like / dislike the post
+					echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
+					echo '<input type="hidden" name="idComment" value="'.$comment->idcomment().'">';
+					if ($likedComment) { // I already like the post
+						echo '<input type="hidden" name="type" value="dislike">';
+						echo '<button type="submit">Unlike comment</button>';
+					} else { // I like the post
+						echo '<input type="hidden" name="type" value="like">';
+						echo '<button type="submit">Like comment</button>';
+					}
+				echo '</form>';
 			}
-			else echo 'No comments to display!'
-			
+		}
+		else echo '<h1>No comments to display!</h1>';
+		echo'<form method="POST" action="addComment.php">';
+			echo '<input type="hidden" name="idPost" value="'.$post->idpost().'">';
+			echo '<button type="submit">Add comment</button>';
+		echo '</form>';		
 		?>
 	</div>
 
