@@ -4,7 +4,7 @@
     require_once __DIR__.'/include/Post.php';
     
 
-    if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
+    if (!isset($_SESSION['user'])) {
         header("Location: signup.php");
     }
 
@@ -46,37 +46,9 @@
                 }
             }
         ?>
-        <?php echo '<h1>Time left until treats reset: <p id="demo"></p> </h1>';
-        ?>
     </div>
     <?php 
         require('include/comun/footer.php');
     ?>
-<script>
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10)
-            seconds = parseInt(timer % 60, 10);
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            display.textContent = minutes + ":" + seconds;
-
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }
-
-    window.onload = function () {
-        // Get how many minutes and seconds are left until then next
-        d1 = new Date ();
-        d2 = new Date ( d1 );
-        d2.setMinutes ( d1.getMinutes() + 10 );
-        console.log(d2);
-    };
-</script>
 </body>
 </html>

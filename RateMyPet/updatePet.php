@@ -25,6 +25,8 @@
 	<div>
 	<?php
 		require("include/comun/footer.php");
-    ?>
+	?>
+	<script type="text/javascript" src="js/imagePreview.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </body>
 </html>

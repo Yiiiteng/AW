@@ -65,11 +65,20 @@
             
         ?>
         <div class="display-pets">
-            <img src="img/animals/<?php echo $pet->petType()?>.png"></a>
+            <?php
+                echo '<img src="'.$pet->getImageSrc().'">';
+            ?>
         </div>
         <?php
             echo '<p>'.$pet->petDescription().'</p>';
             echo '<h4><a href="followers.php?idPet='.$pet->petId().'&followersPets">Followers:</a> '.$pet->followerAmount().'</h4>';
+            if(!$mine) {
+                if ($following) {
+                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowPet&id2='.$pet->petId().'\'">Unfollow</button>';
+                } else {
+                    echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
+                }
+            }
             echo '<h4><i class="fa fa-paw" id="treatNum">'.$pet->treats().'</i></h4>';
 
             if (!$mine) {
@@ -84,21 +93,22 @@
                 echo '<button type="button" class="button-create" onclick="window.location.href=\'updatePet.php?id='.$pet->petId().'\'">Edit</button>';
             }
         ?>
-
+        <hr>
         <div class="pet-post">
-            <h3>POST</h3>
+            <h3>Posts</h3>
             <?php
-                if(!$mine) {
-                    if ($following) {
-                        echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=unfollowPet&id2='.$pet->petId().'\'">Unfollow</button>';
-                    } else {
-                        echo '<button type="button" class="button-create" onclick="window.location.href=\'include/follow.php?action=followPet&id2='.$pet->petId().'\'">Follow</button>';
-                    }
-                }
                 ?>
                 <form method="POST" action="petPost.php">
                     <input type="hidden" name="idPet" value="<?php echo $_GET['idPet']; ?>">
-                    <?php if ($mine) echo '<input class="button-create" type="submit" value="New Post">'; ?>
+                    <?php 
+                        if ($mine) {
+                            if ($verified) {
+                                echo '<input class="button-create" type="submit" value="New Post">'; 
+                            } else {
+                                echo '<h1>You need to get verified before posting!</h1>'; 
+                            }
+                        }
+                    ?>
                 </form>
                 <?php
                 $myPosts = Post::allPosts($pet->petId());
@@ -140,6 +150,10 @@
                         </div>';
                     }
                     echo '</div>';
+                } else {
+                    if (!$mine) {
+                        echo '<h1>This pet doesn\'t have any posts yet!</h1>';
+                    }
                 }
                 ?>
         </div>

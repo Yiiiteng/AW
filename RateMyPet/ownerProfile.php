@@ -26,17 +26,7 @@
 		<div class="data">
 			<div class="profile-image">
 				<?php	
-					$_SESSION["ownerOpet"]="owner";
-					$path='upload/users/'.$_SESSION["username"];
-					$image = "";
-					if (file_exists('upload/users/'.$_SESSION["username"].'.jpg')) {
-						$image = 'src='.$path.'.jpg';
-					} else if (file_exists('upload/users/'.$_SESSION["username"].'.png')) {
-						$image = 'src='.$path.'.png';
-					} else {
-						$image = 'src="upload/users/default.png"';
-					}
-					echo '<img '.$image. '>';
+					echo '<img src="'.$user->getImageSrc().'">';
 				?>
 			</div>
 			<div class="info">
@@ -52,6 +42,20 @@
 					// Edit Button
 					if ($me) {
 						echo '<button type="button" class="button-create" onclick="window.location.href=\'updateUser.php?id='.$user->id().'\'">Edit Profile</button>';
+					} else {
+						if ($following) {
+							echo '<form action="include/follow.php" method="POST">
+								<input type="hidden" name="action" value="unfollowUser">
+								<input type="hidden" name="id2" value="'.$user->id().'">
+								<input type="submit" class="button-create" value="UnFollow">
+							</form>';
+						} else {
+							echo '<form action="include/follow.php" method="POST">
+								<input type="hidden" name="action" value="followUser">
+								<input type="hidden" name="id2" value="'.$user->id().'">
+								<input type="submit" class="button-create" value="Follow">
+							</form>';
+						}
 					}
 				?>
 			</div>
@@ -73,7 +77,7 @@
 							echo '<a href="petProfile.php?idPet='.$pet->petId().'">';
 								echo '<div class="pet-view">
 								<h1>'.$pet->petName().'</h1>
-								<h2>'.$pet->getImage().'</h2>
+								<h2><img class="pet-pic" src="'.$pet->getImageSrc().'"></h2>
 								</div>';
 							echo '</a>';
 						}
@@ -117,13 +121,6 @@
                 arrows: true
             });
         });
-</script>
-<script>
-
-		function editIcon() {
-
-		}
-
 </script>
 </body>
 </html>
