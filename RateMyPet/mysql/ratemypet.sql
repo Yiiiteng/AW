@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.0
+-- version 4.8.3
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 14-05-2019 a las 01:58:48
--- Versión del servidor: 10.1.31-MariaDB
--- Versión de PHP: 7.2.4
+-- Tiempo de generación: 14-05-2019 a las 21:15:08
+-- Versión del servidor: 10.1.36-MariaDB
+-- Versión de PHP: 7.2.10
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -44,7 +44,8 @@ INSERT INTO `comments` (`idcomment`, `idPost`, `idUser`, `content`, `likes`) VAL
 (1, 16, 6, 'lindo perro!  Mis dieses', 0),
 (2, 16, 6, '10/10 would pet again', 0),
 (3, 4, 6, 'este bicho es feisimo', 0),
-(4, 4, 6, 'es broma es super adorable', 0);
+(4, 4, 6, 'es broma es super adorable', 0),
+(5, 17, 6, 'es el mejor post del mundo mundial', 0);
 
 -- --------------------------------------------------------
 
@@ -98,16 +99,17 @@ INSERT INTO `likedcomments` (`idComment`, `idUser`, `idPost`) VALUES
 
 CREATE TABLE `likedposts` (
   `idUser` int(11) NOT NULL,
-  `idPost` int(11) NOT NULL
+  `idPost` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `likedposts`
 --
 
-INSERT INTO `likedposts` (`idUser`, `idPost`) VALUES
-(6, 4),
-(6, 16);
+INSERT INTO `likedposts` (`idUser`, `idPost`, `time`) VALUES
+(6, 4, '2019-05-14 18:56:18'),
+(6, 16, '2019-05-14 18:53:18');
 
 -- --------------------------------------------------------
 
@@ -146,12 +148,12 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 (30, 'Mickey', '              ', 'Hamster', 'White', 0, 6, 0),
 (31, 'Jeffrey', '             ', 'Rabbit', 'Grey', 0, 6, 0),
 (35, 'Mickey', '                        ', 'Hamster', 'Yellow', 0, 7, 0),
-(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 9, 7, 0),
+(36, 'Kiwi', '                        ', 'Cat', 'Siamesse', 0, 7, 0),
 (37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7, 0),
 (38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6, 0),
 (39, 'Mickey', '                                    ', 'Hamster', 'Siamesse', 0, 6, 0),
 (40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6, 0),
-(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 81, 9, 0),
+(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 0, 9, 0),
 (42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9, 0);
 
 -- --------------------------------------------------------
@@ -212,15 +214,17 @@ INSERT INTO `postvalidation` (`idPost`, `idMod`) VALUES
 
 CREATE TABLE `repets` (
   `idUser` int(11) NOT NULL,
-  `idPost` int(11) NOT NULL
+  `idPost` int(11) NOT NULL,
+  `time` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
 
 --
 -- Volcado de datos para la tabla `repets`
 --
 
-INSERT INTO `repets` (`idUser`, `idPost`) VALUES
-(6, 16);
+INSERT INTO `repets` (`idUser`, `idPost`, `time`) VALUES
+(6, 4, '2019-05-14 18:56:21'),
+(6, 16, '2019-05-14 18:52:50');
 
 -- --------------------------------------------------------
 
@@ -244,17 +248,6 @@ INSERT INTO `seguimientos` (`userId`, `seguidorId`) VALUES
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `treaters`
---
-
-CREATE TABLE `treaters` (
-  `pet_id` int(11) NOT NULL,
-  `treater_id` int(11) NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4;
-
--- --------------------------------------------------------
-
---
 -- Estructura de tabla para la tabla `users`
 --
 
@@ -267,20 +260,19 @@ CREATE TABLE `users` (
   `rol` varchar(10) NOT NULL,
   `moderator` tinyint(1) NOT NULL DEFAULT '0',
   `numFollowers` int(5) NOT NULL,
-  `numFollowing` int(5) NOT NULL,
-  `numTreats` int(1) NOT NULL
+  `numFollowing` int(5) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `users`
 --
 
-INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `moderator`, `numFollowers`, `numFollowing`, `numTreats`) VALUES
-(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 1, 0, 0, 0),
-(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0, 0),
-(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0, 0),
-(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0, 0),
-(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 0);
+INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `moderator`, `numFollowers`, `numFollowing`) VALUES
+(6, 'aaaaaa', 'aaaaa', '$2y$10$NPVudwkP4mD5Eai4vzwDIudVI3nDpSEB3ccZq2RiLYrQAOtlTxJSW', 'adruiz01@ucm.es', 'user', 1, 0, 0),
+(7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0),
+(8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0),
+(9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0),
+(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0);
 
 --
 -- Índices para tablas volcadas
@@ -361,13 +353,6 @@ ALTER TABLE `seguimientos`
   ADD KEY `seguidorId` (`seguidorId`);
 
 --
--- Indices de la tabla `treaters`
---
-ALTER TABLE `treaters`
-  ADD PRIMARY KEY (`pet_id`,`treater_id`),
-  ADD KEY `treater_id` (`treater_id`);
-
---
 -- Indices de la tabla `users`
 --
 ALTER TABLE `users`
@@ -382,7 +367,7 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT de la tabla `comments`
 --
 ALTER TABLE `comments`
-  MODIFY `idcomment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `idcomment` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT de la tabla `pets`
@@ -461,12 +446,13 @@ ALTER TABLE `seguimientos`
   ADD CONSTRAINT `seguimientos_ibfk_1` FOREIGN KEY (`userId`) REFERENCES `users` (`id`),
   ADD CONSTRAINT `seguimientos_ibfk_2` FOREIGN KEY (`seguidorId`) REFERENCES `users` (`id`);
 
+DELIMITER $$
 --
--- Filtros para la tabla `treaters`
+-- Eventos
 --
-ALTER TABLE `treaters`
-  ADD CONSTRAINT `treaters_ibfk_1` FOREIGN KEY (`pet_id`) REFERENCES `pets` (`idPet`),
-  ADD CONSTRAINT `treaters_ibfk_2` FOREIGN KEY (`treater_id`) REFERENCES `users` (`id`);
+CREATE DEFINER=`root`@`localhost` EVENT `reset_treats` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-05-14 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE pets SET treats = 0 WHERE treats > 0$$
+
+DELIMITER ;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

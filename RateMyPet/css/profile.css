@@ -16,6 +16,7 @@ img#centered-offline {
 .content-inline{
     display: flex; 
 }
+
 .content-error {
     text-align: center;
     font-size: 50px;
@@ -28,19 +29,6 @@ table {
     margin-right: 10%;
 }
 
-#image{
-    margin-left: 5%;
-    width:200px;
-    font-size: 15px;
-    text-align:left;
-    font-weight: bold;
-}
-
-#myImage{
-
-   
-
-}
 .display-pets {
     display: table;
     align-items: center;
@@ -170,4 +158,47 @@ a {
     /*text-decoration: none;*/
 }
 
+/*Pet Profile*/
 
+.data { /* Pet Data */
+    width: 100%;
+    height: 60%;
+    margin-bottom: 50px;
+}
+
+.pets {
+    width: 100%;
+    height: 40%;
+}
+
+.add-pet {
+    margin-top: 100px;
+}
+
+img.pet-pic {
+    width: 100px;
+    height: 100px;
+    margin: auto;
+}
+
+hr { /*Horizontal Division*/
+    width: 100%;
+    height: 4px;
+    margin-left: auto;
+    margin-right: auto;
+    background-color:#666;
+    border: 0 none;
+    margin-top: 200px;
+}
+
+.pet-view {
+    width: 100%;
+}
+
+/* Edit profile*/
+
+.profile-image img {
+    width: 180px;
+    height: 180px;
+    margin-top: 20px;
+}
