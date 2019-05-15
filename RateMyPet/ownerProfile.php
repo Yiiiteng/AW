@@ -13,172 +13,117 @@
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
 	<link rel="stylesheet" href="css/profile.css">
+	<link rel="stylesheet" type="text/css" href="css/slick/slick/slick.css"/>
+	<link rel="stylesheet" type="text/css" href="css/slick/slick/slick-theme.css"/>
+	<meta name="viewport" content="width=device-width, initial-scale=1">
 </head>
-
-<script src="js/changeImage.js"> </script>
 <body>
 	<?php
 		require("include/comun/header.php");
 	?>
 
 	<div class="content">
-		<div id="image">
-		<?php	
-			$_SESSION["ownerOpet"]="owner";
-			$path='usuarios/'.$_SESSION["username"];
-			if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-				echo '<img id="myImage" src='.$path.'.jpg alt="Logo" width="150" height="150" />';
-	
-			}
-			else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-				echo '<img id="myImage"   src='.$path.'.png alt="Logo" width="150" height="150" />';
-			
-			}
-			else{
-				echo '<img id="myImage" src="usuarios/default.png" alt="Logo" width="150" height="150" />';
-		
-			}
-
-			//cambiar foto de perfil
-			/*echo '<tr>
-				<td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data">
-			Change photo(jpg/png): 
-			<input type="file" name="file" accept="image/*" id="upload" >
-			<input type="submit" value="Change">
-			</form></td>
-			</tr>';*/
-		?>
-		</div>
-		<div>
-		<table id="info">
-		
-		<?php // Añadir queries para coger los parámetros Following, Followers, rank...
-			
-			echo '
-			<tr>
-				<td>'.$user->username().'</td>
-			</tr>
-			<tr>
-				 <td>'.$user->email().'</td>
-			</tr>
-			<tr>
-				<td><a href="followers.php?id='.$user->id().'&followersUsers">Followers</a></td> <td>'.$user->followerAmount().'</td>
-			</tr>
-			<tr>
-				<td><a href="followers.php?id='.$user->id().'&followingUsers">Following</a></td> <td>'.$user->followingAmount().'</td>
-			</tr>
-			';
-
-			if ($me){
-			
-				echo '<tr>
-					<td><button type="button" id="button-follow" onclick="window.location.href=\'updateUser.php?id='.$user->id().'\'">Edit</button></td>
-				</tr>';
-			}
-			else{
-				if ($_SESSION['user']->rol() == "admin") {
-					// You can give someone Moderator Priviledges
-					if ($user->isMod()) { // If the user is not a moderator
-						echo '<h1>'.$user->username().' is a Moderator</h1>'; // You can give him moderator priviledges
-						echo '<form action="include/manageMods.php" method="POST">
-							<input type="hidden" value="'.$user->id().'" name="id">
-							<input type="hidden" value="revoke" name="action">
-							<button type="submit" name="revoke" value="your_value" class="btn-link">Revoke</button>
-						</form>';
-					} else { // The user is a Moderator of Rate My Pet
-						echo '<form action="include/manageMods.php" method="POST">
-							<input type="hidden" value="'.$user->id().'" name="id">
-							<input type="hidden" value="give" name="action">
-							<button type="submit" name="revoke" value="your_value" class="btn-link">Give Mod</button>
-						</form>';
+		<div class="data">
+			<div class="profile-image">
+				<?php	
+					$_SESSION["ownerOpet"]="owner";
+					$path='usuarios/'.$_SESSION["username"];
+					$image = "";
+					if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
+						$image = 'src='.$path.'.jpg/>';
+					} else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
+						$image = 'src='.$path.'.png/>';
+					} else {
+						$image = 'src="usuarios/default.png"/>';
 					}
-				} 
-				if ($following) {
-					echo '<tr>
-					<td><button type="button" id="button-follow" onclick="window.location.href=\'include/follow.php?action=unfollowUser&id2='.$user->id().'\'"> Unfollow </button></td>
-				</tr>';
-				} else {
-					echo '<tr>
-					<td><button type="button" id="button-follow" onclick="window.location.href=\'include/follow.php?action=followUser&id2='.$user->id().'\'"> Follow </button></td>
-				</tr>';
-				}
-			}
-			
-			
-			
-		?>
-		</table>
-		</div>
-		<div id="rankingPerfil">
-		<table>
-			<tr>
-				<td>Current Weekly Rank: </td> <td>#302</td>
-			</tr>
-			<tr>
-				<td>Best Weekly Rank: </td> <td>#3</td>
-			</tr>
-		</table>
-		</div>
+					echo '<img '.$image;
+				?>
+			</div>
+			<div class="info">
+				<?php
+					echo '<h2>'.$user->username().' (aka: '.$user->fullName().')</h2>';
+					echo '<h2>Followers: <a href="followers.php?followersUsers&id='.$user->id().'">'.$user->followerAmount().'</a> | ';
+					echo 'Following: <a href="followers.php?followingUsers&id='.$user->id().'">'.$user->followingAmount().'</a></h2>';
+					// Likes / Repets
 
-		<div class="display-pets">
-			<div>
-			<?php
+					echo '<h2>Likes: <a href="myLikes.php?id='.$user->id().'">'.$user->likedAmount().'</a> | ';
+					echo 'RePets: <a href="myRepets.php?id='.$user->id().'">'.$user->repetAmount().'</a></h2>';
+
+					// Edit Button
+					if ($me) {
+						echo '<button type="button" class="button-create" onclick="window.location.href=\'updateUser.php?id='.$user->id().'\'">Edit Profile</button>';
+					}
+				?>
+			</div>
+		</div>
+		<hr>
+		<div class="pets">
+			<?php // My pets
 				if ($me) {
 					echo '<h1>My pets</h1>';
 				} else {
 					echo '<h1>'.$user->username().'\'s Pets</h1>';
 				}
 			?>
-			</div>
-			<div>
-			<ul>
+			<div class="multiple-items">
 				<?php
-				if ($myPets->num_rows > 0) { // Iterate through all of my pets
-					echo '<div id="Arrows">
-							<i id="Prev" class="fa fa-chevron-left fa-2x" aria-hidden="true"></i></div>';
-					while($pet = $myPets->fetch_assoc()) {
-						/*echo '<li><div class="image">
-								<a href="petProfile.php?idPet='.$pet['idPet'].'">
-								<img src="img/animals/'.$pet['type'].'.png">
-								</a>
-								'.$pet['name'].'
-						</div></li>';*/
-						echo'<section id="Wrapper">
-							<div id="Slideshow">
-								<div id="Slider">
-									<a href="petProfile.php?idPet='.$pet['idPet'].'">
-									<img src="img/animals/'.$pet['type'].'.png"/>
-								</div>
-								
-							</div>
-							</section>';
-					}
-					echo '<div id="Arrows">
-							
-							<i id="Next" class="fa fa-chevron-right fa-2x" aria-hidden="true"></i>
-							</div>';
-					
-				} else {
-					if ($me) {
-						echo "<h2>You don't own any pets!</h2>";
+					if ($myPets->num_rows > 0) { // Iterate through all of my pets
+						while($row = $myPets->fetch_assoc()) {
+							$pet = Pet::buscarPet($row['idPet']);
+							echo '<a href="petProfile.php?idPet='.$pet->petId().'">';
+								echo '<div class="pet-view">
+								<h1>'.$pet->petName().'</h1>
+								<h2>'.$pet->getImage().'</h2>
+								</div>';
+							echo '</a>';
+						}
 					} else {
-						echo '<h1>'.$user->username().' doesn\'t own any pets!</h1>';
+						echo '<div>';
+						if ($me) {
+							echo "<h2>You don't own any pets!</h2>";
+						} else {
+							echo '<h1>'.$user->username().' doesn\'t own any pets!</h1>';
+						}
+						echo '</div>';
 					}
-				}
+				?>  
+			</div>
+			<div class="add-pet">
+				<?php
+					if ($me) {
+						echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'">Add a pet</button>';
+					}
 				?>
-			<?php
-				if ($me) {
-					echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'">Add a pet</button>';
-				}
-			?>
-			</ul>
-			
 			</div>
 		</div>
 	</div>
-
 	<?php
 		require("include/comun/footer.php");
 	?>
+<script src="js/changeImage.js"> </script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script type="text/javascript" src="css/slick/slick/slick.min.js"></script>
+<script type="text/javascript">
+        $(document).ready(function(){
+            $('.multiple-items').slick({
+                infinite: true,
+                slidesToShow: 4,
+                slidesToScroll: 3,
+                autoplay: true,
+                autoplaySpeed: 3000,
+                dots: true,
+                speed: 700,
+                arrows: true
+            });
+        });
+</script>
+<script>
+
+		function editIcon() {
+
+		}
+
+</script>
 </body>
 </html>

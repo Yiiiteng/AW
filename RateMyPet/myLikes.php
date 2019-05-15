@@ -1,19 +1,13 @@
 <?php
     require_once __DIR__.'/include/config.php';
-    require_once __DIR__.'/include/retrievePosts.php';
+    require_once __DIR__.'/include/retrieveLikes.php';
     require_once __DIR__.'/include/Post.php';
-    
-
-    if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
-        header("Location: signup.php");
-    }
-
 ?>
 
 <!DOCTYPE html>
 <html>
 <head>
-    <title>Home</title>
+    <title>My likes</title>
     <link rel="stylesheet" href="css/header.css">
     <link rel="stylesheet" href="css/footer.css">
     <link rel="stylesheet" href="css/content.css">
@@ -24,14 +18,13 @@
         require('include/comun/header.php');
     ?>
     <div class="content">
-        <h1>Your feed</h1>
+        <h1>My Liked Posts</h1>
         <?php
-            // P.title, P.idpost, P.time, P.likes, P.repets, P.petid, P.description, pets.name
-            if (!$postList) {
-                echo '<h2>No new posts. Why not follow some pets?</h2>';
+            if (!$postList) { // You haven't liked any posts yet
+                echo '<h2>You haven\'t liked any posts yet!</h2>';
             } else {
                 while ($row = $postList->fetch_assoc()) {
-                    $post = Post::buscaPost($row['idpost']);
+                    $post = Post::buscaPost($row['idPost']);
                     $pet = Pet::buscarPet($post->petId());
                     echo '<div class="feed-post">';
                         echo '<div id="title">'; // Titlte of the post
@@ -46,37 +39,9 @@
                 }
             }
         ?>
-        <?php echo '<h1>Time left until treats reset: <p id="demo"></p> </h1>';
-        ?>
     </div>
     <?php 
         require('include/comun/footer.php');
     ?>
-<script>
-    function startTimer(duration, display) {
-        var timer = duration, minutes, seconds;
-        setInterval(function () {
-            minutes = parseInt(timer / 60, 10)
-            seconds = parseInt(timer % 60, 10);
-
-            minutes = minutes < 10 ? "0" + minutes : minutes;
-            seconds = seconds < 10 ? "0" + seconds : seconds;
-
-            display.textContent = minutes + ":" + seconds;
-
-            if (--timer < 0) {
-                timer = duration;
-            }
-        }, 1000);
-    }
-
-    window.onload = function () {
-        // Get how many minutes and seconds are left until then next
-        d1 = new Date ();
-        d2 = new Date ( d1 );
-        d2.setMinutes ( d1.getMinutes() + 10 );
-        console.log(d2);
-    };
-</script>
 </body>
 </html>

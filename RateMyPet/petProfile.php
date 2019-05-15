@@ -21,6 +21,19 @@
     
     <div class="content">
         <h1>This is <?php echo ''.$pet->petName(); ?> the <?php echo ''.$pet->petType(); ?>'s Page</h1>
+
+        <?php
+            if (isset($_GET['treat'])) { // In case you gave him a treat
+                if ($_GET['treat'] == "true") {
+                    $message = ''.$pet->petName().' looks happy... Thank you for the treat!';
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                } else {
+                    $message = 'No treats left! Please wait a few minutes and try again.';
+                    echo "<script type='text/javascript'>alert('$message');</script>";
+                }
+            }
+        ?>
+
         <?php
             if($mine) {
                 echo'

@@ -1,5 +1,5 @@
 <?php
-	require_once __DIR__.'/include/config.php';
+    require_once __DIR__.'/include/config.php';
     require_once __DIR__.'/include/FormularioLogin.php';
     require_once __DIR__.'/include/FormularioRegistro.php';
     if (isset($_SESSION['login']) && $_SESSION['login'] == true) {
