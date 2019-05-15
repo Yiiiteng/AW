@@ -8,6 +8,7 @@
 			<li><a href="index.php">Home</a></li>
 			<?php
 				echo '<li><a href="ownerProfile.php?id='.$_SESSION["user"]->id().'">Profile</a></li>';
+				echo '<li><a href="ranking.php">Ranking</a></li>';
 				if ($_SESSION["user"]->rol() == "admin") {
 					echo '<li><a href="adminOptions.php">Admin Options</a></li>';
 				}

@@ -20,15 +20,14 @@ class FormularioEditUser extends Form {
                         <div class="contenedor-title">
                             <h2>Edit profile</h2>
                         </div>
+                        <img class="cover-img" id="output" src="upload/users/'.$user->id().'.png" alt="Image not Found" onerror="this.src=\'upload/users/default.png\'">
+                        <p class="centered">Image Preview</p>
                         <div>
                         <table>
                         <tr>
                         <td>Profile photo(jpg/png): </td>
-                           <td><form class="file" action="include/procesarFichero.php" method="POST" enctype="multipart/form-data"> 
-                                <input type="file" name="file" accept="image/*" id="upload" >
-                                <input type="submit" value="Change">
-                                </form>
-                                
+                           <td>
+                            <input type="file" id="image" name="image" class="cover-image" accept="*" onchange="loadFile(event)">
                             </td>
                         </tr>
                         <tr>

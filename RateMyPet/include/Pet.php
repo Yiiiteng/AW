@@ -113,16 +113,12 @@ class Pet {
         }
     }
 
-    public static function eliminar($idOwner, $petName) {
+    public function borrarMascota() {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query = sprintf(
-            "DELETE FROM pets where idOwner = '%s' AND petName = '%s'",
-            $idOwner,
-            $conn->real_escape_string($petName)
-        );
-
-        if ($conn->query($query)) {
+        $sql = 'DELETE FROM pets WHERE owner_id = '.$this->owner_id().' AND idPet = '.$this->petId.'';
+        echo $sql;
+        if ($conn->query($sql)) {
             return true;
         } else {
             echo "Error al eliminar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
@@ -168,6 +164,16 @@ class Pet {
         $post->submitPost();
     }
 
+    public function addTreat() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'UPDATE pets SET treats = '.($this->getTreats() + 1).' WHERE idPet = '.$this->petId().'';; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
+        }
+    }
 
     public function petName() {
         return $this->petName;
@@ -195,6 +201,20 @@ class Pet {
 
     public function owner_id() {
         return $this->owner_id;
+    }
+
+    public function getImage() {
+        $html = '<img class="pet-pic" src="upload/pets/'.$this->petId().'.png" onerror="this.src=\'upload/pets/default/'.$this->petType().'.png\'">';
+        return $html;
+    }
+
+    public function getTreats() {
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT treats FROM pets WHERE idPet = '.$this->petId.''; // Return the user ID
+        $result = $conn->query($sql);
+        return $result->fetch_assoc()['treats'];
     }
 
     public function isVerified() {

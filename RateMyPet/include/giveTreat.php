@@ -3,17 +3,16 @@
 	require_once __DIR__.'/Pet.php';
 	require_once __DIR__.'/Usuario.php';
 
-	// 1st: Find Pet
+	$response = true;
 
-	$pet = Pet::buscarPet($_GET['idPet']);
-	//$user_id = $_SESSION['users']->id();
-
-	//if()
-
-	$numtreats = $pet->treats() + 1;
-	$petId = $pet->petId();
-	$sql = 'UPDATE pets SET treats = '.$numtreats.' WHERE idPet = '.$petId.'';
-
-	$result = $conn->query($sql);
-	header('Location: ../petProfile.php?idPet='.$petId.'');
+	if (!$_SESSION['user']->giveTreat($_GET['idPet'])) {
+		$response = false;
+	} // Give the pet a treat
+	
+	if ($response) {
+		header('Location: ../petProfile.php?idPet='.$_GET['idPet'].'&treat=true');
+	} else {
+		header('Location: ../petProfile.php?idPet='.$_GET['idPet'].'&treat=false');
+	}
+ 	
 ?>

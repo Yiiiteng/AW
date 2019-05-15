@@ -113,13 +113,6 @@ class Usuario {
         return password_hash($password, PASSWORD_DEFAULT);
     }
     
-    public static function guarda($usuario) {
-        if ($usuario->id !== null) {
-            return self::actualiza($usuario);
-        }
-        return self::inserta($usuario);
-    }
-    
     private static function inserta($usuario) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -194,6 +187,13 @@ class Usuario {
         return $this->email;
     }
 
+    public function numTreats() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT treats FROM users WHERE id = '.$this->id; // Return the user ID
+        $result = $conn->query($sql);
+        return $result->fetch_assoc()['treats'];
+    }
 
     public function followerAmount() {
         // Update amount
@@ -215,6 +215,16 @@ class Usuario {
         return $following;
     }
 
+    public function isFollowing($id) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM seguimientos WHERE (userId = '.$this->id.' AND seguidorId = '.$id.') OR
+        (userId = '.$id.' AND seguidorId = '.$this->id.')'; // Return the user ID
+        $result = $conn->query($sql);
+        $following = $result->num_rows;
+        return $following;
+    }
+
     public function compruebaPassword($password) {
         return password_verify($password, $this->password);
     }
@@ -232,6 +242,23 @@ class Usuario {
                 <h2>'.$name.'</h2>
                 <h3>'.$email.'</h3>
                 </br>';
+    }
+
+    // Give Treat
+
+    public function giveTreat($petId) { // Give a treat to a pet with id: petId (if you have treats available)
+        if ($this->numTreats() > 0) {
+            $app = Aplicacion::getSingleton();
+            $conn = $app->conexionBd();
+            $sql = 'UPDATE users SET treats = '.($this->numTreats() - 1).' WHERE id = '.$this->id().'';; // Return the user ID
+            $result = $conn->query($sql);
+            if ($result) {
+                $pet = Pet::buscarPet($petId);
+                return $pet->addTreat();
+            } else return false;
+        } else {
+            return false;
+        }
     }
 
     // Post functions
@@ -266,8 +293,14 @@ class Usuario {
         } else return false;
     }
 
-    public function likedPosts() { // Return a list with the liked posts
-        
+    public function getLikes() { // Return a list with the liked posts
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT LP.idPost, LP.time FROM likedposts LP WHERE '.$_SESSION['user']->id().' = LP.idUser ORDER BY LP.time DESC'; // Return the user
+        $rs = $conn->query($sql);
+        if ($rs->num_rows > 0) {
+            return $rs;
+        } else return false;
     }
 
     public function likePost($postId) { // Like a post (add it to your liked list)
@@ -290,8 +323,14 @@ class Usuario {
         } else return false;
     }
 
-    public function repetedPosts() { // Return a list with the repeted posts
-        
+    public function getRepets() { // Return a list with the repeted posts
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT RP.idPost, RP.time FROM repets RP WHERE '.$_SESSION['user']->id().' = RP.idUser ORDER BY RP.time DESC'; // Return the user
+        $rs = $conn->query($sql);
+        if ($rs->num_rows > 0) {
+            return $rs;
+        } else return false;
     }
 
     public function repetPost($postId) { // Repet a post (add it to your repeted list)
@@ -332,6 +371,26 @@ class Usuario {
         $result = $conn->query($sql);
         if ($result) {
             return true;
+        } else return false;
+    }
+
+    public function likedAmount() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM likedcomments WHERE idUser = '.$this->id.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return $result->num_rows;
+        } else return false;
+    }
+
+	public function repetAmount() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM repets WHERE idUser = '.$this->id.''; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
+            return $result->num_rows;
         } else return false;
     }
 

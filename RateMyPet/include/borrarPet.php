@@ -3,6 +3,7 @@
 	require_once __DIR__.'/Pet.php';
 
 	$idowner = $_GET['id'];
-	$post = Pet::borrarPet($_GET['idpet']);
+	$pet = Pet::buscarPet($_GET['idpet']);
+	$pet->borrarMascota();
 	header('Location: ../petProfile.php?idPet='.$idowner.'');
 ?>
