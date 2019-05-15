@@ -27,7 +27,7 @@ class FormularioEditUser extends Form {
                         <tr>
                         <td>Profile photo(jpg/png): </td>
                            <td>
-                            <input type="file" id="image" name="image" class="cover-image" accept="*" onchange="loadFile(event)">
+                            <input type="file" id="image" name="file" class="cover-image" accept="*" onchange="loadFile(event)">
                             </td>
                         </tr>
                         <tr>
@@ -59,6 +59,7 @@ class FormularioEditUser extends Form {
 
     protected function procesaFormulario($datos) {
         $erroresFormulario = array();
+
         $userName = isset($datos['username']) ? $datos['username'] : null;
         $fullName = isset($datos['FullName']) ? $datos['FullName'] : null;
         $email = isset($datos['email']) ? $datos['email'] : null;
@@ -70,6 +71,19 @@ class FormularioEditUser extends Form {
                 if (!$user) {
                     echo "No se ha podido actualizar los datos";
                 } else {
+
+                    unlink('upload/users/'.$userName.'.jpg');
+                    unlink('upload/users/'.$userName.'.png');
+
+                    move_uploaded_file($_FILES["file"]["tmp_name"], "upload/users/".$_FILES["file"]["name"]);
+                    if($_FILES["file"]["type"]=="image/png"){
+                        rename('upload/users/'.$_FILES["file"]["name"], 'upload/users/'.$userName.'.png');
+                    } else if($_FILES["file"]["type"]=="image/jpeg"){
+                        rename('upload/users/'.$_FILES["file"]["name"], 'upload/users/'.$userName.'.jpg');
+                    } else if($_FILES["file"]["type"]=="image/jpg"){
+                        rename('upload/users/'.$_FILES["file"]["name"], 'upload/users/'.$userName.'.jpg');
+                    } else echo "Image form error.";
+
                     header("Location: ownerProfile.php?id=".$datos['id_user']);
                 }
             }

@@ -27,16 +27,16 @@
 			<div class="profile-image">
 				<?php	
 					$_SESSION["ownerOpet"]="owner";
-					$path='usuarios/'.$_SESSION["username"];
+					$path='upload/users/'.$_SESSION["username"];
 					$image = "";
 					if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
-						$image = 'src='.$path.'.jpg/>';
-					} else if (file_exists('usuarios/'.$_SESSION["username"].'.png')) {
-						$image = 'src='.$path.'.png/>';
+						$image = 'src='.$path.'.jpg';
+					} else if (file_exists('upload/users/'.$_SESSION["username"].'.png')) {
+						$image = 'src='.$path.'.png';
 					} else {
-						$image = 'src="usuarios/default.png"/>';
+						$image = 'src="upload/users/default.png"';
 					}
-					echo '<img '.$image;
+					echo '<img '.$image. '>';
 				?>
 			</div>
 			<div class="info">
