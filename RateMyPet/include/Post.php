@@ -192,7 +192,13 @@ class Post {
         $description = $this->description();
         $repets = $this->repets();
         $name = Pet::buscarPet($idpet)->petName();//coger el nombre del pet de algun stitio
-        $string = '<img id="post" src="upload/posts/'.$this->idpost().'.jpg">
+
+        if (file_exists('upload/posts/'.$this->idPost().'.png')) {
+            $path = 'upload/posts/'.$this->idPost().'.png';
+        } else if (file_exists('upload/posts/'.$this->idPost().'.jpg')) {
+            $path = 'upload/posts/'.$this->idPost().'.jpg';
+        } 
+        $string = '<img id="post" src="'.$path.'">
         <h1>Post from: <a href="petProfile.php?idPet='.$idpet.'">'.$name.'</a></h1> 
         <h2>'.$title.'</h2>
         <h2>'.$description.'</h2>';
