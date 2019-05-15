@@ -24,7 +24,7 @@
 		?>
 	<div>
 	<?php
-		require("include/comun/footer.php");
+		//require("include/comun/footer.php");
     ?>
     <script src="js/imagePreview.js"></script>
 </body>

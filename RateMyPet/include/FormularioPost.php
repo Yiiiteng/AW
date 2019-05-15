@@ -37,7 +37,7 @@ class FormularioPost extends Form {
                             <tr>
                                 <td>Image: </td>
                                 <td>
-                                <input type="file" accept="image/*" onchange="loadFile(event)">
+                                <input type="file" name="file" accept="image/*" onchange="loadFile(event)">
                                 <img id="output"/>
                                 </td>
                             </tr>
@@ -75,6 +75,15 @@ class FormularioPost extends Form {
         // We also need to check whether or not the image exists (you can't post anything without an Image)
 
         $pet->addPost($title, $tags, $description, $image); // Create the Post
+
+        move_uploaded_file($_FILES["file"]["tmp_name"], "upload/posts/".$_FILES["file"]["name"]);
+            if($_FILES["file"]["type"]=="image/png"){
+                rename('upload/posts/'.$_FILES["file"]["name"], 'upload/posts/'.$title.'.png');
+            } else if($_FILES["file"]["type"]=="image/jpeg"){
+                rename('upload/posts/'.$_FILES["file"]["name"], 'upload/posts/'.$title.'.jpg');
+            } else if($_FILES["file"]["type"]=="image/jpg"){
+                rename('upload/posts/'.$_FILES["file"]["name"], 'upload/posts/'.$title.'.jpg');
+            } else echo "Image form error.";
         header('Location: petProfile.php?idPet='.$idPet.'');
         exit();
     }

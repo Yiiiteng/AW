@@ -29,7 +29,7 @@
 					$_SESSION["ownerOpet"]="owner";
 					$path='upload/users/'.$_SESSION["username"];
 					$image = "";
-					if (file_exists('usuarios/'.$_SESSION["username"].'.jpg')) {
+					if (file_exists('upload/users/'.$_SESSION["username"].'.jpg')) {
 						$image = 'src='.$path.'.jpg';
 					} else if (file_exists('upload/users/'.$_SESSION["username"].'.png')) {
 						$image = 'src='.$path.'.png';

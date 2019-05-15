@@ -115,8 +115,23 @@
                                 <i class="fa fa-times-circle-o fa-lg"></i></button>
                             </form>';
                         }
+
+                        if (file_exists('upload/posts/'.$post->title().'.png')) {
+                            rename('upload/posts/'.$post->title().'.png', 'upload/posts/'.$post->idPost().'.png');
+                            $path = 'upload/posts/'.$post->idPost().'.png';
+                        } else if (file_exists('upload/posts/'.$post->title().'.jpg')) {
+                            rename('upload/posts/'.$post->title().'.jpg', 'upload/posts/'.$post->idPost().'.jpg');
+                            $path = 'upload/posts/'.$post->idPost().'.jpg';
+                        } 
+
+                        if (file_exists('upload/posts/'.$post->idPost().'.png')) {
+                            $path = 'upload/posts/'.$post->idPost().'.png';
+                        } else if (file_exists('upload/posts/'.$post->idPost().'.jpg')) {
+                            $path = 'upload/posts/'.$post->idPost().'.jpg';
+                        } 
+
                         echo '
-                            <a href="postMascota.php?id='.$post->idPost().'"><img src="upload/posts/'.$post->idPost().'.jpg" style="width:100%" class="hover-opacity"></a>
+                            <a href="postMascota.php?id='.$post->idPost().'"><img src="'.$path.'" style="width:100%" class="hover-opacity"></a>
                             <div class="container white">
                             <p>'.$post->title().'</p>
                             <p>'.$post->description().'</p>

@@ -23,7 +23,7 @@ class FormularioPet extends Form {
                                 <td>Type: </td>
                                 <td>
                     
-                                <select onchange= "getBreed()" class="form-"control" id="petType" type="text" name="petType">
+                                <select onchange= "getBreed()" class="form-control" id="petType" type="text" name="petType">
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Hamster">Hamster</option>
