@@ -3,11 +3,11 @@ require_once __DIR__ . '/Aplicacion.php';
 require_once __DIR__ . '/config.php';
 
 $whoFollows = $_SESSION['user']->id(); 
-$whoIsFollowed = $_GET['id2'];
+$whoIsFollowed = $_POST['id2'];
 
 // To unfollow, parse the option
 
-$action = $_GET['action'];
+$action = $_POST['action'];
 
 if ($action == 'followUser') { // We should pass these functions to the User / Pet class
     $sql = 'INSERT INTO seguimientos VALUES ('.$whoFollows.', '.$whoIsFollowed.')';

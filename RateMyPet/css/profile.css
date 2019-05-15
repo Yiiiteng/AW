@@ -24,9 +24,11 @@ img#centered-offline {
 
 table {
     text-align: center;
-    width: 50%;
-    margin-left: 10%;
-    margin-right: 10%;
+    margin-top: 50px;
+}
+
+table td {
+    padding: 10px;
 }
 
 .display-pets {
@@ -76,14 +78,12 @@ table {
     border:none;
     display:inline-block;
     padding:8px 16px;
-    vertical-align:middle;
     text-decoration:none;
     color:inherit;
     background-color: #FADBD8;
     font-size: 18px;
-    text-align:center;
     cursor:pointer;
-    white-space:nowrap
+    white-space:nowrap;
 }
 
 .button-create:hover{
@@ -195,10 +195,41 @@ hr { /*Horizontal Division*/
     width: 100%;
 }
 
-/* Edit profile*/
-
 .profile-image img {
     width: 180px;
     height: 180px;
     margin-top: 20px;
+}
+
+/* Edit profile */
+
+.edit {
+    text-align: center;
+}
+
+.edit .edit-title {
+    text-align: center;
+}
+
+.edit .edit-photo img {
+    width: 180px;
+    height: 180px;
+}
+
+.edit .info {
+    text-align: center;
+}
+
+.edit table {
+    margin-left:auto; 
+    margin-right:auto;
+}
+
+.edit table td {
+    margin-top: 100px;
+}
+
+.button-create#update {
+    margin-top: 50px;
+    margin-left: 48%; 
 }

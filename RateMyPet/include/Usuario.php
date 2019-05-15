@@ -102,7 +102,7 @@ class Usuario {
             return false;
         }
         $user = new Usuario($username, $fullname, self::hashPassword($password), $email, $rol, 0, 0);
-        return self::guarda($user);
+        return self::inserta($user);
     }
 
     public static function buscaMascotas($user) { // Return all my pets
@@ -112,23 +112,41 @@ class Usuario {
     private static function hashPassword($password) {
         return password_hash($password, PASSWORD_DEFAULT);
     }
+
+    public function password() {
+        return $this->password;
+    }
     
     private static function inserta($usuario) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $query=sprintf("INSERT INTO users(username, fullname, password, email, rol) VALUES('%s', '%s', '%s', '%s', '%s')"
-            , $conn->real_escape_string($usuario->username)
-            , $conn->real_escape_string($usuario->fullname)
-            , $conn->real_escape_string($usuario->password)
-            , $conn->real_escape_string($usuario->email)
-            , $conn->real_escape_string($usuario->rol));
-        if ( $conn->query($query) ) {
+        $sql = 'INSERT INTO users VALUES (NULL, \''.$usuario->username().'\', \''.$usuario->fullname().'\', \''.$usuario->password().'\', \''.$usuario->email().'\', \'user\', 
+        0, 0, 0, 3)'; // Return the user ID
+        $result = $conn->query($sql);
+        if ($result) {
             $usuario->id = $conn->insert_id;
-        } else {
-            echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
-            exit();
         }
         return $usuario;
+    }
+
+    // Edit User
+
+    public function processImage($tmp_name, $extension) {
+        $result = false;
+        $path = 'upload/users/'; // Where the file is going to be saved
+        // First, delete any image that existed previously with the same name
+        unlink('upload/users/'.$this->id().'.jpg');
+        unlink('upload/users/'.$this->id().'.png');
+        unlink('upload/users/'.$this->id().'.jpeg');
+        if (move_uploaded_file($tmp_name, $path.$this->id.'.'.$extension)) {
+            $result = true;
+        } else {
+            echo 'Something went wrong...';
+            echo ''.$path;
+            echo ''.$path.$this->id.'.'.$extension;
+            exit();
+        }
+        return $result;
     }
     
     public function actualiza($datos,$id) {
@@ -185,6 +203,21 @@ class Usuario {
 
     public function email() {
         return $this->email;
+    }
+
+    public function getImageSrc() {
+        // This function gets the User's image, depending on the extension, and returns a default if it doesn't exist
+        $src = 'upload/users/'; // Image directory
+        if (file_exists('upload/users/'.$_SESSION['user']->id().'.jpg')) { 
+            $src .= $_SESSION['user']->id().'.jpg';
+        } else if (file_exists('upload/users/'.$_SESSION['user']->id().'.png')) {
+            $src .= $_SESSION['user']->id().'.png';
+        } else if (file_exists('upload/users/'.$_SESSION['user']->id().'.jpeg')) {
+            $src .= $_SESSION['user']->id().'.jpeg';
+        } else { // Default Image
+            $src .= 'default.png';
+        }
+        return $src;
     }
 
     public function numTreats() {
@@ -430,6 +463,16 @@ class Usuario {
         if ($row = $result->fetch_assoc()) {
             if ($row['moderator'] == 1) return true;
             else return false;
+        } else return false; 
+    }
+
+    public function deleteAccount() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'DELETE FROM users WHERE id = '.$this->id.'';
+        $result = $conn->query($sql);
+        if ($result) {
+            return true;
         } else return false; 
     }
 

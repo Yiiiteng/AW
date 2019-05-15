@@ -81,13 +81,9 @@ class FormularioRegistro extends Form {
             if (! $usuario ) {
                 $erroresFormulario[] = "Username already in use.";
             } else {
-                $_SESSION['login'] = true;
-                $_SESSION['username'] = $username;
-                $_SESSION['email'] = $usuario->email();
-                $_SESSION['esAdmin'] = strcmp($fila['rol'], 'admin') == 0 ? true : false;
+                $_SESSION['user'] = $usuario;
                 header('Location: index.php');
                 exit();
-        
             }
         } 
         return $erroresFormulario; // Array con los errores que ha habido durante el procesamiento del formulario.

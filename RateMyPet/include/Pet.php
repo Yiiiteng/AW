@@ -126,24 +126,33 @@ class Pet {
         }
     }
 
-    public static function actualizar($pet){
+    public function actualiza($datos,$id) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
+        $pet = self::buscarPet($id);
 
-        $sql=sprintf("UPDATE pets SET name = '%s', description='%s' WHERE idPet=%s"
-            , $conn->real_escape_string($pet['petName'])
-            , $conn->real_escape_string($pet['petDescript'])
-            , $conn->real_escape_string($pet['id_pet']));
 
-        $consulta = mysqli_query($conn,$sql);
+        // Check that what you're changing is different from what you have
+        $petName = isset($datos['petName']) ? $datos['petName'] : null;
+        $descript = isset($datos['descript']) ? $datos['descript'] : null;
 
-        if($consulta)
-            return true;
-        else{
-            echo "Error al actualizar la BD: (" . $connect->errno . ") " . utf8_encode($connect->error);
-        return false;
+        if ($petName != "") { // Change username
+            $this->petName = $petName;
         }
-    
+
+        if ($descript != "") {
+            $this->petDescript = $descript;
+        }
+
+        $sql = 'UPDATE pets SET name = \''.$this->petName.'\', description = \''.$this->petDescript.'\' WHERE idPet = '.$this->petId.'';
+        
+        if ($conn->query($sql) ) {
+            return true;
+        } else {
+            echo "Error al actualizar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
+            return false;
+        }
+       
     }
 
     public static function allPets($idOwner) { // Given an Owner ID, returns a list with all the pets
@@ -203,9 +212,19 @@ class Pet {
         return $this->owner_id;
     }
 
-    public function getImage() {
-        $html = '<img class="pet-pic" src="upload/pets/'.$this->petId().'.png" onerror="this.src=\'upload/pets/default/'.$this->petType().'.png\'">';
-        return $html;
+    public function getImageSrc() {
+        // This function gets the User's image, depending on the extension, and returns a default if it doesn't exist
+        $src = 'upload/pets/'; // Image directory
+        if (file_exists('upload/pets/'.$this->petId().'.jpg')) { 
+            $src .= $_SESSION['user']->id().'.jpg';
+        } else if (file_exists('upload/pets/'.$this->petId().'.png')) {
+            $src .= $_SESSION['user']->id().'.png';
+        } else if (file_exists('upload/pets/'.$this->petId().'.jpeg')) {
+            $src .= $_SESSION['user']->id().'.jpeg';
+        } else { // Default Image
+            $src .= 'default/'.$this->petType().'.png';
+        }
+        return $src;
     }
 
     public function getTreats() {
@@ -251,5 +270,28 @@ class Pet {
                 <h3>'.$breed.'</h3>
                 </br>';
     }
+
+    // Edit Pet
+
+    // Edit User
+
+    public function processImage($tmp_name, $extension) {
+        $result = false;
+        $path = 'upload/pets/'; // Where the file is going to be saved
+        // First, delete any image that existed previously with the same name
+        unlink('upload/pets/'.$this->petId().'.jpg');
+        unlink('upload/pets/'.$this->petId().'.png');
+        unlink('upload/pets/'.$this->petId().'.jpeg');
+        if (move_uploaded_file($tmp_name, $path.$this->id.'.'.$extension)) {
+            $result = true;
+        } else {
+            echo 'Something went wrong...';
+            echo ''.$path;
+            echo ''.$path.$this->id.'.'.$extension;
+            exit();
+        }
+        return $result;
+    }
+
 }
  

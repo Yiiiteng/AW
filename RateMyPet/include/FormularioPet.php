@@ -22,18 +22,23 @@ class FormularioPet extends Form {
                             <tr>
                                 <td>Type: </td>
                                 <td>
-                    
                                 <select onchange= "getBreed()" class="form-control" id="petType" type="text" name="petType">
+                                    <option value="None">-</option>
                                     <option value="Dog">Dog</option>
                                     <option value="Cat">Cat</option>
                                     <option value="Hamster">Hamster</option>
                                     <option value="Rabbit">Rabbit</option>
+                                    <option value="Bird">Bird</option>
                                 </select>
                                 </td>
+                            </tr>
+                            <tr>
+                                <td>Breed: </td>
                                 <td>
-                                <span id="breed"></span>
-                                </td>
-
+                                <select class="form-control" id="breed" type="text" name="petBreed">
+                                    <option value="None">-</option>
+                                </select>
+                                </td>    
                             </tr>
                             <tr>
                                 <td>Description: </td>
@@ -62,7 +67,7 @@ class FormularioPet extends Form {
         $petType = isset($_POST['petType']) ? $_POST['petType'] : null;
         $petBreed = isset($_POST['petBreed']) ? $_POST['petBreed'] : null;
         $petDescript = isset($_POST['petDescript']) ? $_POST['petDescript'] : null;
-        $owner_id = isset($_SESSION['owner_id']) ? $_SESSION['owner_id'] : null;
+        $owner_id = $_SESSION['user']->id();
 
         if (empty($petName) or empty($petType) or empty($petBreed))	{
             header('Location: ownerprofile.php');
