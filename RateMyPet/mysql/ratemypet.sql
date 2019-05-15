@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 15-05-2019 a las 17:17:10
+-- Tiempo de generación: 15-05-2019 a las 23:24:16
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -146,7 +146,10 @@ INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `
 (38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6, 0),
 (40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6, 0),
 (41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 0, 9, 0),
-(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9, 0);
+(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9, 0),
+(43, 'Josh', 'I may look fearce, but I\'m actually pretty gentle! I mean... Woof!       ', 'Dog', 'Bulldog', 0, 10, 0),
+(44, 'Kenney', 'Boing! Boing!                             ', 'Rabbit', 'English Lop', 0, 10, 0),
+(45, 'Tony', 'Hey there! My name is Tony the Parrot. Yes, I like to repeat everyhting I hear, so be careful what you say about my owner...', 'Bird', 'Parrot', 0, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -230,7 +233,8 @@ CREATE TABLE `seguimientos` (
 
 INSERT INTO `seguimientos` (`userId`, `seguidorId`) VALUES
 (6, 7),
-(7, 6);
+(7, 6),
+(10, 7);
 
 -- --------------------------------------------------------
 
@@ -271,7 +275,7 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `
 (7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0, 3),
 (8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0, 3),
 (9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0, 3),
-(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 3);
+(10, 'a', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 3);
 
 --
 -- Índices para tablas volcadas
@@ -373,7 +377,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=43;
+  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
 
 --
 -- AUTO_INCREMENT de la tabla `posts`
