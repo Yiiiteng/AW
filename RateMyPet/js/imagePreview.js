@@ -1,13 +1,12 @@
-function setPreview() {
-    //Getting Value
-    var selObj = document.getElementById("cover_image");
-    var selValue = selObj.options[selObj.selectedIndex].text;
-    
-    //Setting Value
-	document.getElementById("platform").value = selValue;
-	console.log("Hello");
+function readURL(input) {
+    if (input.files && input.files[0]) {
+        var reader = new FileReader();
+
+        reader.onload = function (e) {
+            $('#output')
+                .attr('src', e.target.result);
+        };
+
+        reader.readAsDataURL(input.files[0]);
+    }
 }
-var loadFile = function(event) {
-    var output = document.getElementById('output');
-    output.src = URL.createObjectURL(event.target.files[0]);
-};
