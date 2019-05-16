@@ -90,8 +90,9 @@ class FormularioEditUser extends Form
                     if (!$user) {
                         echo "No se ha podido actualizar los datos";
                     } else {
-                        if (isset($_FILES['image'])) {
-
+                    
+                        if ($image != null) {
+                           
                             $name_file = $_FILES['image']['name']; // Nombre del archivo
                             $tmp_name = $_FILES['image']['tmp_name'];  // Nombre y directorio temporal del archivo subido
                             $extension = explode(".", $name_file)[1]; // Extensión del archivo

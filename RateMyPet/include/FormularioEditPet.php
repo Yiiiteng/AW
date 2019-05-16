@@ -75,7 +75,7 @@ class FormularioEditPet extends Form {
                     if (!$pet) {
                         echo "No se ha podido actualizar los datos";
                     } else {
-                        if (isset($_FILES['image'])) {
+                        if ($image != null) {
 
                             $name_file = $_FILES['image']['name']; // Nombre del archivo
                             $tmp_name = $_FILES['image']['tmp_name'];  // Nombre y directorio temporal del archivo subido
@@ -88,7 +88,7 @@ class FormularioEditPet extends Form {
                             }
                         }
                         unset($_FILES['image']);
-                        header("Location: ownerProfile.php?id=" . $datos['id_user']);
+                        header("Location: petProfile.php?idPet=" .$datos['id_pet']);
                         exit();
                     }
                 }

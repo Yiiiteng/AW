@@ -216,11 +216,11 @@ class Pet {
         // This function gets the User's image, depending on the extension, and returns a default if it doesn't exist
         $src = 'upload/pets/'; // Image directory
         if (file_exists('upload/pets/'.$this->petId().'.jpg')) { 
-            $src .= $_SESSION['user']->id().'.jpg';
+            $src .= $this->petId().'.jpg';
         } else if (file_exists('upload/pets/'.$this->petId().'.png')) {
-            $src .= $_SESSION['user']->id().'.png';
+            $src .= $this->petId().'.png';
         } else if (file_exists('upload/pets/'.$this->petId().'.jpeg')) {
-            $src .= $_SESSION['user']->id().'.jpeg';
+            $src .= $this->petId().'.jpeg';
         } else { // Default Image
             $src .= 'default/'.$this->petType().'.png';
         }
@@ -282,7 +282,7 @@ class Pet {
         unlink('upload/pets/'.$this->petId().'.jpg');
         unlink('upload/pets/'.$this->petId().'.png');
         unlink('upload/pets/'.$this->petId().'.jpeg');
-        if (move_uploaded_file($tmp_name, $path.$this->id.'.'.$extension)) {
+        if (move_uploaded_file($tmp_name, $path.$this->petId().'.'.$extension)) {
             $result = true;
         } else {
             echo 'Something went wrong...';
