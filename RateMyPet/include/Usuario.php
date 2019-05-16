@@ -18,7 +18,7 @@ class Usuario {
     private $following; // Number of people I follow
     private $followers; // Number of people who follow me
 
-    private function __construct($username, $fullname, $password, $email, $rol, $followers, $following) {
+    private function __construct($username, $fullname, $password, $email, $rol ,$followers, $following) {
         $this->username= $username;
         $this->fullname = $fullname;
         $this->password = $password;
@@ -458,7 +458,7 @@ class Usuario {
     public function isMod() {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $sql = 'SELECT * FROM users WHERE id = '.$this->id.'';
+        $sql = 'SELECT * FROM users WHERE id = '.$this->id().'';
         $result = $conn->query($sql);
         if ($row = $result->fetch_assoc()) {
             if ($row['moderator'] == 1) return true;

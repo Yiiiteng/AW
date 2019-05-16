@@ -31,7 +31,20 @@
 			</div>
 			<div class="info">
 				<?php
-					echo '<h2>'.$user->username().' (aka: '.$user->fullName().')</h2>';
+					echo '<h2>'.$user->username().' (aka: '.$user->fullName().')';
+					if($_SESSION['isAdmin']){
+						if($user->isMod()){
+						echo '<form action="include/moderator.php?act=Revoke&id='.$user->id().'" method="POST">
+							<button class="button-create"> Revoke mod </button>
+						</form>';
+					}
+					else {
+						echo '<form action="include/moderator.php?act=Give&id='.$user->id().'" method="POST">
+							<button class="button-create"> Give mod </button>
+							</form>';
+						}
+					}
+                    echo '</h2>';
 					echo '<h2>Followers: <a href="followers.php?followersUsers&id='.$user->id().'">'.$user->followerAmount().'</a> | ';
 					echo 'Following: <a href="followers.php?followingUsers&id='.$user->id().'">'.$user->followingAmount().'</a></h2>';
 					// Likes / Repets
