@@ -7,7 +7,7 @@ require_once __DIR__.'/Pet.php';
 class FormularioPost extends Form {
 
     protected function generaCamposFormulario($datosIniciales) { // Devuelve el HTML necesario para presentar los campos del formulario.
-        return '<div class="contenedor-add">
+        return '<div class="content">
                     <div>
                         <div class="contenedor-title">
                             <h2>Add a Post</h2>
@@ -43,9 +43,11 @@ class FormularioPost extends Form {
                             </tr>
                             </table>
                         </div>
+                        
+                        <input type="hidden" name="idPet" value="'.$_POST["idPet"].'">
+                        <button class="button-create">Post!</button>
                     </div>
-                    <input type="hidden" name="idPet" value="'.$_POST["idPet"].'">
-                    <button class="button-create">Post!</button>
+                    
                 </div>';
     }
 

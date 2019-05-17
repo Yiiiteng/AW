@@ -34,10 +34,10 @@
 						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
 						if ($like) { // I already like the post
 							echo '<input type="hidden" name="type" value="dislike">';
-							echo '<button type="submit">Un-Pet</button>';
+							echo '<button type="submit" class="button-create">Un-Pet</button>';
 						} else { // I like the post
 							echo '<input type="hidden" name="type" value="like">';
-							echo '<button type="submit">Pet</button>';
+							echo '<button type="submit" class="button-create">Pet</button>';
 						}
 					echo '</form>'; // Like / dislike the post
 				echo '</div>';
@@ -46,10 +46,10 @@
 						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
 						if ($repet) { // I already like the post
 							echo '<input type="hidden" name="type" value="dislike">';
-							echo '<button type="submit">Un-Repet</button>';
+							echo '<button type="submit" class="button-create">Un-Repet</button>';
 						} else { // I like the post
 							echo '<input type="hidden" name="type" value="like">';
-							echo '<button type="submit">Repet</button>';
+							echo '<button type="submit" class="button-create">Repet</button>';
 						}
 					echo '</form>'; // Like / dislike the post
 				echo '</div>';
@@ -59,7 +59,7 @@
 							echo '
 								<form action="include/verifyPost.php" method="POST">
 									<input type="hidden" name="postId" value="'.$post->idpost().'">
-									<button type="submit">Verify</button>
+									<button type="submit" class="button-create">Verify</button>
 								</form>
 							';
 						} else {
@@ -74,10 +74,10 @@
 						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
 						if ($like) { // I already like the post
 							echo '<input type="hidden" name="type" value="dislike">';
-							echo '<button type="submit">Un-Pet</button>';
+							echo '<button type="submit" class="button-create">Un-Pet</button>';
 						} else { // I like the post
 							echo '<input type="hidden" name="type" value="like">';
-							echo '<button type="submit">Pet</button>';
+							echo '<button type="submit" class="button-create">Pet</button>';
 						}
 					echo '</form>'; // Like / dislike the post
 				echo '</div>';
@@ -86,10 +86,10 @@
 						echo '<input type="hidden" name="post" value="'.$post->idpost().'">';
 						if ($repet) { // I already like the post
 							echo '<input type="hidden" name="type" value="dislike">';
-							echo '<button type="submit">Un-Repet</button>';
+							echo '<button type="submit" class="button-create">Un-Repet</button>';
 						} else { // I like the post
 							echo '<input type="hidden" name="type" value="like">';
-							echo '<button type="submit">Repet</button>';
+							echo '<button type="submit" class="button-create">Repet</button>';
 						}
 					echo '</form>'; // Like / dislike the post
 				echo '</div>';
@@ -106,10 +106,10 @@
 					echo '<input type="hidden" name="idComment" value="'.$comment->idcomment().'">';
 					if ($likedComment) { // I already like the post
 						echo '<input type="hidden" name="type" value="dislike">';
-						echo '<button type="submit">Unlike comment</button>';
+						echo '<button type="submit" class="button-create">Unlike comment</button>';
 					} else { // I like the post
 						echo '<input type="hidden" name="type" value="like">';
-						echo '<button type="submit">Like comment</button>';
+						echo '<button type="submit" class="button-create">Like comment</button>';
 					}
 				echo '</form>';
 			}
@@ -117,7 +117,7 @@
 		else echo '<h1>No comments to display!</h1>';
 		echo'<form method="POST" action="addComment.php">';
 			echo '<input type="hidden" name="idPost" value="'.$post->idpost().'">';
-			echo '<button type="submit">Add comment</button>';
+			echo '<button type="submit" class="button-create">Add comment</button>';
 		echo '</form>';		
 		?>
 	</div>

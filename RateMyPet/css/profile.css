@@ -8,9 +8,9 @@ img#centered-offline {
     flex-wrap: wrap;
     justify-content: left;
     width:auto;
-    height : 350px;
 	min-height:150px;
 	padding-bottom: 10px;
+    margin-bottom: 50px;
 }
 
 .content-inline{
@@ -188,7 +188,7 @@ hr { /*Horizontal Division*/
     margin-right: auto;
     background-color:#666;
     border: 0 none;
-    margin-top: 200px;
+    margin-top: 30px;
 }
 
 .pet-view {

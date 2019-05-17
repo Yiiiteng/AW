@@ -55,7 +55,7 @@
                     echo '<h1>Validate now!</h1>';
                     echo '<form action="petTest.php" method="GET">'; // Like / dislike the post
 						echo '<input type="hidden" name="idPet" value="'.$pet->petId().'">';
-						echo '<button type="submit">Validate</button>';
+						echo '<button type="submit" class="button-create" >Validate</button>';
 					echo '</form>'; // Like / dislike the post
                 }
             }
