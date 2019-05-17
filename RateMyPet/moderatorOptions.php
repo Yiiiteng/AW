@@ -33,7 +33,7 @@
                     echo '<form action="postMascota.php" method="GET">
                             <input type="hidden" value="'.$post->idPost().'" name="id">
                             <input type="hidden" value="sign" name="sign">
-                            <button type="submit">Sign</button>
+                            <button type="submit" class="button-create">Sign</button>
                         </form>
                     ';
                 } else {
