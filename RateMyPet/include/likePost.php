@@ -1,6 +1,7 @@
 <?php
     require_once __DIR__ . '/Aplicacion.php';
     require_once __DIR__ . '/config.php';
+    require_once __DIR__ . '/Usuario.php';
 
     if (isset($_POST['type']) && isset($_POST['post'])) {
         if ($_POST['type'] == "like") { // Like the post

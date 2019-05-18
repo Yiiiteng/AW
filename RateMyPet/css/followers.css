@@ -1,3 +1,9 @@
 .follower {
     text-align: center;
 }
+
+img.follower-pic {
+    height: 200px;
+    width: 200px;
+    margin: auto;
+}

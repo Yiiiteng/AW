@@ -11,7 +11,7 @@ class Pet {
     private $petDescript;
     private $treats;
     private $owner_id;
-    private $followers;
+    private $topTreats;
 
     public function __construct($petName, $petId, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $this->petName = $petName;
@@ -51,6 +51,7 @@ class Pet {
             if ($rs->num_rows == 1) {
                 $fila = $rs->fetch_assoc();
                 $pet = new Pet($fila['name'], $fila["idPet"], $fila["type"], $fila["breed"], $fila["description"], $fila["treats"], $fila['owner_id']);
+                $pet->updateTopTreats($fila['topTreats']);
                 $result = $pet;
             }
             $rs->free();
@@ -59,6 +60,10 @@ class Pet {
             exit();
         }
         return $result;
+    }
+
+    public function updateTopTreats($treats) {
+        $this->topTreats = $treats;
     }
 
     public static function buscarNombreDueño($idOwner) {
@@ -80,16 +85,6 @@ class Pet {
         return $result;
     }
 
-    /* public static function crea($petName, $petId, $petType, $petBreed, $petDescript, $treats)
-    {
-        $pet = self::buscarPet($petName);
-        if ($pet) {
-            return false;
-        }
-        $pet = new Pet($petName,$petId,$petType,$petBreed,$petDescript,$treats);
-        return self::guarda($pet);
-    }*/
-
     public static function insertar($petName, $petType, $petBreed, $petDescript, $treats, $owner_id) {
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
@@ -106,7 +101,7 @@ class Pet {
 
         if ($conn->query($query)) {
             $petId = $conn->insert_id;
-            return true;
+            return Pet::buscarPet($petId);
         } else {
             echo "Error al insertar en la BD: (" . $conn->errno . ") " . utf8_encode($conn->error);
             exit();
@@ -212,6 +207,10 @@ class Pet {
         return $this->owner_id;
     }
 
+    public function topTreats() {
+        return $this->topTreats;
+    }
+
     public function getImageSrc() {
         // This function gets the User's image, depending on the extension, and returns a default if it doesn't exist
         $src = 'upload/pets/'; // Image directory
@@ -287,11 +286,85 @@ class Pet {
         } else {
             echo 'Something went wrong...';
             echo ''.$path;
-            echo ''.$path.$this->id.'.'.$extension;
+            echo ''.$path.$this->petId().'.'.$extension;
             exit();
         }
         return $result;
     }
 
+    // Timed Events
+
+    public function maxRank() { // Max Rank of this pet (order)
+        // Update amount
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM pets ORDER BY topTreats DESC'; // Return ALL the pets and order by 
+        $result = $conn->query($sql);
+        if ($result) {
+            $i = 1; // First Position
+            while ($row = $result->fetch_assoc()) {
+                if ($this->petId() == $row['idPet']) { // Get only MY position
+                    return $i;
+                }
+                $i++;
+            }
+        }
+        else return null;
+    }
+
+    // Ranking 
+
+    public static function getRanking() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT P.idPet, P.treats, P.owner_id FROM pets P ORDER BY P.treats DESC LIMIT 10 '; // Return current ranking
+        $rs = $conn->query($sql);
+        if($rs) {
+            return $rs;
+        }
+    }
+
+    public static function getTop() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT P.idPet, P.treats, P.owner_id FROM pets P ORDER BY P.topTreats DESC LIMIT 3 '; // Return current ranking
+        $rs = $conn->query($sql);
+        if($rs) {
+            return $rs;
+        }
+    }
+
+    // Verification
+
+    public static function getNotVerified() {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM pets WHERE verified = 0'; // Return current ranking
+        $rs = $conn->query($sql);
+        if($rs->num_rows > 0) {
+            return $rs;
+        } else return false;
+    }
+
+    public static function sayYes($id) {
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM petvalidation WHERE petId = '.$id.''; // Return current ranking
+        $rs = $conn->query($sql);
+        if($pet_ = $rs->fetch_assoc()) {
+            if ($pet_['userIdA'] != NULL) {
+                $sql = 'UPDATE petvalidation SET userIdA = '.$_SESSION['user']->id().''; // Accept
+            } else if ($pet_['userIdB'] != NULL) {
+                $sql = 'UPDATE petvalidation SET userIdB = '.$_SESSION['user']->id().''; // Accept
+            } else if ($pet_['userIdC'] != NULL) { // This is the last Validation necessary
+                $sql = 'UPDATE petvalidation SET userIdC = '.$_SESSION['user']->id().''; // Accept
+                // UPDATE THE TABLE AND ACCEPT THE ACCOUNT
+            }
+        } else return false;
+    }
+
+    public static function sayNo($id) {
+
+    }
+
 }
- 

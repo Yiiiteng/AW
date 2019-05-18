@@ -208,12 +208,12 @@ class Usuario {
     public function getImageSrc() {
         // This function gets the User's image, depending on the extension, and returns a default if it doesn't exist
         $src = 'upload/users/'; // Image directory
-        if (file_exists('upload/users/'.$_SESSION['user']->id().'.jpg')) { 
-            $src .= $_SESSION['user']->id().'.jpg';
-        } else if (file_exists('upload/users/'.$_SESSION['user']->id().'.png')) {
-            $src .= $_SESSION['user']->id().'.png';
-        } else if (file_exists('upload/users/'.$_SESSION['user']->id().'.jpeg')) {
-            $src .= $_SESSION['user']->id().'.jpeg';
+        if (file_exists('upload/users/'.$this->id().'.jpg')) { 
+            $src .= $this->id().'.jpg';
+        } else if (file_exists('upload/users/'.$this->id().'.png')) {
+            $src .= $this->id().'.png';
+        } else if (file_exists('upload/users/'.$this->id().'.jpeg')) {
+            $src .= $this->id().'.jpeg';
         } else { // Default Image
             $src .= 'default.png';
         }
@@ -339,7 +339,7 @@ class Usuario {
     public function likePost($postId) { // Like a post (add it to your liked list)
         $app = Aplicacion::getSingleton();
         $conn = $app->conexionBd();
-        $sql = 'INSERT INTO likedposts VALUES ('.$this->id.', '.$postId.')'; // Return the user ID
+        $sql = 'INSERT INTO likedposts VALUES ('.$this->id.', '.$postId.', NULL)'; // Return the user ID
         $result = $conn->query($sql);
         if ($result) {
             return true;
@@ -474,6 +474,28 @@ class Usuario {
         if ($result) {
             return true;
         } else return false; 
+    }
+
+    // Verification
+
+    public function verifiedPet($petId) { // Returns whether or not youve already verified a Pet
+        $app = Aplicacion::getSingleton();
+        $conn = $app->conexionBd();
+        $sql = 'SELECT * FROM petvalidation WHERE petId = '.$petId.'';
+        $verification = array();
+        $result = $conn->query($sql);
+        $row = $result->fetch_assoc();
+        if ($row['userIdA'] == $this->id()
+        || $row['userIdB'] == $this->id()
+        || $row['userIdC'] == $this->id()
+        || $row['modId'] == $this->id()
+        || $row['notAId'] == $this->id()
+        || $row['notBId'] == $this->id()
+        || $row['notCId'] == $this->id()) { // If I verified him
+            return true;
+        } else {
+            return false;
+        }
     }
 
 }

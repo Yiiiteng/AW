@@ -80,7 +80,7 @@ class FormularioEditPet extends Form {
                             $name_file = $_FILES['image']['name']; // Nombre del archivo
                             $tmp_name = $_FILES['image']['tmp_name'];  // Nombre y directorio temporal del archivo subido
                             $extension = explode(".", $name_file)[1]; // Extensión del archivo
-
+                            
                             // Procesa la imagen
                             if (!$pet->processImage($tmp_name, $extension)) {
                                 echo 'No se ha podido subir la imagen al servidor.';

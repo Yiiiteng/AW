@@ -175,6 +175,11 @@ a {
     margin-top: 100px;
 }
 
+.button-create#addpet {
+    margin-bottom: 100px;
+    font-size: 20px;
+}
+
 img.pet-pic {
     width: 100px;
     height: 100px;

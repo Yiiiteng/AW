@@ -22,7 +22,6 @@ if ($action == 'followUser') { // We should pass these functions to the User / P
     $sql = 'INSERT INTO followedPets VALUES ('.$whoFollows.', '.$whoIsFollowed.')';
     $result = $conn->query($sql);
     header('Location: ../petProfile.php?idPet='.$whoIsFollowed.'');
-
 } else if ($action == 'unfollowPet') {
     // DELETE FROM `seguimientos` WHERE `seguimientos`.`userId` = 6 AND `seguimientos`.`seguidorId` = 8
     $sql = 'DELETE FROM followedPets WHERE userId = '.$whoFollows.' AND petId = '.$whoIsFollowed.'';
