@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 16-05-2019 a las 10:41:30
+-- Tiempo de generación: 17-05-2019 a las 15:30:08
 -- Versión del servidor: 10.1.38-MariaDB
 -- Versión de PHP: 7.3.2
 
@@ -130,6 +130,7 @@ CREATE TABLE `pets` (
   `type` text NOT NULL,
   `breed` text NOT NULL,
   `treats` int(11) NOT NULL,
+  `topTreats` int(10) DEFAULT '0',
   `owner_id` int(11) NOT NULL,
   `verified` tinyint(1) NOT NULL DEFAULT '0'
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
@@ -138,18 +139,19 @@ CREATE TABLE `pets` (
 -- Volcado de datos para la tabla `pets`
 --
 
-INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `owner_id`, `verified`) VALUES
-(29, 'Kiwi', '              ', 'Cat', 'Siamesse', 0, 6, 0),
-(30, 'Mickey', '              ', 'Hamster', 'White', 0, 6, 0),
-(31, 'Jeffrey', '             ', 'Rabbit', 'Grey', 0, 6, 0),
-(37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 7, 0),
-(38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 6, 0),
-(40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 6, 0),
-(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 0, 9, 0),
-(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 9, 0),
-(43, 'Josh', 'I may look fearce, but I\'m actually pretty gentle! I mean... Woof!       ', 'Dog', 'Bulldog', 0, 10, 0),
-(44, 'Kenney', 'Boing! Boing!                             ', 'Rabbit', 'English Lop', 0, 10, 0),
-(45, 'Tony', 'Hey there! My name is Tony the Parrot. Yes, I like to repeat everyhting I hear, so be careful what you say about my owner...', 'Bird', 'Parrot', 0, 10, 0);
+INSERT INTO `pets` (`idPet`, `name`, `description`, `type`, `breed`, `treats`, `topTreats`, `owner_id`, `verified`) VALUES
+(29, 'Kiwi', '              ', 'Cat', 'Siamesse', 0, 34, 6, 1),
+(30, 'Mickey', '              ', 'Hamster', 'White', 0, 3, 6, 0),
+(31, 'Jeffrey', '             ', 'Rabbit', 'Grey', 0, 15, 6, 0),
+(37, 'Josh', '                        ', 'Dog', 'Corgie', 0, 56, 7, 0),
+(38, 'Teresa', '                                    ', 'Rabbit', 'Liebre', 0, 15, 6, 0),
+(40, 'Nathan', '                                    ', 'Hamster', 'White', 0, 15, 6, 0),
+(41, 'Sergio', '                                    ', 'Rabbit', 'Auditor', 0, 15, 9, 0),
+(42, 'Blanca', '                                    ', 'Cat', 'Siamesse', 0, 15, 9, 0),
+(43, 'Josh', 'I may look fearce, but I\'m actually pretty gentle! I mean... Woof!       ', 'Dog', 'Bulldog', 0, 15, 10, 0),
+(44, 'Kenney', 'Boing! Boing!                             ', 'Rabbit', 'English Lop', 0, 15, 10, 0),
+(45, 'Tony', 'Hey there! My name is Tony the Parrot. Yes, I like to repeat everyhting I hear, so be careful what you say about my owner...', 'Bird', 'Parrot', 0, 15, 10, 0),
+(46, 'George', '                                    ', 'Cat', 'Bengal', 0, 1, 10, 0);
 
 -- --------------------------------------------------------
 
@@ -174,7 +176,6 @@ CREATE TABLE `posts` (
 
 INSERT INTO `posts` (`idpost`, `title`, `time`, `likes`, `repets`, `petid`, `description`, `pending`) VALUES
 (16, 'No sé que decir auxilio.', '2019-04-12', 0, 0, 29, '      asfasfasfasfas                              ', 0),
-(18, 'Volveré', '2019-04-12', 0, 0, 29, 'Holaaaaa                                    ', 1),
 (19, 'Prueba', '2019-05-12', 0, 0, 29, 'Prueba                                    ', 1);
 
 -- --------------------------------------------------------
@@ -194,7 +195,6 @@ CREATE TABLE `postvalidation` (
 
 INSERT INTO `postvalidation` (`idPost`, `idMod`) VALUES
 (16, 6),
-(18, 6),
 (19, 6);
 
 -- --------------------------------------------------------
@@ -234,6 +234,7 @@ CREATE TABLE `seguimientos` (
 INSERT INTO `seguimientos` (`userId`, `seguidorId`) VALUES
 (6, 7),
 (7, 6),
+(10, 6),
 (10, 7);
 
 -- --------------------------------------------------------
@@ -275,7 +276,7 @@ INSERT INTO `users` (`id`, `username`, `fullname`, `password`, `email`, `rol`, `
 (7, 'Nanuk', 'Adrián Ruiz', '$2y$10$1X4kam12YUORObXQAF3JFOa1ahYjCfYNf9XxsBN92MZh5REwFsfJK', 'adruiz01@ucm.es', 'user', 0, 0, 0, 3),
 (8, 'Houghton', 'Miguel Houghton', '$2y$10$Oi8MvxWuZM88JYVV41fpP./yipnXijnxihmm33c/xZJTfIW3c.zs2', 'miguelho@ucm.es', 'user', 0, 0, 0, 3),
 (9, 'bbbbb', 'bbbbb', '$2y$10$ZH.5pzHeQQn6P/JR5Rhu0eMuas8PaTtTualPyTG8EYS1qFX8pURAC', 'leyendarhu@gmail.com', 'user', 0, 0, 0, 3),
-(10, 'a', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 3);
+(10, 'admin', 'admin', '$2y$10$FlxvitpTVzOU.jh2nWCpe.Ki623KzAiGG20UJEZbsGndQ6/sfGkJy', 'admin@ucm.es', 'admin', 0, 0, 0, 3);
 
 --
 -- Índices para tablas volcadas
@@ -377,7 +378,7 @@ ALTER TABLE `comments`
 -- AUTO_INCREMENT de la tabla `pets`
 --
 ALTER TABLE `pets`
-  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idPet` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=47;
 
 --
 -- AUTO_INCREMENT de la tabla `posts`
@@ -454,9 +455,17 @@ DELIMITER $$
 --
 -- Eventos
 --
-CREATE DEFINER=`root`@`localhost` EVENT `reset_treats_rank` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-05-14 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE pets SET treats = 0 WHERE treats > 0$$
+CREATE DEFINER=`root`@`localhost` EVENT `reset_treats_users` ON SCHEDULE EVERY 1 MINUTE STARTS '2019-05-14 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE users SET treats = 3$$
 
-CREATE DEFINER=`root`@`localhost` EVENT `reset_treats_users` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-05-14 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO UPDATE users SET treats = 3$$
+CREATE DEFINER=`root`@`localhost` EVENT `reset_treats_rank` ON SCHEDULE EVERY 10 MINUTE STARTS '2019-05-14 00:00:00' ON COMPLETION NOT PRESERVE ENABLE DO BEGIN 
+    UPDATE pets p1, (SELECT treats, idPet FROM pets ) p2
+    SET p1.topTreats = p2.treats
+    WHERE p1.topTreats < p2.treats &&
+    p1.idPet = p2.idPet;
+
+    UPDATE pets p1
+    SET treats = 0;
+END$$
 
 DELIMITER ;
 COMMIT;
