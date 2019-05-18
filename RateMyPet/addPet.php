@@ -19,9 +19,9 @@ require("include/comun/header.php");
 ?>
 <div>
 	<?php
-	$opciones = array(); // Ninguna por defecto
-	$formulario = new FormularioPet("Pet", $opciones); // Créame una instancia hija de Form de tipo FormularioPet
-	$formulario->gestiona(); // Búscame el HTML correspondiente al formulario de tipo Añadir Pet
+		$opciones = array(); // Ninguna por defecto
+		$formulario = new FormularioPet("Pet", $opciones); // Créame una instancia hija de Form de tipo FormularioPet
+		$formulario->gestiona(); // Búscame el HTML correspondiente al formulario de tipo Añadir Pet
 	?>
 	<div>
 	<?php
@@ -29,4 +29,6 @@ require("include/comun/header.php");
 	?>
 	<script type="text/javascript" src="js/getBreed.js"></script>
 	</body>
+	<script type="text/javascript" src="js/imagePreview.js"></script>
+	<script src="https://ajax.googleapis.com/ajax/libs/jquery/2.1.1/jquery.min.js"></script>
 </html>

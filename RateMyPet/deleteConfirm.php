@@ -45,8 +45,8 @@ if (!isset($_SESSION['login']) && !$_SESSION['login'] === true) {
                 <h2>All of ' .$pet->petName( ) .'\'s information, including posts, and anything stored in our database will be deleted.</h2>
                 <div class="in-line">
                     <form method="POST" action="include/borrarPet.php">
-                    <input type="submit" class="button-create" value="Delete">
-                    <input type="hidden" name="id" value=" ' .$pet->petId( ) .'">
+                        <input type="submit" class="button-create" value="Delete">
+                        <input type="hidden" name="id" value=" ' .$pet->petId( ) .'">
                     </form>
                     <form method="POST" action="ownerProfile.php?id= ' .$_SESSION['user']->id( ) .'".php">
                         <input type="submit" class="button-create" value="Go Back">

@@ -25,24 +25,32 @@
 	<div class="content">
 		<div class="data">
 			<div class="profile-image">
-				<?php	
+				<?php
+					if (!$me) { // I can't give mod to myself
+						if ($_SESSION['isAdmin']){
+							if($user->isMod()) {
+								echo '<h1>'.$user->username().' is a Mod!</h1>';
+								echo '<form action="include/moderator.php?act=Revoke&id='.$user->id().'" method="POST">
+									<button class="button-create"> Revoke Mod Priviledges </button>
+								</form>';
+							} else {
+								echo '<form action="include/moderator.php?act=Give&id='.$user->id().'" method="POST">
+									<button class="button-create"> Give Mod Priviledges </button>
+									</form>';
+							}
+						}
+					}
 					echo '<img src="'.$user->getImageSrc().'">';
 				?>
 			</div>
 			<div class="info">
 				<?php
 					echo '<h2>'.$user->username().' (aka: '.$user->fullName().')';
-					if($_SESSION['isAdmin']){
-						if($user->isMod()){
-						echo '<form action="include/moderator.php?act=Revoke&id='.$user->id().'" method="POST">
-							<button class="button-create"> Revoke mod </button>
-						</form>';
+					if ($user->isMod()) {
+						echo ' 💠 (MOD)';
 					}
-					else {
-						echo '<form action="include/moderator.php?act=Give&id='.$user->id().'" method="POST">
-							<button class="button-create"> Give mod </button>
-							</form>';
-						}
+					if ($user->rol() == 'admin') {
+						echo ' 🌟 (ADMIN)';
 					}
                     echo '</h2>';
 					echo '<h2>Followers: <a href="followers.php?followersUsers&id='.$user->id().'">'.$user->followerAmount().'</a> | ';
@@ -108,7 +116,9 @@
 			<div class="add-pet">
 				<?php
 					if ($me) {
-						echo '<button type="button" class="button-create" onclick="window.location.href=\'addPet.php\'">Add a pet</button>';
+						echo '<form action="addPet.php" method="POST">
+							<input class="button-create" id="addpet" type="submit" value="Add a Pet">
+						</form>';
 					}
 				?>
 			</div>
@@ -117,23 +127,10 @@
 	<?php
 		require("include/comun/footer.php");
 	?>
-<script src="js/changeImage.js"> </script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
-<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
-<script type="text/javascript" src="css/slick/slick/slick.min.js"></script>
-<script type="text/javascript">
-        $(document).ready(function(){
-            $('.multiple-items').slick({
-                infinite: true,
-                slidesToShow: 4,
-                slidesToScroll: 3,
-                autoplay: true,
-                autoplaySpeed: 3000,
-                dots: true,
-                speed: 700,
-                arrows: true
-            });
-        });
-</script>
+	<script src="js/changeImage.js"> </script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-1.11.0.min.js"></script>
+	<script type="text/javascript" src="https://code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+	<script type="text/javascript" src="css/slick/slick/slick.min.js"></script>
+	<script type="text/javascript" src="js/slickSettingsOwner.js"></script>
 </body>
 </html>

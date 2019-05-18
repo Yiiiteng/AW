@@ -19,6 +19,7 @@
     ?>
     <div class="search-content" id="left">
         <h1>Owners</h1>
+        <hr>
     <?php
         if (isset($_SESSION['users'])) {           
             $data = $_SESSION['users'];
@@ -33,6 +34,7 @@
     </div>
     <div class="search-content" id="right">
         <h1>Pets</h1>
+        <hr>
     <?php
         if (isset($_SESSION['pets'])) {           
             $data = $_SESSION['pets'];

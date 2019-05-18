@@ -16,7 +16,7 @@
     ?>
     <div class="content">
         <h1>Terms & Conditions</h1>
-        <h2>Last revision: 27/03/2019</h2>
+        <h2>Last revision: 17/05/2019</h2>
         <p>
             Welcome to Rate My Pet. This site is being constructed as a University project.
             No information will be shared with external sources, nor will the website be usable
